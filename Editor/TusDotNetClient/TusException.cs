@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// Represents an exception that might occur when using <see cref="TusClient"/>. See https://github.com/jonstodle/TusDotNetClient.

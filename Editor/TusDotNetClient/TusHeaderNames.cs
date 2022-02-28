@@ -1,11 +1,10 @@
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// A collection of the header names used by the Tus protocol. See https://github.com/jonstodle/TusDotNetClient
     /// </summary>
     public static class TusHeaderNames
     {
-
         ///<inheritdoc cref="TusHeaderNames"/>
         public const string TusResumable = "tus-resumable";
         ///<inheritdoc cref="TusHeaderNames"/>

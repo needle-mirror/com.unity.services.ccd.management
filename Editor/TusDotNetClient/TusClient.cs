@@ -1,16 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.Services.CCD.Management.Http;
+using Unity.Services.Ccd.Management.Http;
 
-namespace TusDotNetClient
+[assembly: InternalsVisibleTo("Unity.Services.Ccd.Management.Editor.Tests")]
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// Represents the different hashing algorithm implementations supported by <see cref="TusClient"/> See https://github.com/jonstodle/TusDotNetClient.
@@ -58,7 +59,7 @@ namespace TusDotNetClient
         /// <returns>The URL to the created file.</returns>
         /// <exception cref="Exception">Throws if the response doesn't contain the required information.</exception>
         public async Task<string> CreateAsync(string url, FileInfo fileInfo,
-            params (string key, string value)[] metadata)
+            params(string key, string value)[] metadata)
         {
             if (!metadata.Any(m => m.key == "filename"))
             {
@@ -77,7 +78,7 @@ namespace TusDotNetClient
         /// <returns>The URL to the created file.</returns>
         /// <exception cref="Exception">Throws if the response doesn't contain the required information.</exception>
         public async Task<string> CreateAsync(string url, long uploadLength,
-            params (string key, string value)[] metadata)
+            params(string key, string value)[] metadata)
         {
             var requestUri = new Uri(url);
             var client = new TusHttpClient
@@ -331,8 +332,8 @@ namespace TusDotNetClient
                 .ConfigureAwait(false);
 
             return response.StatusCode == HttpStatusCode.NoContent ||
-                   response.StatusCode == HttpStatusCode.NotFound ||
-                   response.StatusCode == HttpStatusCode.Gone;
+                response.StatusCode == HttpStatusCode.NotFound ||
+                response.StatusCode == HttpStatusCode.Gone;
         }
 
         private async Task<long> GetFileOffset(string url)
@@ -357,13 +358,12 @@ namespace TusDotNetClient
             return (int)Math.Ceiling(chunkSize * 1024.0 * 1024.0);
         }
 
-
         /// <summary>
-        /// Used to MapTusHttpResponses to CCD.Management.HttpResponse
+        /// Used to MapTusHttpResponses to Ccd.Management.HttpResponse
         /// </summary>
         /// <param name="tusHttpResponses">List of TusHttpResponses</param>
         /// <returns></returns>
-        public static HttpClientResponse MapTusHttpResponsesToHttpResponse(List<TusHttpResponse> tusHttpResponses)
+        internal static HttpClientResponse MapTusHttpResponsesToHttpResponse(List<TusHttpResponse> tusHttpResponses)
         {
             //Return 200 in the case that the file already exists and up to date.
             if (tusHttpResponses.Count == 0)
@@ -385,8 +385,8 @@ namespace TusDotNetClient
             return new HttpClientResponse(
                 finalResponse.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 (long)finalResponse.StatusCode,
-                finalResponse.StatusCode >= HttpStatusCode.BadRequest && finalResponse.StatusCode < HttpStatusCode.InternalServerError,
-                finalResponse.StatusCode >= HttpStatusCode.InternalServerError,
+                (int)finalResponse.StatusCode >= (int)HttpStatusCode.BadRequest && (int)finalResponse.StatusCode < (int)HttpStatusCode.InternalServerError,
+                (int)finalResponse.StatusCode >= (int)HttpStatusCode.InternalServerError,
                 finalResponse.ResponseBytes,
                 finalResponse.ResponseString);
         }

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// Represents a response from a request made to a Tus enabled server. See https://github.com/jonstodle/TusDotNetClient

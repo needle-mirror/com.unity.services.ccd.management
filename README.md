@@ -7,7 +7,7 @@ Cloud Content Delivery is a managed cloud service that hosts and delivers conten
 ### Import package
 
 ```csharp
-using Unity.Services.CCD.Management;
+using Unity.Services.Ccd.Management;
 ```
 
 ### Usage
@@ -17,7 +17,7 @@ Sample Usage:
 ```csharp
 async void MakeAPICall()
 {
-    await CCDManagementAPIService.SetConfigurationAuthHeader(CloudProjectSettings.accessToken);
+    await CcdManagementService.SetConfigurationAuthHeader(CloudProjectSettings.accessToken);
     FakeApiGetRequest r = new FakeApiGetRequest("fakeParameter");
     var client = new FakeClient(new HttpClient());
     var response = await client.FakeApiGetAsync(r);
@@ -25,7 +25,7 @@ async void MakeAPICall()
 ```
 
 ### Example
-Sample of usage can be found in [List Buckets Example](./Samples/Example/BucketsExample.cs)
+Sample of usage can be found in [Ccd Sample Window Example](./Samples~/CcdSampleWindow/CcdSampleWindow.cs)
 
 
 

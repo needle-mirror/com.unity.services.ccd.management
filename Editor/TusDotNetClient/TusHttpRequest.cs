@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// HTTP methods supported by <see cref="TusDotNetClient"/> See https://github.com/jonstodle/TusDotNetClient.

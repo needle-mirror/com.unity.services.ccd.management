@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// A class to execute requests against a Tus enabled server. See https://github.com/jonstodle/TusDotNetClient.
@@ -103,7 +103,7 @@ namespace TusDotNetClient
                     }
                 }
 
-                var response = (HttpWebResponse) await webRequest.GetResponseAsync()
+                var response = (HttpWebResponse)await webRequest.GetResponseAsync()
                     .ConfigureAwait(false);
 
                 //contentLength=0 for gzipped responses due to .net bug

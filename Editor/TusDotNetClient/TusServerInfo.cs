@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace TusDotNetClient
+namespace Unity.Services.Ccd.Management
 {
     /// <summary>
     /// Represents information about a Tus enabled server. See https://github.com/jonstodle/TusDotNetClient.
@@ -20,7 +20,7 @@ namespace TusDotNetClient
         /// </summary>
         public string[] Extensions { get; }
         /// <summary>
-        /// Get the maximum total size of a single file supported by the Tus server. 
+        /// Get the maximum total size of a single file supported by the Tus server.
         /// </summary>
         public long MaxSize { get; }
         /// <summary>
