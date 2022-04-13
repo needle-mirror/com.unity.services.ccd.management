@@ -1,7 +1,7 @@
 {
   "name": "com.unity.services.ccd.management",
   "displayName": "CCD Management",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "unity": "2019.4",
   "description": "Cloud Content Delivery (CCD) is a managed cloud service that hosts and delivers live content to your application’s users worldwide. Note: The Addressables package (1.19.6+) contains features that utilize this SDK to manage CCD.",
   "_upm": {
@@ -15,7 +15,7 @@
   "repository": {
     "url": "https://github.cds.internal.unity3d.com/unity/com.unity.services.ccd.management.git",
     "type": "git",
-    "revision": "e976a38c3fff1e6c5216ab89467e9f9e82c2bf07"
+    "revision": "0f2f2f5bf7544661c91b0232acbed8d28ee89ac0"
   },
   "dependencies": {
     "com.unity.services.core": "1.3.1",
@@ -34,12 +34,12 @@
     }
   ],
   "upm": {
-    "changelog": "* Updated Core and NewtonsoftJson dependencies"
+    "changelog": "* Bumping patch version due to promotion errors"
   },
   "relatedPackages": {
-    "com.unity.services.ccd.management.tests": "2.0.3"
+    "com.unity.services.ccd.management.tests": "2.0.4"
   },
   "upmCi": {
-    "footprint": "1c2a55e33a5c94b5c1d85a626c49a813a4aa78bb"
+    "footprint": "492b7161779274cd4aba691e3def52d430d4b6b5"
   }
 }
