@@ -1,21 +1,16 @@
 {
   "name": "com.unity.services.ccd.management",
   "displayName": "CCD Management",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "unity": "2019.4",
   "description": "Cloud Content Delivery (CCD) is a managed cloud service that hosts and delivers live content to your application’s users worldwide. Note: The Addressables package (1.19.6+) contains features that utilize this SDK to manage CCD.",
   "_upm": {
-    "gameService": {
-      "genericDashboardUrl": "https://dashboard.unity3d.com/cloud-content-delivery",
-      "projectDashboardUrl": "https://dashboard.unity3d.com/organizations/{0}/projects/{1}/cloud-content-delivery",
-      "projectDashboardUrlType": "OrganizationKeyAndProjectGuid",
-      "configurePath": "Project/Services/Cloud Content Delivery"
-    }
+    "changelog": "* Added support for Environments. To change the environment, use the `SetEnvironmentId` function. Environment IDs can be found in the Unity Dashboard under `Projects` > `Project Settings` > `Environments`. If no environment is set, the default environment of a project will be used."
   },
   "repository": {
     "url": "https://github.cds.internal.unity3d.com/unity/com.unity.services.ccd.management.git",
     "type": "git",
-    "revision": "0f2f2f5bf7544661c91b0232acbed8d28ee89ac0"
+    "revision": "08f87162ac6d37255f887f17263dab43bc9f8376"
   },
   "dependencies": {
     "com.unity.services.core": "1.3.1",
@@ -33,13 +28,10 @@
       "path": "Samples~/CcdSampleWindow"
     }
   ],
-  "upm": {
-    "changelog": "* Bumping patch version due to promotion errors"
-  },
   "relatedPackages": {
-    "com.unity.services.ccd.management.tests": "2.0.4"
+    "com.unity.services.ccd.management.tests": "2.1.0"
   },
   "upmCi": {
-    "footprint": "492b7161779274cd4aba691e3def52d430d4b6b5"
+    "footprint": "cf47e2eee20cd428ef2965533fe3775d7a347ca0"
   }
 }

@@ -370,6 +370,133 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         }
     }
     /// <summary>
+    /// CreateBucketAccessTokenEnvRequest
+    /// Create bucket access token
+    /// </summary>
+    [Preserve]
+    internal class CreateBucketAccessTokenEnvRequest : BucketAccessTokensApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for ccdBucketAccessTokenCreate </summary>
+        [Preserve]
+        public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate CcdBucketAccessTokenCreate { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// CreateBucketAccessTokenEnv Request Object.
+        /// Create bucket access token
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="ccdBucketAccessTokenCreate">BucketAccessToken</param>
+        [Preserve]
+        public CreateBucketAccessTokenEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate ccdBucketAccessTokenCreate)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Projectid = projectid;
+            CcdBucketAccessTokenCreate = ccdBucketAccessTokenCreate;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return ConstructBody(CcdBucketAccessTokenCreate);
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+                "application/json"
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "POST";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// DeleteBucketAccessTokenRequest
     /// Delete a bucket access token
     /// </summary>
@@ -489,6 +616,132 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         }
     }
     /// <summary>
+    /// DeleteBucketAccessTokenEnvRequest
+    /// Delete a bucket access token
+    /// </summary>
+    [Preserve]
+    internal class DeleteBucketAccessTokenEnvRequest : BucketAccessTokensApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for tokenid </summary>
+        [Preserve]
+        
+        public string Tokenid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// DeleteBucketAccessTokenEnv Request Object.
+        /// Delete a bucket access token
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="tokenid">Token ID</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public DeleteBucketAccessTokenEnvRequest(string environmentid, string bucketid, string tokenid, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Tokenid = tokenid;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "DELETE";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// GetBucketAccessTokenRequest
     /// get bucket access token
     /// </summary>
@@ -528,6 +781,133 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
 
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens/{tokenid}";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// GetBucketAccessTokenEnvRequest
+    /// get bucket access token
+    /// </summary>
+    [Preserve]
+    internal class GetBucketAccessTokenEnvRequest : BucketAccessTokensApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for tokenid </summary>
+        [Preserve]
+        
+        public string Tokenid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetBucketAccessTokenEnv Request Object.
+        /// get bucket access token
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="tokenid">Token ID</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public GetBucketAccessTokenEnvRequest(string environmentid, string bucketid, string tokenid, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Tokenid = tokenid;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
             List<string> queryParams = new List<string>();
 
@@ -738,6 +1118,142 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         }
     }
     /// <summary>
+    /// ListBucketAccessTokensEnvRequest
+    /// List bucket access tokens
+    /// </summary>
+    [Preserve]
+    internal class ListBucketAccessTokensEnvRequest : BucketAccessTokensApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for page </summary>
+        [Preserve]
+        public int? Page { get; }
+        
+        /// <summary>Accessor for perPage </summary>
+        [Preserve]
+        public int? PerPage { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// ListBucketAccessTokensEnv Request Object.
+        /// List bucket access tokens
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="page">Current Page</param>
+        /// <param name="perPage">Items Per Page</param>
+        [Preserve]
+        public ListBucketAccessTokensEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Projectid = projectid;
+            Page = page;
+                        PerPage = perPage;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens";
+
+            List<string> queryParams = new List<string>();
+
+            var pageStringValue = Page.ToString();
+            queryParams = AddParamsToQueryParams(queryParams, "page", pageStringValue);
+            var perPageStringValue = PerPage.ToString();
+            queryParams = AddParamsToQueryParams(queryParams, "per_page", perPageStringValue);
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// UpdateBucketAccessTokenInfoRequest
     /// Update bucket access token info
     /// </summary>
@@ -783,6 +1299,140 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
             
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens/{tokenid}";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return ConstructBody(CcdBucketAccessTokenUpdate);
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+                "application/json"
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "PUT";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// UpdateBucketAccessTokenInfoEnvRequest
+    /// Update bucket access token info
+    /// </summary>
+    [Preserve]
+    internal class UpdateBucketAccessTokenInfoEnvRequest : BucketAccessTokensApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for tokenid </summary>
+        [Preserve]
+        
+        public string Tokenid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for ccdBucketAccessTokenUpdate </summary>
+        [Preserve]
+        public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate CcdBucketAccessTokenUpdate { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// UpdateBucketAccessTokenInfoEnv Request Object.
+        /// Update bucket access token info
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="tokenid">Token ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="ccdBucketAccessTokenUpdate">BucketAccessToken</param>
+        [Preserve]
+        public UpdateBucketAccessTokenInfoEnvRequest(string environmentid, string bucketid, string tokenid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate ccdBucketAccessTokenUpdate)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Tokenid = tokenid;
+            
+            Projectid = projectid;
+            CcdBucketAccessTokenUpdate = ccdBucketAccessTokenUpdate;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
             List<string> queryParams = new List<string>();
 

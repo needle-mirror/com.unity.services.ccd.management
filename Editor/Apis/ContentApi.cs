@@ -33,6 +33,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
 
             /// <summary>
             /// Async Operation.
+            /// Create content upload for TUS.
+            /// </summary>
+            /// <param name="request">Request object for CreateContentEnv.</param>
+            /// <param name="operationConfiguration">Configuration for CreateContentEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> CreateContentEnvAsync(Unity.Services.Ccd.Management.Content.CreateContentEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get content by entryid.
             /// </summary>
             /// <param name="request">Request object for GetContent.</param>
@@ -40,6 +50,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
             /// <returns>Task for a Response object containing status code, headers, and System.IO.Stream object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<System.IO.Stream>> GetContentAsync(Unity.Services.Ccd.Management.Content.GetContentRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get content by entryid.
+            /// </summary>
+            /// <param name="request">Request object for GetContentEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetContentEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and System.IO.Stream object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<System.IO.Stream>> GetContentEnvAsync(Unity.Services.Ccd.Management.Content.GetContentEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -53,6 +73,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
 
             /// <summary>
             /// Async Operation.
+            /// Get content status by entryid.
+            /// </summary>
+            /// <param name="request">Request object for GetContentStatusEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetContentStatusEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> GetContentStatusEnvAsync(Unity.Services.Ccd.Management.Content.GetContentStatusEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get content status for version of entry.
             /// </summary>
             /// <param name="request">Request object for GetContentStatusVersion.</param>
@@ -60,6 +90,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
             /// <returns>Task for a Response object containing status code, headers.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response> GetContentStatusVersionAsync(Unity.Services.Ccd.Management.Content.GetContentStatusVersionRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get content status for version of entry.
+            /// </summary>
+            /// <param name="request">Request object for GetContentStatusVersionEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetContentStatusVersionEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> GetContentStatusVersionEnvAsync(Unity.Services.Ccd.Management.Content.GetContentStatusVersionEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -73,6 +113,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
 
             /// <summary>
             /// Async Operation.
+            /// Get content for version of entry.
+            /// </summary>
+            /// <param name="request">Request object for GetContentVersionEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetContentVersionEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and System.IO.Stream object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<System.IO.Stream>> GetContentVersionEnvAsync(Unity.Services.Ccd.Management.Content.GetContentVersionEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Upload content for entry.
             /// </summary>
             /// <param name="request">Request object for UploadContent.</param>
@@ -80,6 +130,16 @@ namespace Unity.Services.Ccd.Management.Apis.Content
             /// <returns>Task for a Response object containing status code, headers.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response> UploadContentAsync(Unity.Services.Ccd.Management.Content.UploadContentRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Upload content for entry.
+            /// </summary>
+            /// <param name="request">Request object for UploadContentEnv.</param>
+            /// <param name="operationConfiguration">Configuration for UploadContentEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> UploadContentEnvAsync(Unity.Services.Ccd.Management.Content.UploadContentEnvRequest request, Configuration operationConfiguration = null);
 
     }
 
@@ -137,7 +197,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response> CreateContentAsync(Unity.Services.Ccd.Management.Content.CreateContentRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"201",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"201",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Create content upload for TUS.
+        /// </summary>
+        /// <param name="request">Request object for CreateContentEnv.</param>
+        /// <param name="operationConfiguration">Configuration for CreateContentEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> CreateContentEnvAsync(Unity.Services.Ccd.Management.Content.CreateContentEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"201",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -164,7 +251,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response<System.IO.Stream>> GetContentAsync(Unity.Services.Ccd.Management.Content.GetContentRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<System.IO.Stream>(response, statusCodeToTypeMap);
+            return new Response<System.IO.Stream>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get content by entryid.
+        /// </summary>
+        /// <param name="request">Request object for GetContentEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetContentEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and System.IO.Stream object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<System.IO.Stream>> GetContentEnvAsync(Unity.Services.Ccd.Management.Content.GetContentEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -191,7 +305,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response> GetContentStatusAsync(Unity.Services.Ccd.Management.Content.GetContentStatusRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("HEAD",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get content status by entryid.
+        /// </summary>
+        /// <param name="request">Request object for GetContentStatusEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetContentStatusEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> GetContentStatusEnvAsync(Unity.Services.Ccd.Management.Content.GetContentStatusEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -218,7 +359,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response> GetContentStatusVersionAsync(Unity.Services.Ccd.Management.Content.GetContentStatusVersionRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("HEAD",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get content status for version of entry.
+        /// </summary>
+        /// <param name="request">Request object for GetContentStatusVersionEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetContentStatusVersionEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> GetContentStatusVersionEnvAsync(Unity.Services.Ccd.Management.Content.GetContentStatusVersionEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -245,7 +413,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response<System.IO.Stream>> GetContentVersionAsync(Unity.Services.Ccd.Management.Content.GetContentVersionRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<System.IO.Stream>(response, statusCodeToTypeMap);
+            return new Response<System.IO.Stream>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get content for version of entry.
+        /// </summary>
+        /// <param name="request">Request object for GetContentVersionEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetContentVersionEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and System.IO.Stream object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<System.IO.Stream>> GetContentVersionEnvAsync(Unity.Services.Ccd.Management.Content.GetContentVersionEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(System.IO.Stream)   },{"206", typeof(System.IO.Stream)   },{"307",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -272,7 +467,7 @@ namespace Unity.Services.Ccd.Management.Apis.Content
         public async Task<Response> UploadContentAsync(Unity.Services.Ccd.Management.Content.UploadContentRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -283,6 +478,34 @@ namespace Unity.Services.Ccd.Management.Apis.Content
                 request.ConstructHeaders(finalConfiguration),
                 finalConfiguration.RequestTimeout ?? _baseTimeout,
                 "BoundaryUploadContentBoundary");
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Upload content for entry.
+        /// </summary>
+        /// <param name="request">Request object for UploadContentEnv.</param>
+        /// <param name="operationConfiguration">Configuration for UploadContentEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> UploadContentEnvAsync(Unity.Services.Ccd.Management.Content.UploadContentEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("PATCH",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                "BoundaryUploadContentEnvBoundary");
 
             ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
             return new Response(response);

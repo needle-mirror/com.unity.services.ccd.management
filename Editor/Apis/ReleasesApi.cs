@@ -33,6 +33,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
             /// <summary>
             /// Async Operation.
+            /// Create release.
+            /// </summary>
+            /// <param name="request">Request object for CreateReleaseEnv.</param>
+            /// <param name="operationConfiguration">Configuration for CreateReleaseEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdRelease>> CreateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.CreateReleaseEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get detail error information.
             /// </summary>
             /// <param name="request">Request object for GetErrorDetails.</param>
@@ -40,6 +50,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
             /// <returns>Task for a Response object containing status code, headers, and byte[] object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<byte[]>> GetErrorDetailsAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get detail error information.
+            /// </summary>
+            /// <param name="request">Request object for GetErrorDetailsEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetErrorDetailsEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and byte[] object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<byte[]>> GetErrorDetailsEnvAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -63,6 +83,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
             /// <summary>
             /// Async Operation.
+            /// Get release by badge.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseByBadgeEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseByBadgeEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdRelease>> GetReleaseByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseByBadgeEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get counts of changes between releases.
             /// </summary>
             /// <param name="request">Request object for GetReleaseDiff.</param>
@@ -80,6 +110,26 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
             /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get changed entries between releases.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseDiffEntriesEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseDiffEntriesEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get counts of changes between releases.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseDiffEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseDiffEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdReleaseChangeVersion object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdReleaseChangeVersion>> GetReleaseDiffEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -103,6 +153,36 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
             /// <summary>
             /// Async Operation.
+            /// Get badged release entries.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseEntriesByBadgeEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseEntriesByBadgeEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesByBadgeEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get release entries.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseEntriesEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseEntriesEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get release.
+            /// </summary>
+            /// <param name="request">Request object for GetReleaseEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleaseEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdRelease>> GetReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get releases for bucket.
             /// </summary>
             /// <param name="request">Request object for GetReleases.</param>
@@ -110,6 +190,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
             /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdRelease&gt; object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<List<CcdRelease>>> GetReleasesAsync(Unity.Services.Ccd.Management.Releases.GetReleasesRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get releases for bucket.
+            /// </summary>
+            /// <param name="request">Request object for GetReleasesEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetReleasesEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdRelease&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdRelease>>> GetReleasesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleasesEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -123,6 +213,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
             /// <summary>
             /// Async Operation.
+            /// Get stats for a release.
+            /// </summary>
+            /// <param name="request">Request object for GetStatsEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetStatsEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdMetricQuantity object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdMetricQuantity>> GetStatsEnvAsync(Unity.Services.Ccd.Management.Releases.GetStatsEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Update release.
             /// </summary>
             /// <param name="request">Request object for UpdateRelease.</param>
@@ -130,6 +230,16 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
             /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdRelease>> UpdateReleaseAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Update release.
+            /// </summary>
+            /// <param name="request">Request object for UpdateReleaseEnv.</param>
+            /// <param name="operationConfiguration">Configuration for UpdateReleaseEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdRelease>> UpdateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseEnvRequest request, Configuration operationConfiguration = null);
 
     }
 
@@ -187,7 +297,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> CreateReleaseAsync(Unity.Services.Ccd.Management.Releases.CreateReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
+            return new Response<CcdRelease>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Create release.
+        /// </summary>
+        /// <param name="request">Request object for CreateReleaseEnv.</param>
+        /// <param name="operationConfiguration">Configuration for CreateReleaseEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdRelease>> CreateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.CreateReleaseEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -214,7 +351,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<byte[]>> GetErrorDetailsAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<byte[]>(response, statusCodeToTypeMap);
+            return new Response<byte[]>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get detail error information.
+        /// </summary>
+        /// <param name="request">Request object for GetErrorDetailsEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetErrorDetailsEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and byte[] object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<byte[]>> GetErrorDetailsEnvAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -241,7 +405,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseAsync(Unity.Services.Ccd.Management.Releases.GetReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -268,7 +432,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseByBadgeAsync(Unity.Services.Ccd.Management.Releases.GetReleaseByBadgeRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
+            return new Response<CcdRelease>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get release by badge.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseByBadgeEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseByBadgeEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdRelease>> GetReleaseByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseByBadgeEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -295,7 +486,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdReleaseChangeVersion>> GetReleaseDiffAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -322,7 +513,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -340,6 +531,60 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
         /// <summary>
         /// Async Operation.
+        /// Get changed entries between releases.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseDiffEntriesEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseDiffEntriesEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdReleaseEntry>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get counts of changes between releases.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseDiffEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseDiffEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdReleaseChangeVersion object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdReleaseChangeVersion>> GetReleaseDiffEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdReleaseChangeVersion>(response, statusCodeToTypeMap);
+            return new Response<CcdReleaseChangeVersion>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
         /// Get release entries.
         /// </summary>
         /// <param name="request">Request object for GetReleaseEntries.</param>
@@ -349,7 +594,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -376,7 +621,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesByBadgeAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesByBadgeRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -394,6 +639,87 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
 
         /// <summary>
         /// Async Operation.
+        /// Get badged release entries.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseEntriesByBadgeEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseEntriesByBadgeEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesByBadgeEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdReleaseEntry>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get release entries.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseEntriesEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseEntriesEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdReleaseEntry>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get release.
+        /// </summary>
+        /// <param name="request">Request object for GetReleaseEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleaseEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdRelease>> GetReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
+            return new Response<CcdRelease>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
         /// Get releases for bucket.
         /// </summary>
         /// <param name="request">Request object for GetReleases.</param>
@@ -403,7 +729,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdRelease>>> GetReleasesAsync(Unity.Services.Ccd.Management.Releases.GetReleasesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdRelease>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdRelease>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get releases for bucket.
+        /// </summary>
+        /// <param name="request">Request object for GetReleasesEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetReleasesEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdRelease&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdRelease>>> GetReleasesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleasesEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -430,7 +783,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdMetricQuantity>> GetStatsAsync(Unity.Services.Ccd.Management.Releases.GetStatsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdMetricQuantity>(response, statusCodeToTypeMap);
+            return new Response<CcdMetricQuantity>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get stats for a release.
+        /// </summary>
+        /// <param name="request">Request object for GetStatsEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetStatsEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdMetricQuantity object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdMetricQuantity>> GetStatsEnvAsync(Unity.Services.Ccd.Management.Releases.GetStatsEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -457,7 +837,34 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> UpdateReleaseAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("PUT",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
+            return new Response<CcdRelease>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Update release.
+        /// </summary>
+        /// <param name="request">Request object for UpdateReleaseEnv.</param>
+        /// <param name="operationConfiguration">Configuration for UpdateReleaseEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdRelease>> UpdateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);

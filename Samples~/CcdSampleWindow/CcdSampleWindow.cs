@@ -84,6 +84,10 @@ To Setup the Demo:
                 try
                 {
                     isLoading = true;
+
+                    // To change the CCD environment, utilize this call. By default, CCD will use the default Dashboard environment.
+                    //CcdManagement.SetEnvironmentId("<environment_id_here>");
+
                     //Beginning Org calls
                     var org = await CcdManagement.Instance.GetOrgAsync();
                     Debug.unityLogger.Log("Ccd", $"Org: {org.Name} ({org.Id})");

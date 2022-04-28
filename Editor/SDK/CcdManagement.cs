@@ -30,6 +30,7 @@ namespace Unity.Services.Ccd.Management
         private static IHttpClient client;
 
         internal static string projectid;
+        internal static string environmentid;
 
         /// <summary>
         /// Sets the configuration base path
@@ -38,6 +39,15 @@ namespace Unity.Services.Ccd.Management
         public static void SetBasePath(string basePath)
         {
             configuration.BasePath = basePath;
+        }
+
+        /// <summary>
+        /// Sets the environment for the project
+        /// </summary>
+        /// <param name="envId"></param>
+        public static void SetEnvironmentId(string envId)
+        {
+            environmentid = envId;
         }
 
         static CcdManagement()

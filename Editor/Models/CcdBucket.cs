@@ -34,6 +34,8 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="changes">changes param</param>
         /// <param name="created">created param</param>
         /// <param name="description">description param</param>
+        /// <param name="environmentId">environmentId param</param>
+        /// <param name="environmentName">environmentName param</param>
         /// <param name="id">id param</param>
         /// <param name="lastRelease">lastRelease param</param>
         /// <param name="name">name param</param>
@@ -41,12 +43,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="@private">@private param</param>
         /// <param name="projectguid">projectguid param</param>
         [Preserve]
-        public CcdBucket(CcdBucketAttributes attributes = default, CcdReleaseChangeVersion changes = default, DateTime created = default, string description = default, System.Guid id = default, CcdRelease lastRelease = default, string name = default, CcdBucketPermissions permissions = default, bool @private = default, System.Guid projectguid = default)
+        public CcdBucket(CcdBucketAttributes attributes = default, CcdReleaseChangeVersion changes = default, DateTime created = default, string description = default, System.Guid environmentId = default, string environmentName = default, System.Guid id = default, CcdRelease lastRelease = default, string name = default, CcdBucketPermissions permissions = default, bool @private = default, System.Guid projectguid = default)
         {
             Attributes = attributes;
             Changes = changes;
             Created = created;
             Description = description;
+            EnvironmentId = environmentId;
+            EnvironmentName = environmentName;
             Id = id;
             LastRelease = lastRelease;
             Name = name;
@@ -79,6 +83,18 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "environment_id", EmitDefaultValue = false)]
+        public System.Guid EnvironmentId{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "environment_name", EmitDefaultValue = false)]
+        public string EnvironmentName{ get; }
         /// <summary>
         /// 
         /// </summary>

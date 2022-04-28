@@ -30,14 +30,15 @@ namespace Unity.Services.Ccd.Management.Models
         /// <summary>
         /// Creates an instance of CcdEntryCreate.
         /// </summary>
+        /// <param name="path">path param</param>
         /// <param name="contentHash">The \&quot;content_hash\&quot; should be MD5sum hash value.</param>
         /// <param name="contentSize">contentSize param</param>
-        /// <param name="path">path param</param>
         /// <param name="contentType">contentType param</param>
         /// <param name="labels">labels param</param>
         /// <param name="metadata">metadata param</param>
+        /// <param name="signedUrl">Set to &#39;true&#39; if you want to return a signed URL for direct upload. Otherwise defaults to &#39;false&#39;.</param>
         [Preserve]
-        public CcdEntryCreate(string contentHash, int contentSize, string path, string contentType = default, List<string> labels = default, object metadata = default)
+        public CcdEntryCreate(string path, string contentHash = default, int contentSize = default, string contentType = default, List<string> labels = default, object metadata = default, bool signedUrl = default)
         {
             ContentHash = contentHash;
             ContentSize = contentSize;
@@ -45,19 +46,20 @@ namespace Unity.Services.Ccd.Management.Models
             Labels = labels;
             Metadata = new JsonObject(metadata);
             Path = path;
+            SignedUrl = signedUrl;
         }
 
         /// <summary>
         /// The \&quot;content_hash\&quot; should be MD5sum hash value.
         /// </summary>
         [Preserve]
-        [DataMember(Name = "content_hash", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "content_hash", EmitDefaultValue = false)]
         public string ContentHash{ get; }
         /// <summary>
         /// 
         /// </summary>
         [Preserve]
-        [DataMember(Name = "content_size", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "content_size", EmitDefaultValue = false)]
         public int ContentSize{ get; }
         /// <summary>
         /// 
@@ -84,6 +86,12 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "path", IsRequired = true, EmitDefaultValue = true)]
         public string Path{ get; }
+        /// <summary>
+        /// Set to &#39;true&#39; if you want to return a signed URL for direct upload. Otherwise defaults to &#39;false&#39;.
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "signed_url", EmitDefaultValue = true)]
+        public bool SignedUrl{ get; }
     
     }
 }

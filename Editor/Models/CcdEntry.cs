@@ -44,9 +44,10 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="link">link param</param>
         /// <param name="metadata">metadata param</param>
         /// <param name="path">path param</param>
+        /// <param name="signedUrl">signedUrl param</param>
         /// <param name="updatedAt">updatedAt param</param>
         [Preserve]
-        public CcdEntry(bool complete = default, string contentHash = default, string contentLink = default, int contentSize = default, string contentType = default, System.Guid currentVersionid = default, System.Guid entryid = default, List<string> labels = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, string link = default, object metadata = default, string path = default, DateTime updatedAt = default)
+        public CcdEntry(bool complete = default, string contentHash = default, string contentLink = default, int contentSize = default, string contentType = default, System.Guid currentVersionid = default, System.Guid entryid = default, List<string> labels = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, string link = default, object metadata = default, string path = default, string signedUrl = default, DateTime updatedAt = default)
         {
             Complete = complete;
             ContentHash = contentHash;
@@ -62,6 +63,7 @@ namespace Unity.Services.Ccd.Management.Models
             Link = link;
             Metadata = new JsonObject(metadata);
             Path = path;
+            SignedUrl = signedUrl;
             UpdatedAt = updatedAt;
         }
 
@@ -150,6 +152,12 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "path", EmitDefaultValue = false)]
         public string Path{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "signed_url", EmitDefaultValue = false)]
+        public string SignedUrl{ get; }
         /// <summary>
         /// 
         /// </summary>

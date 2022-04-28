@@ -379,6 +379,142 @@ namespace Unity.Services.Ccd.Management.Content
         }
     }
     /// <summary>
+    /// CreateContentEnvRequest
+    /// Create content upload for TUS
+    /// </summary>
+    [Preserve]
+    internal class CreateContentEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        public string Versionid { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// CreateContentEnv Request Object.
+        /// Create content upload for TUS
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="versionid">Version ID</param>
+        [Preserve]
+        public CreateContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Projectid = projectid;
+            Versionid = versionid;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if(!string.IsNullOrEmpty(Versionid))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "versionid", Versionid);
+            }
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "POST";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// GetContentRequest
     /// Get content by entryid
     /// </summary>
@@ -424,6 +560,143 @@ namespace Unity.Services.Ccd.Management.Content
             
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if(!string.IsNullOrEmpty(Versionid))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "versionid", Versionid);
+            }
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/octet-stream",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// GetContentEnvRequest
+    /// Get content by entryid
+    /// </summary>
+    [Preserve]
+    internal class GetContentEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        public string Versionid { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetContentEnv Request Object.
+        /// Get content by entryid
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="versionid">Version ID</param>
+        [Preserve]
+        public GetContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Projectid = projectid;
+            Versionid = versionid;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
 
@@ -638,6 +911,142 @@ namespace Unity.Services.Ccd.Management.Content
         }
     }
     /// <summary>
+    /// GetContentStatusEnvRequest
+    /// Get content status by entryid
+    /// </summary>
+    [Preserve]
+    internal class GetContentStatusEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        public string Versionid { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetContentStatusEnv Request Object.
+        /// Get content status by entryid
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="versionid">Version ID</param>
+        [Preserve]
+        public GetContentStatusEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Projectid = projectid;
+            Versionid = versionid;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if(!string.IsNullOrEmpty(Versionid))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "versionid", Versionid);
+            }
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "HEAD";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// GetContentStatusVersionRequest
     /// Get content status for version of entry
     /// </summary>
@@ -684,6 +1093,139 @@ namespace Unity.Services.Ccd.Management.Content
 
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "HEAD";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// GetContentStatusVersionEnvRequest
+    /// Get content status for version of entry
+    /// </summary>
+    [Preserve]
+    internal class GetContentStatusVersionEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        
+        public string Versionid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetContentStatusVersionEnv Request Object.
+        /// Get content status for version of entry
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="versionid">Version ID</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public GetContentStatusVersionEnvRequest(string environmentid, string bucketid, string entryid, string versionid, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Versionid = versionid;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
 
             List<string> queryParams = new List<string>();
 
@@ -891,6 +1433,140 @@ namespace Unity.Services.Ccd.Management.Content
         }
     }
     /// <summary>
+    /// GetContentVersionEnvRequest
+    /// Get content for version of entry
+    /// </summary>
+    [Preserve]
+    internal class GetContentVersionEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        
+        public string Versionid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetContentVersionEnv Request Object.
+        /// Get content for version of entry
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="versionid">Version ID</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public GetContentVersionEnvRequest(string environmentid, string bucketid, string entryid, string versionid, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Versionid = versionid;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/octet-stream",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// UploadContentRequest
     /// Upload content for entry
     /// </summary>
@@ -942,6 +1618,139 @@ namespace Unity.Services.Ccd.Management.Content
             
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
+
+            List<string> queryParams = new List<string>();
+
+            if(!string.IsNullOrEmpty(Versionid))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "versionid", Versionid);
+            }
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public List<IMultipartFormSection> ConstructBody()
+        {
+            List<IMultipartFormSection> requestParts = new List<IMultipartFormSection>();
+            requestParts.Add(GenerateMultipartFormFileSection("file", File, "application/octet-stream"));
+            
+            return requestParts;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// UploadContentEnvRequest
+    /// Upload content for entry
+    /// </summary>
+    [Preserve]
+    internal class UploadContentEnvRequest : ContentApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for entryid </summary>
+        [Preserve]
+        
+        public string Entryid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for file </summary>
+        [Preserve]
+        public System.IO.Stream File { get; }
+        
+        /// <summary>Accessor for versionid </summary>
+        [Preserve]
+        public string Versionid { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// UploadContentEnv Request Object.
+        /// Upload content for entry
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="entryid">Entry ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="file">File content</param>
+        /// <param name="versionid">Version ID</param>
+        [Preserve]
+        public UploadContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, System.IO.Stream file, string versionid = default(string))
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Entryid = entryid;
+            
+            Projectid = projectid;
+            File = file;
+                        Versionid = versionid;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
 

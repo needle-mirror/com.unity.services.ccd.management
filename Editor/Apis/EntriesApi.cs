@@ -33,6 +33,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
 
             /// <summary>
             /// Async Operation.
+            /// Create entry.
+            /// </summary>
+            /// <param name="request">Request object for CreateEntryEnv.</param>
+            /// <param name="operationConfiguration">Configuration for CreateEntryEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> CreateEntryEnvAsync(Unity.Services.Ccd.Management.Entries.CreateEntryEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Create or update entry by path.
             /// </summary>
             /// <param name="request">Request object for CreateOrUpdateEntryByPath.</param>
@@ -40,6 +50,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
             /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdEntry>> CreateOrUpdateEntryByPathAsync(Unity.Services.Ccd.Management.Entries.CreateOrUpdateEntryByPathRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Create or update entry by path.
+            /// </summary>
+            /// <param name="request">Request object for CreateOrUpdateEntryByPathEnv.</param>
+            /// <param name="operationConfiguration">Configuration for CreateOrUpdateEntryByPathEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> CreateOrUpdateEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.CreateOrUpdateEntryByPathEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -53,6 +73,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
 
             /// <summary>
             /// Async Operation.
+            /// Delete entry.
+            /// </summary>
+            /// <param name="request">Request object for DeleteEntryEnv.</param>
+            /// <param name="operationConfiguration">Configuration for DeleteEntryEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> DeleteEntryEnvAsync(Unity.Services.Ccd.Management.Entries.DeleteEntryEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get entries for bucket.
             /// </summary>
             /// <param name="request">Request object for GetEntries.</param>
@@ -60,6 +90,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
             /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdEntry&gt; object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<List<CcdEntry>>> GetEntriesAsync(Unity.Services.Ccd.Management.Entries.GetEntriesRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get entries for bucket.
+            /// </summary>
+            /// <param name="request">Request object for GetEntriesEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetEntriesEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdEntry&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdEntry>>> GetEntriesEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntriesEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -83,6 +123,26 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
 
             /// <summary>
             /// Async Operation.
+            /// Get entry by path.
+            /// </summary>
+            /// <param name="request">Request object for GetEntryByPathEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetEntryByPathEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> GetEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryByPathEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get entry.
+            /// </summary>
+            /// <param name="request">Request object for GetEntryEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetEntryEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> GetEntryEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get entry version.
             /// </summary>
             /// <param name="request">Request object for GetEntryVersion.</param>
@@ -93,6 +153,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
 
             /// <summary>
             /// Async Operation.
+            /// Get entry version.
+            /// </summary>
+            /// <param name="request">Request object for GetEntryVersionEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetEntryVersionEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> GetEntryVersionEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get entry versions.
             /// </summary>
             /// <param name="request">Request object for GetEntryVersions.</param>
@@ -100,6 +170,16 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
             /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdVersion&gt; object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<List<CcdVersion>>> GetEntryVersionsAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionsRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get entry versions.
+            /// </summary>
+            /// <param name="request">Request object for GetEntryVersionsEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetEntryVersionsEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdVersion&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdVersion>>> GetEntryVersionsEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionsEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -120,6 +200,26 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
             /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdEntry>> UpdateEntryByPathAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryByPathRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Update entry by path.
+            /// </summary>
+            /// <param name="request">Request object for UpdateEntryByPathEnv.</param>
+            /// <param name="operationConfiguration">Configuration for UpdateEntryByPathEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> UpdateEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryByPathEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Update entry.
+            /// </summary>
+            /// <param name="request">Request object for UpdateEntryEnv.</param>
+            /// <param name="operationConfiguration">Configuration for UpdateEntryEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdEntry>> UpdateEntryEnvAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryEnvRequest request, Configuration operationConfiguration = null);
 
     }
 
@@ -177,7 +277,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> CreateEntryAsync(Unity.Services.Ccd.Management.Entries.CreateEntryRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Create entry.
+        /// </summary>
+        /// <param name="request">Request object for CreateEntryEnv.</param>
+        /// <param name="operationConfiguration">Configuration for CreateEntryEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> CreateEntryEnvAsync(Unity.Services.Ccd.Management.Entries.CreateEntryEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -204,7 +331,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> CreateOrUpdateEntryByPathAsync(Unity.Services.Ccd.Management.Entries.CreateOrUpdateEntryByPathRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Create or update entry by path.
+        /// </summary>
+        /// <param name="request">Request object for CreateOrUpdateEntryByPathEnv.</param>
+        /// <param name="operationConfiguration">Configuration for CreateOrUpdateEntryByPathEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> CreateOrUpdateEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.CreateOrUpdateEntryByPathEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -231,7 +385,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response> DeleteEntryAsync(Unity.Services.Ccd.Management.Entries.DeleteEntryRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("DELETE",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Delete entry.
+        /// </summary>
+        /// <param name="request">Request object for DeleteEntryEnv.</param>
+        /// <param name="operationConfiguration">Configuration for DeleteEntryEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> DeleteEntryEnvAsync(Unity.Services.Ccd.Management.Entries.DeleteEntryEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -258,7 +439,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<List<CcdEntry>>> GetEntriesAsync(Unity.Services.Ccd.Management.Entries.GetEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdEntry>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdEntry>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entries for bucket.
+        /// </summary>
+        /// <param name="request">Request object for GetEntriesEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetEntriesEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdEntry&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdEntry>>> GetEntriesEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntriesEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -285,7 +493,7 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> GetEntryAsync(Unity.Services.Ccd.Management.Entries.GetEntryRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -312,7 +520,61 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> GetEntryByPathAsync(Unity.Services.Ccd.Management.Entries.GetEntryByPathRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entry by path.
+        /// </summary>
+        /// <param name="request">Request object for GetEntryByPathEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetEntryByPathEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> GetEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryByPathEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entry.
+        /// </summary>
+        /// <param name="request">Request object for GetEntryEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetEntryEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> GetEntryEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -339,7 +601,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> GetEntryVersionAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entry version.
+        /// </summary>
+        /// <param name="request">Request object for GetEntryVersionEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetEntryVersionEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> GetEntryVersionEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -366,7 +655,34 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<List<CcdVersion>>> GetEntryVersionsAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdVersion>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdVersion>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdVersion>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdVersion>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entry versions.
+        /// </summary>
+        /// <param name="request">Request object for GetEntryVersionsEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetEntryVersionsEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdVersion&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdVersion>>> GetEntryVersionsEnvAsync(Unity.Services.Ccd.Management.Entries.GetEntryVersionsEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdVersion>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -393,7 +709,7 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> UpdateEntryAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -420,7 +736,61 @@ namespace Unity.Services.Ccd.Management.Apis.Entries
         public async Task<Response<CcdEntry>> UpdateEntryByPathAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryByPathRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("PUT",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Update entry by path.
+        /// </summary>
+        /// <param name="request">Request object for UpdateEntryByPathEnv.</param>
+        /// <param name="operationConfiguration">Configuration for UpdateEntryByPathEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> UpdateEntryByPathEnvAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryByPathEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("PUT",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdEntry>(response, statusCodeToTypeMap);
+            return new Response<CcdEntry>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Update entry.
+        /// </summary>
+        /// <param name="request">Request object for UpdateEntryEnv.</param>
+        /// <param name="operationConfiguration">Configuration for UpdateEntryEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdEntry object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdEntry>> UpdateEntryEnvAsync(Unity.Services.Ccd.Management.Entries.UpdateEntryEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdEntry)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);

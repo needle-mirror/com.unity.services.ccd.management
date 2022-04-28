@@ -33,25 +33,33 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="error">error param</param>
         /// <param name="fromBucketId">fromBucketId param</param>
         /// <param name="fromBucketName">fromBucketName param</param>
+        /// <param name="fromEnvironmentId">fromEnvironmentId param</param>
+        /// <param name="fromEnvironmentName">fromEnvironmentName param</param>
         /// <param name="fromReleaseId">fromReleaseId param</param>
         /// <param name="fromReleaseNumber">fromReleaseNumber param</param>
         /// <param name="promotionId">promotionId param</param>
         /// <param name="promotionStatus">promotionStatus param</param>
         /// <param name="toBucketId">toBucketId param</param>
         /// <param name="toBucketName">toBucketName param</param>
+        /// <param name="toEnvironmentId">toEnvironmentId param</param>
+        /// <param name="toEnvironmentName">toEnvironmentName param</param>
         /// <param name="toReleaseId">toReleaseId param</param>
         [Preserve]
-        public CcdPromotion(string error = default, System.Guid fromBucketId = default, string fromBucketName = default, System.Guid fromReleaseId = default, int fromReleaseNumber = default, System.Guid promotionId = default, PromotionStatusOptions promotionStatus = default, System.Guid toBucketId = default, string toBucketName = default, System.Guid toReleaseId = default)
+        public CcdPromotion(string error = default, System.Guid fromBucketId = default, string fromBucketName = default, System.Guid fromEnvironmentId = default, string fromEnvironmentName = default, System.Guid fromReleaseId = default, int fromReleaseNumber = default, System.Guid promotionId = default, PromotionStatusOptions promotionStatus = default, System.Guid toBucketId = default, string toBucketName = default, System.Guid toEnvironmentId = default, string toEnvironmentName = default, System.Guid toReleaseId = default)
         {
             Error = error;
             FromBucketId = fromBucketId;
             FromBucketName = fromBucketName;
+            FromEnvironmentId = fromEnvironmentId;
+            FromEnvironmentName = fromEnvironmentName;
             FromReleaseId = fromReleaseId;
             FromReleaseNumber = fromReleaseNumber;
             PromotionId = promotionId;
             PromotionStatus = promotionStatus;
             ToBucketId = toBucketId;
             ToBucketName = toBucketName;
+            ToEnvironmentId = toEnvironmentId;
+            ToEnvironmentName = toEnvironmentName;
             ToReleaseId = toReleaseId;
         }
 
@@ -73,6 +81,18 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "from_bucket_name", EmitDefaultValue = false)]
         public string FromBucketName{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "from_environment_id", EmitDefaultValue = false)]
+        public System.Guid FromEnvironmentId{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "from_environment_name", EmitDefaultValue = false)]
+        public string FromEnvironmentName{ get; }
         /// <summary>
         /// 
         /// </summary>
@@ -110,6 +130,18 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "to_bucket_name", EmitDefaultValue = false)]
         public string ToBucketName{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "to_environment_id", EmitDefaultValue = false)]
+        public System.Guid ToEnvironmentId{ get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "to_environment_name", EmitDefaultValue = false)]
+        public string ToEnvironmentName{ get; }
         /// <summary>
         /// 
         /// </summary>

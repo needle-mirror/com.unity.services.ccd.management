@@ -369,6 +369,132 @@ namespace Unity.Services.Ccd.Management.Badges
         }
     }
     /// <summary>
+    /// DeleteBadgeEnvRequest
+    /// Delete a badge
+    /// </summary>
+    [Preserve]
+    internal class DeleteBadgeEnvRequest : BadgesApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for badgename </summary>
+        [Preserve]
+        
+        public string Badgename { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// DeleteBadgeEnv Request Object.
+        /// Delete a badge
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="badgename">Badge Name</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public DeleteBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Badgename = badgename;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges/{badgename}";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "DELETE";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// GetBadgeRequest
     /// Get badge
     /// </summary>
@@ -408,6 +534,133 @@ namespace Unity.Services.Ccd.Management.Badges
 
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges/{badgename}";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// GetBadgeEnvRequest
+    /// Get badge
+    /// </summary>
+    [Preserve]
+    internal class GetBadgeEnvRequest : BadgesApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for badgename </summary>
+        [Preserve]
+        
+        public string Badgename { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// GetBadgeEnv Request Object.
+        /// Get badge
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="badgename">Badge Name</param>
+        /// <param name="projectid">Project ID</param>
+        [Preserve]
+        public GetBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Badgename = badgename;
+            
+            Projectid = projectid;
+
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges/{badgename}";
 
             List<string> queryParams = new List<string>();
 
@@ -658,6 +911,182 @@ namespace Unity.Services.Ccd.Management.Badges
         }
     }
     /// <summary>
+    /// ListBadgesEnvRequest
+    /// Get badges
+    /// </summary>
+    [Preserve]
+    internal class ListBadgesEnvRequest : BadgesApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for page </summary>
+        [Preserve]
+        public int? Page { get; }
+        
+        /// <summary>Accessor for perPage </summary>
+        [Preserve]
+        public int? PerPage { get; }
+        
+        /// <summary>Accessor for name </summary>
+        [Preserve]
+        public string Name { get; }
+        
+        /// <summary>Accessor for releasenum </summary>
+        [Preserve]
+        public string Releasenum { get; }
+        
+        /// <summary>Accessor for sortBy </summary>
+        [Preserve]
+        public string SortBy { get; }
+        
+        /// <summary>Accessor for sortOrder </summary>
+        [Preserve]
+        public string SortOrder { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// ListBadgesEnv Request Object.
+        /// Get badges
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="page">Current Page</param>
+        /// <param name="perPage">Items Per Page</param>
+        /// <param name="name">resource name</param>
+        /// <param name="releasenum">release number</param>
+        /// <param name="sortBy">Sort By</param>
+        /// <param name="sortOrder">Sort Order</param>
+        [Preserve]
+        public ListBadgesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Projectid = projectid;
+            Page = page;
+                        PerPage = perPage;
+                        Name = name;
+                        Releasenum = releasenum;
+                        SortBy = sortBy;
+                        SortOrder = sortOrder;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges";
+
+            List<string> queryParams = new List<string>();
+
+            var pageStringValue = Page.ToString();
+            queryParams = AddParamsToQueryParams(queryParams, "page", pageStringValue);
+            var perPageStringValue = PerPage.ToString();
+            queryParams = AddParamsToQueryParams(queryParams, "per_page", perPageStringValue);
+            if(!string.IsNullOrEmpty(Name))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "name", Name);
+            }
+            if(!string.IsNullOrEmpty(Releasenum))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "releasenum", Releasenum);
+            }
+            if(!string.IsNullOrEmpty(SortBy))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "sort_by", SortBy);
+            }
+            if(!string.IsNullOrEmpty(SortOrder))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "sort_order", SortOrder);
+            }
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "GET";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
     /// UpdateBadgeRequest
     /// Assign a badge
     /// </summary>
@@ -696,6 +1125,133 @@ namespace Unity.Services.Ccd.Management.Badges
             
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges";
+
+            List<string> queryParams = new List<string>();
+
+            if (queryParams.Count > 0)
+            {
+                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
+            }
+        }
+
+        /// <summary>
+        /// Helper function for constructing URL from request base path and
+        /// query params.
+        /// </summary>
+        /// <param name="requestBasePath"></param>
+        /// <returns></returns>
+        public string ConstructUrl(string requestBasePath)
+        {
+            return requestBasePath + PathAndQueryParams;
+        }
+
+        /// <summary>
+        /// Helper for constructing the request body.
+        /// </summary>
+        /// <returns>A list of IMultipartFormSection representing the request body.</returns>
+        public byte[] ConstructBody()
+        {
+            return ConstructBody(CcdBadgeAssign);
+        }
+
+        /// <summary>
+        /// Helper function for constructing the headers.
+        /// </summary>
+        /// <param name="operationConfiguration">The operation configuration to use.</param>
+        /// <returns>A dictionary representing the request headers.</returns>
+        public Dictionary<string, string> ConstructHeaders(Configuration operationConfiguration = null)
+        {
+            var headers = new Dictionary<string, string>();
+
+            // Analytics headers
+            headers.Add("Unity-Client-Version", Application.unityVersion);
+            headers.Add("Unity-Client-Mode", Scheduler.EngineStateHelper.IsPlaying ? "play" : "edit");
+
+            string[] contentTypes = {
+                "application/json"
+            };
+
+            string[] accepts = {
+                "application/json",
+                "application/problem+json"
+            };
+
+            var acceptHeader = GenerateAcceptHeader(accepts);
+            if (!string.IsNullOrEmpty(acceptHeader))
+            {
+                headers.Add("Accept", acceptHeader);
+            }
+            var httpMethod = "PUT";
+            var contentTypeHeader = GenerateContentTypeHeader(contentTypes);
+            if (!string.IsNullOrEmpty(contentTypeHeader))
+            {
+                headers.Add("Content-Type", contentTypeHeader);
+            }
+            else if (httpMethod == "POST" || httpMethod == "PATCH")
+            {
+                headers.Add("Content-Type", "application/json");
+            }
+
+
+            // We also check if there are headers that are defined as part of
+            // the request configuration.
+            if (operationConfiguration != null && operationConfiguration.Headers != null)
+            {
+                foreach (var pair in operationConfiguration.Headers)
+                {
+                    headers[pair.Key] = pair.Value;
+                }
+            }
+
+            return headers;
+        }
+    }
+    /// <summary>
+    /// UpdateBadgeEnvRequest
+    /// Assign a badge
+    /// </summary>
+    [Preserve]
+    internal class UpdateBadgeEnvRequest : BadgesApiBaseRequest
+    {
+        /// <summary>Accessor for environmentid </summary>
+        [Preserve]
+        
+        public string Environmentid { get; }
+        /// <summary>Accessor for bucketid </summary>
+        [Preserve]
+        
+        public string Bucketid { get; }
+        /// <summary>Accessor for projectid </summary>
+        [Preserve]
+        
+        public string Projectid { get; }
+        /// <summary>Accessor for ccdBadgeAssign </summary>
+        [Preserve]
+        public Unity.Services.Ccd.Management.Models.CcdBadgeAssign CcdBadgeAssign { get; }
+        
+        string PathAndQueryParams;
+
+        /// <summary>
+        /// UpdateBadgeEnv Request Object.
+        /// Assign a badge
+        /// </summary>
+        /// <param name="environmentid">Environment ID</param>
+        /// <param name="bucketid">Bucket ID</param>
+        /// <param name="projectid">Project ID</param>
+        /// <param name="ccdBadgeAssign">Badge</param>
+        [Preserve]
+        public UpdateBadgeEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBadgeAssign ccdBadgeAssign)
+        {
+            
+            Environmentid = environmentid;
+            
+            Bucketid = bucketid;
+            
+            Projectid = projectid;
+            CcdBadgeAssign = ccdBadgeAssign;
+            
+
+            PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges";
 
             List<string> queryParams = new List<string>();
 

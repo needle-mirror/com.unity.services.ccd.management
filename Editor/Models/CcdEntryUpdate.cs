@@ -35,14 +35,16 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="contentType">contentType param</param>
         /// <param name="labels">labels param</param>
         /// <param name="metadata">metadata param</param>
+        /// <param name="signedUrl">Set to &#39;true&#39; if you want to return a signed URL for direct upload. Otherwise defaults to &#39;false&#39;.</param>
         [Preserve]
-        public CcdEntryUpdate(string contentHash = default, int contentSize = default, string contentType = default, List<string> labels = default, object metadata = default)
+        public CcdEntryUpdate(string contentHash = default, int contentSize = default, string contentType = default, List<string> labels = default, object metadata = default, bool signedUrl = default)
         {
             ContentHash = contentHash;
             ContentSize = contentSize;
             ContentType = contentType;
             Labels = labels;
             Metadata = new JsonObject(metadata);
+            SignedUrl = signedUrl;
         }
 
         /// <summary>
@@ -76,6 +78,12 @@ namespace Unity.Services.Ccd.Management.Models
         [JsonConverter(typeof(JsonObjectConverter))]
         [DataMember(Name = "metadata", EmitDefaultValue = false)]
         public JsonObject Metadata{ get; }
+        /// <summary>
+        /// Set to &#39;true&#39; if you want to return a signed URL for direct upload. Otherwise defaults to &#39;false&#39;.
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "signed_url", EmitDefaultValue = true)]
+        public bool SignedUrl{ get; }
     
     }
 }

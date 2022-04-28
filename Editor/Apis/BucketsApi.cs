@@ -33,6 +33,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
             /// <summary>
             /// Async Operation.
+            /// Create bucket.
+            /// </summary>
+            /// <param name="request">Request object for CreateBucketByProjectEnv.</param>
+            /// <param name="operationConfiguration">Configuration for CreateBucketByProjectEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdBucket>> CreateBucketByProjectEnvAsync(Unity.Services.Ccd.Management.Buckets.CreateBucketByProjectEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Delete a bucket.
             /// </summary>
             /// <param name="request">Request object for DeleteBucket.</param>
@@ -43,6 +53,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
             /// <summary>
             /// Async Operation.
+            /// Delete a bucket.
+            /// </summary>
+            /// <param name="request">Request object for DeleteBucketEnv.</param>
+            /// <param name="operationConfiguration">Configuration for DeleteBucketEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response> DeleteBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.DeleteBucketEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get a bucket.
             /// </summary>
             /// <param name="request">Request object for GetBucket.</param>
@@ -50,6 +70,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
             /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdBucket>> GetBucketAsync(Unity.Services.Ccd.Management.Buckets.GetBucketRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get a bucket.
+            /// </summary>
+            /// <param name="request">Request object for GetBucketEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetBucketEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdBucket>> GetBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.GetBucketEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -73,6 +103,26 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
             /// <summary>
             /// Async Operation.
+            /// Get changed entries since last releases.
+            /// </summary>
+            /// <param name="request">Request object for GetDiffEntriesEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetDiffEntriesEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdReleaseEntry>>> GetDiffEntriesEnvAsync(Unity.Services.Ccd.Management.Buckets.GetDiffEntriesEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get counts of changes since last release.
+            /// </summary>
+            /// <param name="request">Request object for GetDiffEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetDiffEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdReleaseChangeVersion object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdReleaseChangeVersion>> GetDiffEnvAsync(Unity.Services.Ccd.Management.Buckets.GetDiffEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get information about the promotion job.
             /// </summary>
             /// <param name="request">Request object for GetPromotion.</param>
@@ -80,6 +130,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
             /// <returns>Task for a Response object containing status code, headers, and CcdPromotion object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdPromotion>> GetPromotionAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get information about the promotion job.
+            /// </summary>
+            /// <param name="request">Request object for GetPromotionEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetPromotionEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdPromotion object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdPromotion>> GetPromotionEnvAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -93,6 +153,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
             /// <summary>
             /// Async Operation.
+            /// Get promotions for a bucket.
+            /// </summary>
+            /// <param name="request">Request object for GetPromotionsEnv.</param>
+            /// <param name="operationConfiguration">Configuration for GetPromotionsEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdPromotion&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdPromotion>>> GetPromotionsEnvAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionsEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Get buckets for project.
             /// </summary>
             /// <param name="request">Request object for ListBucketsByProject.</param>
@@ -100,6 +170,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
             /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdBucket&gt; object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<List<CcdBucket>>> ListBucketsByProjectAsync(Unity.Services.Ccd.Management.Buckets.ListBucketsByProjectRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Get buckets for project.
+            /// </summary>
+            /// <param name="request">Request object for ListBucketsByProjectEnv.</param>
+            /// <param name="operationConfiguration">Configuration for ListBucketsByProjectEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdBucket&gt; object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<List<CcdBucket>>> ListBucketsByProjectEnvAsync(Unity.Services.Ccd.Management.Buckets.ListBucketsByProjectEnvRequest request, Configuration operationConfiguration = null);
 
             /// <summary>
             /// Async Operation.
@@ -123,6 +203,26 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
             /// <summary>
             /// Async Operation.
+            /// Promote release asynchronously between buckets.
+            /// </summary>
+            /// <param name="request">Request object for PromoteBucketAsyncEnv.</param>
+            /// <param name="operationConfiguration">Configuration for PromoteBucketAsyncEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdPromoteBucketResponse object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdPromoteBucketResponse>> PromoteBucketAsyncEnvAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketAsyncEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Promote release between buckets.
+            /// </summary>
+            /// <param name="request">Request object for PromoteBucketEnv.</param>
+            /// <param name="operationConfiguration">Configuration for PromoteBucketEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdRelease>> PromoteBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketEnvRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
             /// Update a bucket.
             /// </summary>
             /// <param name="request">Request object for UpdateBucket.</param>
@@ -130,6 +230,16 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
             /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
             /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
             Task<Response<CcdBucket>> UpdateBucketAsync(Unity.Services.Ccd.Management.Buckets.UpdateBucketRequest request, Configuration operationConfiguration = null);
+
+            /// <summary>
+            /// Async Operation.
+            /// Update a bucket.
+            /// </summary>
+            /// <param name="request">Request object for UpdateBucketEnv.</param>
+            /// <param name="operationConfiguration">Configuration for UpdateBucketEnv.</param>
+            /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+            /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+            Task<Response<CcdBucket>> UpdateBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.UpdateBucketEnvRequest request, Configuration operationConfiguration = null);
 
     }
 
@@ -187,7 +297,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdBucket>> CreateBucketByProjectAsync(Unity.Services.Ccd.Management.Buckets.CreateBucketByProjectRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
+            return new Response<CcdBucket>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Create bucket.
+        /// </summary>
+        /// <param name="request">Request object for CreateBucketByProjectEnv.</param>
+        /// <param name="operationConfiguration">Configuration for CreateBucketByProjectEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdBucket>> CreateBucketByProjectEnvAsync(Unity.Services.Ccd.Management.Buckets.CreateBucketByProjectEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -214,7 +351,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response> DeleteBucketAsync(Unity.Services.Ccd.Management.Buckets.DeleteBucketRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("DELETE",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
+            return new Response(response);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Delete a bucket.
+        /// </summary>
+        /// <param name="request">Request object for DeleteBucketEnv.</param>
+        /// <param name="operationConfiguration">Configuration for DeleteBucketEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response> DeleteBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.DeleteBucketEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -241,7 +405,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdBucket>> GetBucketAsync(Unity.Services.Ccd.Management.Buckets.GetBucketRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
+            return new Response<CcdBucket>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get a bucket.
+        /// </summary>
+        /// <param name="request">Request object for GetBucketEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetBucketEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdBucket>> GetBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.GetBucketEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -268,7 +459,7 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdReleaseChangeVersion>> GetDiffAsync(Unity.Services.Ccd.Management.Buckets.GetDiffRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -295,7 +486,7 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<List<CcdReleaseEntry>>> GetDiffEntriesAsync(Unity.Services.Ccd.Management.Buckets.GetDiffEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -313,6 +504,60 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
         /// <summary>
         /// Async Operation.
+        /// Get changed entries since last releases.
+        /// </summary>
+        /// <param name="request">Request object for GetDiffEntriesEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetDiffEntriesEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdReleaseEntry&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdReleaseEntry>>> GetDiffEntriesEnvAsync(Unity.Services.Ccd.Management.Buckets.GetDiffEntriesEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdReleaseEntry>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get counts of changes since last release.
+        /// </summary>
+        /// <param name="request">Request object for GetDiffEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetDiffEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdReleaseChangeVersion object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdReleaseChangeVersion>> GetDiffEnvAsync(Unity.Services.Ccd.Management.Buckets.GetDiffEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdReleaseChangeVersion>(response, statusCodeToTypeMap);
+            return new Response<CcdReleaseChangeVersion>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
         /// Get information about the promotion job.
         /// </summary>
         /// <param name="request">Request object for GetPromotion.</param>
@@ -322,7 +567,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdPromotion>> GetPromotionAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromotion)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromotion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromotion>(response, statusCodeToTypeMap);
+            return new Response<CcdPromotion>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get information about the promotion job.
+        /// </summary>
+        /// <param name="request">Request object for GetPromotionEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetPromotionEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdPromotion object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdPromotion>> GetPromotionEnvAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromotion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -349,7 +621,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<List<CcdPromotion>>> GetPromotionsAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdPromotion>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdPromotion>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdPromotion>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdPromotion>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get promotions for a bucket.
+        /// </summary>
+        /// <param name="request">Request object for GetPromotionsEnv.</param>
+        /// <param name="operationConfiguration">Configuration for GetPromotionsEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdPromotion&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdPromotion>>> GetPromotionsEnvAsync(Unity.Services.Ccd.Management.Buckets.GetPromotionsEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdPromotion>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -376,7 +675,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<List<CcdBucket>>> ListBucketsByProjectAsync(Unity.Services.Ccd.Management.Buckets.ListBucketsByProjectRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucket>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucket>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("GET",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdBucket>>(response, statusCodeToTypeMap);
+            return new Response<List<CcdBucket>>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Get buckets for project.
+        /// </summary>
+        /// <param name="request">Request object for ListBucketsByProjectEnv.</param>
+        /// <param name="operationConfiguration">Configuration for ListBucketsByProjectEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and List&lt;CcdBucket&gt; object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<List<CcdBucket>>> ListBucketsByProjectEnvAsync(Unity.Services.Ccd.Management.Buckets.ListBucketsByProjectEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucket>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -403,7 +729,7 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdRelease>> PromoteBucketAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -430,7 +756,7 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdPromoteBucketResponse>> PromoteBucketAsyncAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketAsyncRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromoteBucketResponse)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromoteBucketResponse)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -448,6 +774,60 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
 
         /// <summary>
         /// Async Operation.
+        /// Promote release asynchronously between buckets.
+        /// </summary>
+        /// <param name="request">Request object for PromoteBucketAsyncEnv.</param>
+        /// <param name="operationConfiguration">Configuration for PromoteBucketAsyncEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdPromoteBucketResponse object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdPromoteBucketResponse>> PromoteBucketAsyncEnvAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketAsyncEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdPromoteBucketResponse)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromoteBucketResponse>(response, statusCodeToTypeMap);
+            return new Response<CcdPromoteBucketResponse>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Promote release between buckets.
+        /// </summary>
+        /// <param name="request">Request object for PromoteBucketEnv.</param>
+        /// <param name="operationConfiguration">Configuration for PromoteBucketEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdRelease object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdRelease>> PromoteBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.PromoteBucketEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("POST",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
+            return new Response<CcdRelease>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
         /// Update a bucket.
         /// </summary>
         /// <param name="request">Request object for UpdateBucket.</param>
@@ -457,7 +837,34 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
         public async Task<Response<CcdBucket>> UpdateBucketAsync(Unity.Services.Ccd.Management.Buckets.UpdateBucketRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+
+            // Merge the operation/request level configuration with the client level configuration.
+            var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
+
+            var response = await HttpClient.MakeRequestAsync("PUT",
+                request.ConstructUrl(finalConfiguration.BasePath),
+                request.ConstructBody(),
+                request.ConstructHeaders(finalConfiguration),
+                finalConfiguration.RequestTimeout ?? _baseTimeout);
+
+            var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
+            return new Response<CcdBucket>(response, handledResponse);
+        }
+
+
+        /// <summary>
+        /// Async Operation.
+        /// Update a bucket.
+        /// </summary>
+        /// <param name="request">Request object for UpdateBucketEnv.</param>
+        /// <param name="operationConfiguration">Configuration for UpdateBucketEnv.</param>
+        /// <returns>Task for a Response object containing status code, headers, and CcdBucket object.</returns>
+        /// <exception cref="Unity.Services.Ccd.Management.Http.HttpException">An exception containing the HttpClientResponse with headers, response code, and string of error.</exception>
+        public async Task<Response<CcdBucket>> UpdateBucketEnvAsync(Unity.Services.Ccd.Management.Buckets.UpdateBucketEnvRequest request,
+            Configuration operationConfiguration = null)
+        {
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucket)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);

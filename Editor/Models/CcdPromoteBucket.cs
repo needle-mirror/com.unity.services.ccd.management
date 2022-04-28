@@ -33,12 +33,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="fromRelease">fromRelease param</param>
         /// <param name="toBucket">toBucket param</param>
         /// <param name="notes">If unset, the release notes of the \&quot;from release\&quot; will be used.</param>
+        /// <param name="toEnvironment">If unset, the environment of the \&quot;from_release\&quot; will be used.</param>
         [Preserve]
-        public CcdPromoteBucket(System.Guid fromRelease, System.Guid toBucket, string notes = default)
+        public CcdPromoteBucket(System.Guid fromRelease, System.Guid toBucket, string notes = default, System.Guid toEnvironment = default)
         {
             FromRelease = fromRelease;
             Notes = notes;
             ToBucket = toBucket;
+            ToEnvironment = toEnvironment;
         }
 
         /// <summary>
@@ -59,6 +61,12 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "to_bucket", IsRequired = true, EmitDefaultValue = true)]
         public System.Guid ToBucket{ get; }
+        /// <summary>
+        /// If unset, the environment of the \&quot;from_release\&quot; will be used.
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "to_environment", EmitDefaultValue = false)]
+        public System.Guid ToEnvironment{ get; }
     
     }
 }

@@ -13,7 +13,8 @@ namespace Unity.Services.Ccd.Management
 
         public InternalUploadContentRequest(UploadContentOptions options, Configuration config)
         {
-            var request = new UploadContentRequest(
+            var request = new UploadContentEnvRequest(
+                CcdManagement.environmentid,
                 options.BucketId.ToString(),
                 options.EntryId.ToString(),
                 CcdManagement.projectid, null);

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Unity.Services.Ccd.Management.Apis.Badges;
 using Unity.Services.Ccd.Management.Apis.Buckets;
 using Unity.Services.Ccd.Management.Apis.Content;
@@ -82,14 +83,16 @@ namespace Unity.Services.Ccd.Management
 
         public async Task DeleteBadgeAsync(Guid bucketId, string badgeName)
         {
-            var request = new DeleteBadgeRequest(bucketId.ToString(), badgeName, CcdManagement.projectid);
-            await TryCatchRequest(BadgesApiClient.DeleteBadgeAsync, request);
+            var request = new DeleteBadgeEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), badgeName, CcdManagement.projectid);
+            await TryCatchRequest(BadgesApiClient.DeleteBadgeEnvAsync, request);
         }
 
         public async Task<CcdBadge> GetBadgeAsync(Guid bucketId, string badgeName)
         {
-            var request = new GetBadgeRequest(bucketId.ToString(), badgeName, CcdManagement.projectid);
-            var response = await TryCatchRequest(BadgesApiClient.GetBadgeAsync, request);
+            var request = new GetBadgeEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), badgeName, CcdManagement.projectid);
+            var response = await TryCatchRequest(BadgesApiClient.GetBadgeEnvAsync, request);
             return response.Result;
         }
 
@@ -99,8 +102,9 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new ListBadgesRequest(bucketId.ToString(), CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(BadgesApiClient.ListBadgesAsync, request);
+            var request = new ListBadgesEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
+            var response = await TryCatchRequest(BadgesApiClient.ListBadgesEnvAsync, request);
             return response.Result;
         }
 
@@ -121,36 +125,41 @@ namespace Unity.Services.Ccd.Management
             {
                 throw new CcdManagementException(CcdManagementErrorCodes.InvalidArgument, "Cannot have both ReleaseId and ReleaseNum present.");
             }
-            var request = new UpdateBadgeRequest(updateBadgeOptions.BucketId.ToString(), CcdManagement.projectid, badgeAssign);
-            var response = await TryCatchRequest(BadgesApiClient.UpdateBadgeAsync, request);
+            var request = new UpdateBadgeEnvRequest(
+                CcdManagement.environmentid, updateBadgeOptions.BucketId.ToString(), CcdManagement.projectid, badgeAssign);
+            var response = await TryCatchRequest(BadgesApiClient.UpdateBadgeEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdBucket> CreateBucketAsync(CreateBucketOptions createBucketOptions)
         {
-            var request = new CreateBucketByProjectRequest(CcdManagement.projectid,
+            var request = new CreateBucketByProjectEnvRequest(
+                CcdManagement.environmentid, CcdManagement.projectid,
                 new CcdBucketCreate(createBucketOptions.Name, Guid.Parse(CcdManagement.projectid), createBucketOptions.Description, false));
-            var response = await TryCatchRequest(BucketsApiClient.CreateBucketByProjectAsync, request);
+            var response = await TryCatchRequest(BucketsApiClient.CreateBucketByProjectEnvAsync, request);
             return response.Result;
         }
 
         public async Task DeleteBucketAsync(Guid bucketId)
         {
-            var request = new DeleteBucketRequest(bucketId.ToString(), CcdManagement.projectid);
-            await TryCatchRequest(BucketsApiClient.DeleteBucketAsync, request);
+            var request = new DeleteBucketEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid);
+            await TryCatchRequest(BucketsApiClient.DeleteBucketEnvAsync, request);
         }
 
         public async Task<CcdBucket> GetBucketAsync(Guid bucketId)
         {
-            var request = new GetBucketRequest(bucketId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(BucketsApiClient.GetBucketAsync, request);
+            var request = new GetBucketEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid);
+            var response = await TryCatchRequest(BucketsApiClient.GetBucketEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdReleaseChangeVersion> GetDiffAsync(Guid bucketId)
         {
-            var request = new GetDiffRequest(bucketId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(BucketsApiClient.GetDiffAsync, request);
+            var request = new GetDiffEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid);
+            var response = await TryCatchRequest(BucketsApiClient.GetDiffEnvAsync, request);
             return response.Result;
         }
 
@@ -161,30 +170,33 @@ namespace Unity.Services.Ccd.Management
                 pageOptions = new PageOptions();
             }
 
-            var request = new GetDiffEntriesRequest(
+            var request = new GetDiffEntriesEnvRequest(
+                CcdManagement.environmentid,
                 diffEntriesOptions.BucketId.ToString(),
                 CcdManagement.projectid,
                 pageOptions.Page,
                 pageOptions.PerPage,
                 diffEntriesOptions.Path,
                 diffEntriesOptions.IncludeStates);
-            var response = await TryCatchRequest(BucketsApiClient.GetDiffEntriesAsync, request);
+            var response = await TryCatchRequest(BucketsApiClient.GetDiffEntriesEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdRelease> PromoteBucketAsync(PromoteBucketOptions promoteBucketOptions)
         {
-            var request = new PromoteBucketRequest(promoteBucketOptions.BucketId.ToString(), CcdManagement.projectid,
+            var request = new PromoteBucketEnvRequest(
+                CcdManagement.environmentid, promoteBucketOptions.BucketId.ToString(), CcdManagement.projectid,
                 new CcdPromoteBucket(promoteBucketOptions.FromRelease, promoteBucketOptions.BucketId, promoteBucketOptions.Notes));
-            var response = await TryCatchRequest(BucketsApiClient.PromoteBucketAsync, request);
+            var response = await TryCatchRequest(BucketsApiClient.PromoteBucketEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdBucket> UpdateBucketAsync(UpdateBucketOptions updateBucketOptions)
         {
-            var request = new UpdateBucketRequest(updateBucketOptions.BucketId.ToString(), CcdManagement.projectid,
+            var request = new UpdateBucketEnvRequest(
+                CcdManagement.environmentid, updateBucketOptions.BucketId.ToString(), CcdManagement.projectid,
                 new CcdBucketUpdate(updateBucketOptions.Description, updateBucketOptions.Name));
-            var response = await TryCatchRequest(BucketsApiClient.UpdateBucketAsync, request);
+            var response = await TryCatchRequest(BucketsApiClient.UpdateBucketEnvAsync, request);
             return response.Result;
         }
 
@@ -194,14 +206,16 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new ListBucketsByProjectRequest(CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(BucketsApiClient.ListBucketsByProjectAsync, request);
+            var request = new ListBucketsByProjectEnvRequest(
+                CcdManagement.environmentid, CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
+            var response = await TryCatchRequest(BucketsApiClient.ListBucketsByProjectEnvAsync, request);
             return response.Result;
         }
 
         public async Task<string> CreateContentAsync(Guid bucketId, Guid entryId)
         {
-            var request = new CreateContentRequest(bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
+            var request = new CreateContentRequest(
+                CcdManagement.environmentid, bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
             var response = await TryCatchRequest(InternalCreateContent, request);
             string location;
             response.Headers.TryGetValue("location", out location);
@@ -237,39 +251,41 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<Stream> GetContentAsync(EntryOptions entryOptions)
         {
-            GetContentRequest request;
-            request = new GetContentRequest(entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryOptions.VersionId != default ? entryOptions.VersionId.ToString() : null);
-            var response = await TryCatchRequest(ContentApiClient.GetContentAsync, request);
+            GetContentEnvRequest request = new GetContentEnvRequest(
+                CcdManagement.environmentid, entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryOptions.VersionId != default ? entryOptions.VersionId.ToString() : null);
+            var response = await TryCatchRequest(ContentApiClient.GetContentEnvAsync, request);
             return response.Result;
         }
 
         public async Task<ContentStatus> GetContentStatusAsync(EntryOptions entryOptions)
         {
-            GetContentStatusRequest request;
-            request = new GetContentStatusRequest(entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryOptions.VersionId != default ? entryOptions.VersionId.ToString() : null);
-            var response = await TryCatchRequest(ContentApiClient.GetContentStatusAsync, request);
+            GetContentStatusEnvRequest request = new GetContentStatusEnvRequest(
+                CcdManagement.environmentid, entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryOptions.VersionId != default ? entryOptions.VersionId.ToString() : null);
+            var response = await TryCatchRequest(ContentApiClient.GetContentStatusEnvAsync, request);
             return GetContentStatusFromResponse(response);
         }
 
         public async Task<ContentStatus> GetContentStatusVersionAsync(EntryVersionsOptions entryVersionsOption)
         {
-            var request = new GetContentStatusVersionRequest(
+            var request = new GetContentStatusVersionEnvRequest(
+                CcdManagement.environmentid,
                 entryVersionsOption.BucketId.ToString(),
                 entryVersionsOption.EntryId.ToString(),
                 entryVersionsOption.VersionId.ToString(),
                 CcdManagement.projectid);
-            var response = await TryCatchRequest(ContentApiClient.GetContentStatusVersionAsync, request);
+            var response = await TryCatchRequest(ContentApiClient.GetContentStatusVersionEnvAsync, request);
             return GetContentStatusFromResponse(response);
         }
 
         public async Task<Stream> GetContentVersionAsync(EntryVersionsOptions entryVersionsOption)
         {
-            var request = new GetContentVersionRequest(
+            var request = new GetContentVersionEnvRequest(
+                CcdManagement.environmentid,
                 entryVersionsOption.BucketId.ToString(),
                 entryVersionsOption.EntryId.ToString(),
                 entryVersionsOption.VersionId.ToString(),
                 CcdManagement.projectid);
-            var response = await TryCatchRequest(ContentApiClient.GetContentVersionAsync, request);
+            var response = await TryCatchRequest(ContentApiClient.GetContentVersionEnvAsync, request);
             return response.Result;
         }
 
@@ -313,24 +329,27 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<CcdEntry> CreateEntryAsync(Guid bucketId, EntryModelOptions entry)
         {
-            var entryCreate = new CcdEntryCreate(entry.ContentHash, entry.ContentSize, entry.Path, entry.ContentType, entry.Labels, entry.Metadata);
-            var request = new CreateEntryRequest(bucketId.ToString(), CcdManagement.projectid, entryCreate);
-            var response = await TryCatchRequest(EntriesApiClient.CreateEntryAsync, request);
+            var entryCreate = new CcdEntryCreate(entry.Path, entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, false);
+            var request = new CreateEntryEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid, entryCreate);
+            var response = await TryCatchRequest(EntriesApiClient.CreateEntryEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> CreateOrUpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry)
         {
             var entryCreateOrUpdate = new CcdEntryCreateByPath(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
-            var request = new CreateOrUpdateEntryByPathRequest(entryByPathOptions.BucketId.ToString(), entryByPathOptions.Path, CcdManagement.projectid, entryCreateOrUpdate, entry.UpdateIfExists);
-            var response = await TryCatchRequest(EntriesApiClient.CreateOrUpdateEntryByPathAsync, request);
+            var request = new CreateOrUpdateEntryByPathEnvRequest(
+                CcdManagement.environmentid, entryByPathOptions.BucketId.ToString(), entryByPathOptions.Path, CcdManagement.projectid, entryCreateOrUpdate, entry.UpdateIfExists);
+            var response = await TryCatchRequest(EntriesApiClient.CreateOrUpdateEntryByPathEnvAsync, request);
             return response.Result;
         }
 
         public async Task DeleteEntryAsync(Guid bucketId, Guid entryId)
         {
-            var request = new DeleteEntryRequest(bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
-            await TryCatchRequest(EntriesApiClient.DeleteEntryAsync, request);
+            var request = new DeleteEntryEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
+            await TryCatchRequest(EntriesApiClient.DeleteEntryEnvAsync, request);
         }
 
         public async Task<List<CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, PageOptions pageOptions = default)
@@ -339,30 +358,41 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new GetEntriesRequest(entryOptions.BucketId.ToString(), CcdManagement.projectid, entryOptions.Path, entryOptions.Label, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(EntriesApiClient.GetEntriesAsync, request);
+            var request = new GetEntriesEnvRequest(
+                CcdManagement.environmentid, entryOptions.BucketId.ToString(), CcdManagement.projectid, pageOptions.Page, null, pageOptions.PerPage, entryOptions.Path, entryOptions.Label, null, null, null);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntriesEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> GetEntryAsync(Guid bucketId, Guid entryId)
         {
-            var request = new GetEntryRequest(bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(EntriesApiClient.GetEntryAsync, request);
+            var request = new GetEntryEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), entryId.ToString(), CcdManagement.projectid);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntryEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> GetEntryByPathAsync(EntryByPathOptions entryByPathOptions)
         {
-            GetEntryByPathRequest request;
-            request = new GetEntryByPathRequest(entryByPathOptions.BucketId.ToString(), entryByPathOptions.Path, CcdManagement.projectid, entryByPathOptions.VersionId != default ? entryByPathOptions.VersionId.ToString() : null);
-            var response = await TryCatchRequest(EntriesApiClient.GetEntryByPathAsync, request);
+            GetEntryByPathEnvRequest request = new GetEntryByPathEnvRequest(
+                CcdManagement.environmentid,
+                entryByPathOptions.BucketId.ToString(),
+                entryByPathOptions.Path,
+                CcdManagement.projectid,
+                entryByPathOptions.VersionId != default ? entryByPathOptions.VersionId.ToString() : null);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntryByPathEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> GetEntryVersionAsync(EntryVersionsOptions entryVersionsOption)
         {
-            var request = new GetEntryVersionRequest(entryVersionsOption.BucketId.ToString(), entryVersionsOption.EntryId.ToString(), entryVersionsOption.VersionId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(EntriesApiClient.GetEntryVersionAsync, request);
+            var request = new GetEntryVersionEnvRequest(
+                CcdManagement.environmentid,
+                entryVersionsOption.BucketId.ToString(),
+                entryVersionsOption.EntryId.ToString(),
+                entryVersionsOption.VersionId.ToString(),
+                CcdManagement.projectid);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntryVersionEnvAsync, request);
             return response.Result;
         }
 
@@ -372,30 +402,47 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new GetEntryVersionsRequest(entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryOptions.Label, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(EntriesApiClient.GetEntryVersionsAsync, request);
+            var request = new GetEntryVersionsEnvRequest(
+                CcdManagement.environmentid,
+                entryOptions.BucketId.ToString(),
+                entryOptions.EntryId.ToString(),
+                CcdManagement.projectid,
+                entryOptions.Label,
+                pageOptions.Page,
+                pageOptions.PerPage);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntryVersionsEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> UpdateEntryAsync(EntryOptions entryOptions, EntryModelOptions entry)
         {
             var entryUpdate = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
-            var request = new UpdateEntryRequest(entryOptions.BucketId.ToString(), entryOptions.EntryId.ToString(), CcdManagement.projectid, entryUpdate);
-            var response = await TryCatchRequest(EntriesApiClient.UpdateEntryAsync, request);
+            var request = new UpdateEntryEnvRequest(
+                CcdManagement.environmentid,
+                entryOptions.BucketId.ToString(),
+                entryOptions.EntryId.ToString(),
+                CcdManagement.projectid,
+                entryUpdate);
+            var response = await TryCatchRequest(EntriesApiClient.UpdateEntryEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdEntry> UpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry)
         {
             var entryUpdateByPath = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
-            var request = new UpdateEntryByPathRequest(entryByPathOptions.BucketId.ToString(), entryByPathOptions.Path, CcdManagement.projectid, entryUpdateByPath);
-            var response = await TryCatchRequest(EntriesApiClient.UpdateEntryByPathAsync, request);
+            var request = new UpdateEntryByPathEnvRequest(
+                CcdManagement.environmentid,
+                entryByPathOptions.BucketId.ToString(),
+                entryByPathOptions.Path,
+                CcdManagement.projectid,
+                entryUpdateByPath);
+            var response = await TryCatchRequest(EntriesApiClient.UpdateEntryByPathEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdOrg> GetOrgAsync()
         {
-            var proj = (await TryCatchRequest(InternalGetOrgData, CloudProjectSettings.projectId)).Result;
+            var proj = (await TryCatchRequest(InternalGetOrgData, CcdManagement.projectid)).Result;
             var request = new GetOrgRequest(proj.organizationGenesisId);
             var response = await TryCatchRequest(OrgsApiClient.GetOrgAsync, request);
             return response.Result;
@@ -403,7 +450,7 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<CcdOrgUsage> GetOrgUsageAsync()
         {
-            var proj = (await TryCatchRequest(InternalGetOrgData, CloudProjectSettings.projectId)).Result;
+            var proj = (await TryCatchRequest(InternalGetOrgData, CcdManagement.projectid)).Result;
             var request = new GetOrgUsageRequest(proj.organizationGenesisId);
             var response = await TryCatchRequest(OrgsApiClient.GetOrgUsageAsync, request);
             return response.Result;
@@ -439,56 +486,63 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<CcdPermission> CreatePermissionAsync(CreatePermissionsOption permissionsOptions)
         {
-            var request = new CreatePermissionByBucketRequest(permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
+            var request = new CreatePermissionByBucketEnvRequest(
+                CcdManagement.environmentid, permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
                 new CcdPermissionCreate(permissionsOptions.Action, permissionsOptions.Permission));
-            var response = await TryCatchRequest(PermissionsApiClient.CreatePermissionByBucketAsync, request);
+            var response = await TryCatchRequest(PermissionsApiClient.CreatePermissionByBucketEnvAsync, request);
             return response.Result;
         }
 
         public async Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions)
         {
             string permission = permissionsOptions.Permission.ToString();
-            var request = new DeletePermissionByBucketRequest(
+            var request = new DeletePermissionByBucketEnvRequest(
+                CcdManagement.environmentid,
                 permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
                 permission: permissionsOptions.Permission.ToString().ToLower(),
                 action: permissionsOptions.Action.ToString().ToLower());
-            await TryCatchRequest(PermissionsApiClient.DeletePermissionByBucketAsync, request);
+            await TryCatchRequest(PermissionsApiClient.DeletePermissionByBucketEnvAsync, request);
         }
 
         public async Task<List<CcdPermission>> GetPermissionsAsync(Guid bucketId)
         {
-            var request = new GetAllByBucketRequest(bucketId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(PermissionsApiClient.GetAllByBucketAsync, request);
+            var request = new GetAllByBucketEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid);
+            var response = await TryCatchRequest(PermissionsApiClient.GetAllByBucketEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdPermission> UpdatePermissionAsync(UpdatePermissionsOption permissionsOptions)
         {
-            var request = new UpdatePermissionByBucketRequest(permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
+            var request = new UpdatePermissionByBucketEnvRequest(
+                CcdManagement.environmentid, permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
                 new CcdPermissionUpdate(permissionsOptions.Action, permissionsOptions.Permission));
-            var response = await TryCatchRequest(PermissionsApiClient.UpdatePermissionByBucketAsync, request);
+            var response = await TryCatchRequest(PermissionsApiClient.UpdatePermissionByBucketEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdRelease> CreateReleaseAsync(CreateReleaseOptions createReleaseOptions)
         {
             var releaseCreate = new CcdReleaseCreate(createReleaseOptions.Entries, createReleaseOptions.Metadata, createReleaseOptions.Notes, createReleaseOptions.Snapshot);
-            var request = new CreateReleaseRequest(createReleaseOptions.BucketId.ToString(), CcdManagement.projectid, releaseCreate);
-            var response = await TryCatchRequest(ReleasesApiClient.CreateReleaseAsync, request);
+            var request = new CreateReleaseEnvRequest(
+                CcdManagement.environmentid, createReleaseOptions.BucketId.ToString(), CcdManagement.projectid, releaseCreate);
+            var response = await TryCatchRequest(ReleasesApiClient.CreateReleaseEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdRelease> GetReleaseAsync(Guid bucketId, Guid releaseId)
         {
-            var request = new GetReleaseRequest(bucketId.ToString(), releaseId.ToString(), CcdManagement.projectid);
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseAsync, request);
+            var request = new GetReleaseEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), releaseId.ToString(), CcdManagement.projectid);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdRelease> GetReleaseByBadgeAsync(Guid bucketId, string badgeName)
         {
-            var request = new GetReleaseByBadgeRequest(bucketId.ToString(), badgeName, CcdManagement.projectid);
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseByBadgeAsync, request);
+            var request = new GetReleaseByBadgeEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), badgeName, CcdManagement.projectid);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseByBadgeEnvAsync, request);
             return response.Result;
         }
 
@@ -496,10 +550,11 @@ namespace Unity.Services.Ccd.Management
         {
             bool hasReleaseId = releaseDiffOptions.FromReleaseId != default && releaseDiffOptions.ToReleaseId != default;
             bool hasReleaseNum = releaseDiffOptions.FromReleaseNum.HasValue && releaseDiffOptions.ToReleaseNum.HasValue;
-            GetReleaseDiffRequest request;
+            GetReleaseDiffEnvRequest request;
             if (hasReleaseId && !hasReleaseNum)
             {
-                request = new GetReleaseDiffRequest(
+                request = new GetReleaseDiffEnvRequest(
+                    CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
                     releaseDiffOptions.FromReleaseId.ToString(),
                     null,
@@ -509,7 +564,8 @@ namespace Unity.Services.Ccd.Management
             }
             else if (hasReleaseNum && !hasReleaseId)
             {
-                request = new GetReleaseDiffRequest(
+                request = new GetReleaseDiffEnvRequest(
+                    CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
                     null,
                     releaseDiffOptions.FromReleaseNum.ToString(),
@@ -521,7 +577,7 @@ namespace Unity.Services.Ccd.Management
             {
                 throw new CcdManagementException(CcdManagementErrorCodes.InvalidArgument, "Cannot have both ReleaseId and ReleaseNum present.");
             }
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseDiffAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseDiffEnvAsync, request);
             return response.Result;
         }
 
@@ -533,11 +589,12 @@ namespace Unity.Services.Ccd.Management
             }
             bool hasReleaseId = releaseDiffOptions.FromReleaseId != default && releaseDiffOptions.ToReleaseId != default;
             bool hasReleaseNum = releaseDiffOptions.FromReleaseNum.HasValue && releaseDiffOptions.ToReleaseNum.HasValue;
-            GetReleaseDiffEntriesRequest request;
+            GetReleaseDiffEntriesEnvRequest request;
 
             if (hasReleaseId && !hasReleaseNum)
             {
-                request = new GetReleaseDiffEntriesRequest(
+                request = new GetReleaseDiffEntriesEnvRequest(
+                    CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
                     releaseDiffOptions.FromReleaseId.ToString(),
                     null,
@@ -551,7 +608,8 @@ namespace Unity.Services.Ccd.Management
             }
             else if (hasReleaseNum && !hasReleaseId)
             {
-                request = new GetReleaseDiffEntriesRequest(
+                request = new GetReleaseDiffEntriesEnvRequest(
+                    CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
                     null,
                     releaseDiffOptions.FromReleaseNum.ToString(),
@@ -568,7 +626,7 @@ namespace Unity.Services.Ccd.Management
                 throw new CcdManagementException(CcdManagementErrorCodes.InvalidArgument, "Cannot have both ReleaseId and ReleaseNum present.");
             }
 
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseDiffEntriesAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseDiffEntriesEnvAsync, request);
             return response.Result;
         }
 
@@ -578,9 +636,10 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new GetReleaseEntriesRequest(releaseEntryOptions.BucketId.ToString(), releaseEntryOptions.ReleaseId.ToString(),
+            var request = new GetReleaseEntriesEnvRequest(
+                CcdManagement.environmentid, releaseEntryOptions.BucketId.ToString(), releaseEntryOptions.ReleaseId.ToString(),
                 CcdManagement.projectid, releaseEntryOptions.Label, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseEntriesAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseEntriesEnvAsync, request);
             return response.Result;
         }
 
@@ -590,14 +649,15 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new GetReleaseEntriesByBadgeRequest(
+            var request = new GetReleaseEntriesByBadgeEnvRequest(
+                CcdManagement.environmentid,
                 releaseByBadgeOptions.BucketId.ToString(),
                 releaseByBadgeOptions.BadgeName,
                 CcdManagement.projectid,
                 releaseByBadgeOptions.Label,
                 pageOptions.Page,
                 pageOptions.PerPage);
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseEntriesByBadgeAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleaseEntriesByBadgeEnvAsync, request);
             return response.Result;
         }
 
@@ -607,29 +667,32 @@ namespace Unity.Services.Ccd.Management
             {
                 pageOptions = new PageOptions();
             }
-            var request = new GetReleasesRequest(bucketId.ToString(), CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
-            var response = await TryCatchRequest(ReleasesApiClient.GetReleasesAsync, request);
+            var request = new GetReleasesEnvRequest(
+                CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
+            var response = await TryCatchRequest(ReleasesApiClient.GetReleasesEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdMetricQuantity> GetStatsAsync(ReleaseStatsOptions releaseStatsOptions)
         {
-            var request = new GetStatsRequest(
+            var request = new GetStatsEnvRequest(
+                CcdManagement.environmentid,
                 releaseStatsOptions.BucketId.ToString(),
                 releaseStatsOptions.ReleaseId.ToString(),
                 releaseStatsOptions.Metric.ToString().ToLower(),
                 releaseStatsOptions.Interval.ToString().ToLower(),
                 CcdManagement.projectid);
-            var response = await TryCatchRequest(ReleasesApiClient.GetStatsAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.GetStatsEnvAsync, request);
             return response.Result;
         }
 
         public async Task<CcdRelease> UpdateReleaseAsync(Guid bucketId, Guid releaseId, string notes)
         {
-            var request = new UpdateReleaseRequest(
+            var request = new UpdateReleaseEnvRequest(
+                CcdManagement.environmentid,
                 bucketId.ToString(), releaseId.ToString(), CcdManagement.projectid,
                 new CcdReleaseUpdate(notes));
-            var response = await TryCatchRequest(ReleasesApiClient.UpdateReleaseAsync, request);
+            var response = await TryCatchRequest(ReleasesApiClient.UpdateReleaseEnvAsync, request);
             return response.Result;
         }
 
@@ -681,12 +744,14 @@ namespace Unity.Services.Ccd.Management
 
                 try
                 {
+                    await SetDefaultEnvironmentIfNotExists(Configuration);
                     response = await func(request, Configuration);
                 }
                 catch (HttpException<AuthorizationError>)
                 {
                     ClearAuthHeader(Configuration);
                     await SetConfigurationAuthHeader(Configuration);
+                    await SetDefaultEnvironmentIfNotExists(Configuration);
                     response = await func(request, Configuration);
                 }
             }
@@ -720,12 +785,14 @@ namespace Unity.Services.Ccd.Management
 
                 try
                 {
+                    await SetDefaultEnvironmentIfNotExists(Configuration);
                     response = await func(request, Configuration);
                 }
                 catch (HttpException<AuthorizationError>)
                 {
                     ClearAuthHeader(Configuration);
                     await SetConfigurationAuthHeader(Configuration);
+                    await SetDefaultEnvironmentIfNotExists(Configuration);
                     response = await func(request, Configuration);
                 }
             }
@@ -739,6 +806,27 @@ namespace Unity.Services.Ccd.Management
                 ResolveErrorWrapping(CommonErrorCodes.Unknown, e);
             }
             return response;
+        }
+
+        /// <summary>
+        /// Sets the default environment from the identity api if none is set
+        /// </summary>
+        /// <param name="config">config</param>
+        /// <returns></returns>
+        private async Task SetDefaultEnvironmentIfNotExists(Configuration config)
+        {
+            if (string.IsNullOrEmpty(CcdManagement.environmentid))
+            {
+                var headers = config.Headers.ToDictionary(kvp => kvp.Key, kvp => string.Join(", ", kvp.Value));
+                var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbGET, $"{config.BasePath}/api/unity/v1/projects/{CcdManagement.projectid}/environments", null, headers, config.RequestTimeout ?? 0);
+                if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
+                {
+                    throw new HttpException(clientResponse);
+                }
+                var result = JsonConvert.DeserializeObject<Environments>(Encoding.Default.GetString(clientResponse.Data));
+                var defaultEnv = result.environments.Where(x => x.IsDefault == true).First();
+                CcdManagement.SetEnvironmentId(defaultEnv.Id);
+            }
         }
 
         // Helper function to resolve the new wrapped error/exception based on input parameter
@@ -917,10 +1005,39 @@ namespace Unity.Services.Ccd.Management
             return new ContentStatus(uploadHash, uploadLength, uploadOffset);
         }
 
+        /// <summary>
+        /// Access Token
+        /// </summary>
         private class Token
         {
             [JsonProperty("token")]
             public string TokenValue;
+        }
+
+        /// <summary>
+        /// Environment Wrapper Object
+        /// </summary>
+        private class Environments
+        {
+            [JsonProperty("results")]
+            public List<Environment> environments;
+        }
+
+        /// <summary>
+        /// Identity API Environment Object
+        /// </summary>
+        private class Environment
+        {
+            [JsonProperty("id")]
+            public string Id;
+            [JsonProperty("projectId")]
+            public string ProjectId;
+            [JsonProperty("projectGenesisId")]
+            public string ProjectGenesisId;
+            [JsonProperty("name")]
+            public string Name;
+            [JsonProperty("isDefault")]
+            public bool IsDefault;
         }
     }
 }
