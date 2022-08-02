@@ -6,10 +6,12 @@ using Unity.Services.Ccd.Management.Apis.Buckets;
 using Unity.Services.Ccd.Management.Apis.Content;
 using Unity.Services.Ccd.Management.Apis.Default;
 using Unity.Services.Ccd.Management.Apis.Entries;
+using Unity.Services.Ccd.Management.Apis.Environments;
 using Unity.Services.Ccd.Management.Apis.Orgs;
 using Unity.Services.Ccd.Management.Apis.Permissions;
 using Unity.Services.Ccd.Management.Apis.Releases;
 using Unity.Services.Ccd.Management.Apis.Users;
+using Unity.Services.Ccd.Management.ErrorMitigation;
 using Unity.Services.Ccd.Management.Http;
 using UnityEditor;
 
@@ -24,11 +26,13 @@ namespace Unity.Services.Ccd.Management
     /// </summary>
     public static class CcdManagement
     {
-        private static ICcdManagementServiceSdk service;
+        internal static ICcdManagementServiceSdk service;
 
         private static readonly Configuration configuration;
-        private static IHttpClient client;
+        internal static IHttpClient client;
 
+        internal static string accessToken;
+        internal static string userId;
         internal static string projectid;
         internal static string environmentid;
 
@@ -42,6 +46,15 @@ namespace Unity.Services.Ccd.Management
         }
 
         /// <summary>
+        /// Sets the http timeout in milliseconds
+        /// </summary>
+        /// <param name="timoutms">The number of milliseonds to wait before timing out.</param>
+        public static void SetTimeout(int timeoutms)
+        {
+            configuration.RequestTimeout = timeoutms;
+        }
+
+        /// <summary>
         /// Sets the environment for the project
         /// </summary>
         /// <param name="envId"></param>
@@ -52,7 +65,22 @@ namespace Unity.Services.Ccd.Management
 
         static CcdManagement()
         {
-            configuration = new Configuration("https://services.unity.com", 10, 4, new Dictionary<string, string>());
+            configuration = new Configuration("https://services.unity.com", 10, 4, new Dictionary<string, string>(), new RetryPolicyConfig(), new StatusCodePolicyConfig());
+        }
+
+        internal static Action instanceCallbacks;
+
+        internal static void RefreshCloudSettings()
+        {
+            userId = CloudProjectSettings.userId;
+            projectid = CloudProjectSettings.projectId;
+            accessToken = CloudProjectSettings.accessToken;
+        }
+
+        [InitializeOnLoadMethod]
+        static void OnLoad()
+        {
+            instanceCallbacks += RefreshCloudSettings;
         }
 
         /// <summary>
@@ -62,19 +90,26 @@ namespace Unity.Services.Ccd.Management
         {
             get
             {
-                //Update project id every time new instance is retrieved to avoid stale caching on static object.
-                projectid = CloudProjectSettings.projectId;
+                instanceCallbacks?.Invoke();
+
+                if (client == null)
+                {
+                    client = new HttpClient();
+                }
 
                 if (service == null)
                 {
+                    instanceCallbacks = RefreshCloudSettings;
+
                     // Need to initialize here without using UnityServices.InitializeAsync due to these features being mainly Editor specific.
-                    client = new HttpClient();
+
                     service = new WrappedCcdManagementService(
                         new BadgesApiClient(client),
                         new BucketsApiClient(client),
                         new ContentApiClient(client),
                         new DefaultApiClient(client),
                         new EntriesApiClient(client),
+                        new EnvironmentsApiClient(client),
                         new OrgsApiClient(client),
                         new PermissionsApiClient(client),
                         new ReleasesApiClient(client),

@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -44,30 +45,93 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter created of CcdBucketAccessToken
         /// </summary>
         [Preserve]
         [DataMember(Name = "created", EmitDefaultValue = false)]
         public DateTime Created{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter description of CcdBucketAccessToken
         /// </summary>
         [Preserve]
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter id of CcdBucketAccessToken
         /// </summary>
         [Preserve]
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public System.Guid Id{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter token of CcdBucketAccessToken
         /// </summary>
         [Preserve]
         [DataMember(Name = "token", EmitDefaultValue = false)]
         public string Token{ get; }
     
+        /// <summary>
+        /// Formats a CcdBucketAccessToken into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Created != null)
+            {
+                serializedModel += "created," + Created.ToString() + ",";
+            }
+            if (Description != null)
+            {
+                serializedModel += "description," + Description + ",";
+            }
+            if (Id != null)
+            {
+                serializedModel += "id," + Id + ",";
+            }
+            if (Token != null)
+            {
+                serializedModel += "token," + Token;
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdBucketAccessToken as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Created != null)
+            {
+                var createdStringValue = Created.ToString();
+                dictionary.Add("created", createdStringValue);
+            }
+            
+            if (Description != null)
+            {
+                var descriptionStringValue = Description.ToString();
+                dictionary.Add("description", descriptionStringValue);
+            }
+            
+            if (Id != null)
+            {
+                var idStringValue = Id.ToString();
+                dictionary.Add("id", idStringValue);
+            }
+            
+            if (Token != null)
+            {
+                var tokenStringValue = Token.ToString();
+                dictionary.Add("token", tokenStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

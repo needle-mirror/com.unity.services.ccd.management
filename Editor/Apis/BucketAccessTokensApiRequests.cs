@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,16 +277,13 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketAccessTokenCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate CcdBucketAccessTokenCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -280,21 +296,14 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public CreateBucketAccessTokenRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate ccdBucketAccessTokenCreate)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBucketAccessTokenCreate = ccdBucketAccessTokenCreate;
-            
 
+            Projectid = projectid;
+
+            CcdBucketAccessTokenCreate = ccdBucketAccessTokenCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -378,20 +387,16 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketAccessTokenCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate CcdBucketAccessTokenCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -405,23 +410,16 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public CreateBucketAccessTokenEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenCreate ccdBucketAccessTokenCreate)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBucketAccessTokenCreate = ccdBucketAccessTokenCreate;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdBucketAccessTokenCreate = ccdBucketAccessTokenCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -505,15 +503,12 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -527,22 +522,15 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public DeleteBucketAccessTokenRequest(string bucketid, string tokenid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
 
+            Tokenid = tokenid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -624,19 +612,15 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -651,24 +635,17 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public DeleteBucketAccessTokenEnvRequest(string environmentid, string bucketid, string tokenid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Tokenid = tokenid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -750,15 +727,12 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -772,22 +746,15 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public GetBucketAccessTokenRequest(string bucketid, string tokenid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
 
+            Tokenid = tokenid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -870,19 +837,15 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -897,24 +860,17 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public GetBucketAccessTokenEnvRequest(string environmentid, string bucketid, string tokenid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Tokenid = tokenid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -997,20 +953,16 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1024,14 +976,12 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public ListBucketAccessTokensRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-            
 
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens";
 
             List<string> queryParams = new List<string>();
@@ -1126,24 +1076,19 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1158,16 +1103,14 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public ListBucketAccessTokensEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens";
 
             List<string> queryParams = new List<string>();
@@ -1262,20 +1205,16 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketAccessTokenUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate CcdBucketAccessTokenUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1289,23 +1228,16 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public UpdateBucketAccessTokenInfoRequest(string bucketid, string tokenid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate ccdBucketAccessTokenUpdate)
         {
-            
             Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
-            CcdBucketAccessTokenUpdate = ccdBucketAccessTokenUpdate;
-            
 
+            Tokenid = tokenid;
+
+            Projectid = projectid;
+
+            CcdBucketAccessTokenUpdate = ccdBucketAccessTokenUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1389,24 +1321,19 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for tokenid </summary>
         [Preserve]
-        
         public string Tokenid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketAccessTokenUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate CcdBucketAccessTokenUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1421,25 +1348,18 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         [Preserve]
         public UpdateBucketAccessTokenInfoEnvRequest(string environmentid, string bucketid, string tokenid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketAccessTokenUpdate ccdBucketAccessTokenUpdate)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Tokenid = tokenid;
-            
-            Projectid = projectid;
-            CcdBucketAccessTokenUpdate = ccdBucketAccessTokenUpdate;
-            
 
+            Bucketid = bucketid;
+
+            Tokenid = tokenid;
+
+            Projectid = projectid;
+
+            CcdBucketAccessTokenUpdate = ccdBucketAccessTokenUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/accesstokens/{tokenid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>

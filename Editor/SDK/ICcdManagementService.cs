@@ -223,7 +223,7 @@ namespace Unity.Services.Ccd.Management
 
         /// <summary>
         /// Async Operation.
-        /// Get entries for bucket.
+        /// Get entries for bucket. GetEntriesAsync(EntryOptions, string, int) is more performant and should be used instead.
         /// Required: BucketId
         /// </summary>
         /// <param name="entryOptions">Parameters for entries.</param>
@@ -231,6 +231,18 @@ namespace Unity.Services.Ccd.Management
         /// <returns>List of CcdEntries.</returns>
         /// <exception cref="CcdManagementException"></exception>
         Task<List<CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, PageOptions pageOptions = default);
+
+        /// <summary>
+        /// Async Operation.
+        /// Get entries for bucket.
+        /// Required: BucketId
+        /// </summary>
+        /// <param name="entryOptions">Parameters for entries.</param>
+        /// <param name="startingAfter">Last entryid from the previous page. Leave blank for the first page.</param>
+        /// <param name="perPage">Number of entries to return per page.</param>
+        /// <returns>List of CcdEntries.</returns>
+        /// <exception cref="CcdManagementException"></exception>
+        Task<List<CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, string startingAfter, int perPage = 10);
 
         /// <summary>
         /// Async Operation.
@@ -487,5 +499,24 @@ namespace Unity.Services.Ccd.Management
         /// <returns>User api key</returns>
         /// <exception cref="CcdManagementException"></exception>
         Task<CcdUserAPIKey> RegenerateUserApiKeyAsync();
+
+        /// <summary>
+        /// Async Operation.
+        /// Get lists of environments for a project
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        /// <param name="pageOptions">Pagination options.</param>
+        /// <returns>List of environemnts for a project</returns>
+        /// <exception cref="CcdManagementException"></exception>
+        Task<List<CcdEnvironment>> ListEnvironmentsByProjectAsync(Guid projectId, PageOptions pageOptions = default);
+
+        /// <summary>
+        /// Async Operation.
+        /// Get an environment for a project by name
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        /// <returns>The named environment for a project</returns>
+        /// <exception cref="CcdManagementException"></exception>
+        Task<CcdEnvironment> GetEnvironmentByNameAsync(Guid projectId, string name);
     }
 }

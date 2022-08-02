@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -40,18 +41,53 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter projectguid of CcdUsage
         /// </summary>
         [Preserve]
         [DataMember(Name = "projectguid", EmitDefaultValue = false)]
         public System.Guid Projectguid{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter quantity of CcdUsage
         /// </summary>
         [Preserve]
         [DataMember(Name = "quantity", EmitDefaultValue = false)]
         public decimal Quantity{ get; }
     
+        /// <summary>
+        /// Formats a CcdUsage into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Projectguid != null)
+            {
+                serializedModel += "projectguid," + Projectguid + ",";
+            }
+            serializedModel += "quantity," + Quantity.ToString();
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdUsage as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Projectguid != null)
+            {
+                var projectguidStringValue = Projectguid.ToString();
+                dictionary.Add("projectguid", projectguidStringValue);
+            }
+            
+            var quantityStringValue = Quantity.ToString();
+            dictionary.Add("quantity", quantityStringValue);
+            
+            return dictionary;
+        }
     }
 }
-

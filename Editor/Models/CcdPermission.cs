@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -42,24 +43,76 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter action of CcdPermission
         /// </summary>
         [Preserve]
         [DataMember(Name = "action", EmitDefaultValue = false)]
         public string Action{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter permission of CcdPermission
         /// </summary>
         [Preserve]
         [DataMember(Name = "permission", EmitDefaultValue = false)]
         public string Permission{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter resource of CcdPermission
         /// </summary>
         [Preserve]
         [DataMember(Name = "resource", EmitDefaultValue = false)]
         public string Resource{ get; }
     
+        /// <summary>
+        /// Formats a CcdPermission into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Action != null)
+            {
+                serializedModel += "action," + Action + ",";
+            }
+            if (Permission != null)
+            {
+                serializedModel += "permission," + Permission + ",";
+            }
+            if (Resource != null)
+            {
+                serializedModel += "resource," + Resource;
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdPermission as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Action != null)
+            {
+                var actionStringValue = Action.ToString();
+                dictionary.Add("action", actionStringValue);
+            }
+            
+            if (Permission != null)
+            {
+                var permissionStringValue = Permission.ToString();
+                dictionary.Add("permission", permissionStringValue);
+            }
+            
+            if (Resource != null)
+            {
+                var resourceStringValue = Resource.ToString();
+                dictionary.Add("resource", resourceStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

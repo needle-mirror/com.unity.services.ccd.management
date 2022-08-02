@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.Permissions
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.Permissions
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,16 +277,13 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPermissionCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPermissionCreate CcdPermissionCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -280,21 +296,14 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public CreatePermissionByBucketRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPermissionCreate ccdPermissionCreate)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPermissionCreate = ccdPermissionCreate;
-            
 
+            Projectid = projectid;
+
+            CcdPermissionCreate = ccdPermissionCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -378,20 +387,16 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPermissionCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPermissionCreate CcdPermissionCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -405,23 +410,16 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public CreatePermissionByBucketEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPermissionCreate ccdPermissionCreate)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPermissionCreate = ccdPermissionCreate;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdPermissionCreate = ccdPermissionCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -505,20 +503,16 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for permission </summary>
         [Preserve]
         public string Permission { get; }
-        
         /// <summary>Accessor for action </summary>
         [Preserve]
         public string Action { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -532,14 +526,12 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public DeletePermissionByBucketRequest(string bucketid, string projectid, string permission = default(string), string action = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Permission = permission;
-                        Action = action;
-            
 
+            Projectid = projectid;
+
+            Permission = permission;
+            Action = action;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/permissions";
 
             List<string> queryParams = new List<string>();
@@ -637,24 +629,19 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for permission </summary>
         [Preserve]
         public string Permission { get; }
-        
         /// <summary>Accessor for action </summary>
         [Preserve]
         public string Action { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -669,16 +656,14 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public DeletePermissionByBucketEnvRequest(string environmentid, string bucketid, string projectid, string permission = default(string), string action = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Permission = permission;
-                        Action = action;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            Permission = permission;
+            Action = action;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/permissions";
 
             List<string> queryParams = new List<string>();
@@ -776,11 +761,9 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -793,20 +776,13 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public GetAllByBucketRequest(string bucketid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -889,15 +865,12 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -911,22 +884,15 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public GetAllByBucketEnvRequest(string environmentid, string bucketid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1009,16 +975,13 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPermissionUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate CcdPermissionUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1031,21 +994,14 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public UpdatePermissionByBucketRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPermissionUpdate ccdPermissionUpdate)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPermissionUpdate = ccdPermissionUpdate;
-            
 
+            Projectid = projectid;
+
+            CcdPermissionUpdate = ccdPermissionUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1129,20 +1085,16 @@ namespace Unity.Services.Ccd.Management.Permissions
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPermissionUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate CcdPermissionUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1156,23 +1108,16 @@ namespace Unity.Services.Ccd.Management.Permissions
         [Preserve]
         public UpdatePermissionByBucketEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPermissionUpdate ccdPermissionUpdate)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPermissionUpdate = ccdPermissionUpdate;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdPermissionUpdate = ccdPermissionUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/permissions";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>

@@ -13,5 +13,11 @@ namespace Unity.Services.Ccd.Management
         /// </summary>
         /// <param name="basePath">The base path to set in configuration.</param>
         void SetBasePath(string basePath);
+
+        /// <summary>
+        /// Sets the http timeout in milliseconds
+        /// </summary>
+        /// <param name="timoutms">The number of milliseonds to wait before timing out.</param>
+        void SetTimeout(int timoutms);
     }
 }

@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -38,12 +39,42 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter description of CcdBucketAccessTokenCreate
         /// </summary>
         [Preserve]
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description{ get; }
     
+        /// <summary>
+        /// Formats a CcdBucketAccessTokenCreate into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Description != null)
+            {
+                serializedModel += "description," + Description;
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdBucketAccessTokenCreate as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Description != null)
+            {
+                var descriptionStringValue = Description.ToString();
+                dictionary.Add("description", descriptionStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

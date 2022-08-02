@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -31,71 +32,73 @@ namespace Unity.Services.Ccd.Management.Models
     /// <summary>
     /// CcdErrorCodes enum.
     /// </summary>
+    /// <value>0 - OK 1 - Invalid argument 2 - Out of range 3 - Unauthenticated 4 - Permission denied 5 - Not found 6 - Already exists 7 - Unknown error 8 - Internal error 9 - Invalid operation 10 - Organization Activation is needed 11 - You have an entry specified, but the matching file has not been uploaded, or the file size, or md5 hash of what was uploaded does not match 12 - too many requests</value>
+    
     [Preserve]
     public enum CcdErrorCodes
     {
         /// <summary>
-        /// Enum _0 for 0
+        /// Enum _0 for value: 0
         /// </summary>
         _0 = 0,
 
         /// <summary>
-        /// Enum _1 for 1
+        /// Enum _1 for value: 1
         /// </summary>
         _1 = 1,
 
         /// <summary>
-        /// Enum _2 for 2
+        /// Enum _2 for value: 2
         /// </summary>
         _2 = 2,
 
         /// <summary>
-        /// Enum _3 for 3
+        /// Enum _3 for value: 3
         /// </summary>
         _3 = 3,
 
         /// <summary>
-        /// Enum _4 for 4
+        /// Enum _4 for value: 4
         /// </summary>
         _4 = 4,
 
         /// <summary>
-        /// Enum _5 for 5
+        /// Enum _5 for value: 5
         /// </summary>
         _5 = 5,
 
         /// <summary>
-        /// Enum _6 for 6
+        /// Enum _6 for value: 6
         /// </summary>
         _6 = 6,
 
         /// <summary>
-        /// Enum _7 for 7
+        /// Enum _7 for value: 7
         /// </summary>
         _7 = 7,
 
         /// <summary>
-        /// Enum _8 for 8
+        /// Enum _8 for value: 8
         /// </summary>
         _8 = 8,
 
         /// <summary>
-        /// Enum _9 for 9
+        /// Enum _9 for value: 9
         /// </summary>
         _9 = 9,
 
         /// <summary>
-        /// Enum _10 for 10
+        /// Enum _10 for value: 10
         /// </summary>
         _10 = 10,
 
         /// <summary>
-        /// Enum _11 for 11
+        /// Enum _11 for value: 11
         /// </summary>
         _11 = 11,
 
         /// <summary>
-        /// Enum _12 for 12
+        /// Enum _12 for value: 12
         /// </summary>
         _12 = 12
 

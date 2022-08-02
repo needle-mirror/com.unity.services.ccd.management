@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -48,42 +49,121 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter created of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "created", EmitDefaultValue = false)]
         public DateTime Created{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter created_by of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "created_by", EmitDefaultValue = false)]
         public string CreatedBy{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter created_by_name of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "created_by_name", EmitDefaultValue = false)]
         public string CreatedByName{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter name of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter releaseid of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "releaseid", EmitDefaultValue = false)]
         public System.Guid Releaseid{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter releasenum of CcdBadge
         /// </summary>
         [Preserve]
         [DataMember(Name = "releasenum", EmitDefaultValue = false)]
         public int Releasenum{ get; }
     
+        /// <summary>
+        /// Formats a CcdBadge into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Created != null)
+            {
+                serializedModel += "created," + Created.ToString() + ",";
+            }
+            if (CreatedBy != null)
+            {
+                serializedModel += "created_by," + CreatedBy + ",";
+            }
+            if (CreatedByName != null)
+            {
+                serializedModel += "created_by_name," + CreatedByName + ",";
+            }
+            if (Name != null)
+            {
+                serializedModel += "name," + Name + ",";
+            }
+            if (Releaseid != null)
+            {
+                serializedModel += "releaseid," + Releaseid + ",";
+            }
+            serializedModel += "releasenum," + Releasenum.ToString();
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdBadge as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Created != null)
+            {
+                var createdStringValue = Created.ToString();
+                dictionary.Add("created", createdStringValue);
+            }
+            
+            if (CreatedBy != null)
+            {
+                var created_byStringValue = CreatedBy.ToString();
+                dictionary.Add("created_by", created_byStringValue);
+            }
+            
+            if (CreatedByName != null)
+            {
+                var created_by_nameStringValue = CreatedByName.ToString();
+                dictionary.Add("created_by_name", created_by_nameStringValue);
+            }
+            
+            if (Name != null)
+            {
+                var nameStringValue = Name.ToString();
+                dictionary.Add("name", nameStringValue);
+            }
+            
+            if (Releaseid != null)
+            {
+                var releaseidStringValue = Releaseid.ToString();
+                dictionary.Add("releaseid", releaseidStringValue);
+            }
+            
+            var releasenumStringValue = Releasenum.ToString();
+            dictionary.Add("releasenum", releasenumStringValue);
+            
+            return dictionary;
+        }
     }
 }
-

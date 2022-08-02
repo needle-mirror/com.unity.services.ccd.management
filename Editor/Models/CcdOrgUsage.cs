@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -42,24 +43,70 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter id of CcdOrgUsage
         /// </summary>
         [Preserve]
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter start_time of CcdOrgUsage
         /// </summary>
         [Preserve]
         [DataMember(Name = "start_time", EmitDefaultValue = false)]
         public DateTime StartTime{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter usage of CcdOrgUsage
         /// </summary>
         [Preserve]
         [DataMember(Name = "usage", EmitDefaultValue = false)]
         public List<CcdUsage> Usage{ get; }
     
+        /// <summary>
+        /// Formats a CcdOrgUsage into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Id != null)
+            {
+                serializedModel += "id," + Id + ",";
+            }
+            if (StartTime != null)
+            {
+                serializedModel += "start_time," + StartTime.ToString() + ",";
+            }
+            if (Usage != null)
+            {
+                serializedModel += "usage," + Usage.ToString();
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdOrgUsage as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Id != null)
+            {
+                var idStringValue = Id.ToString();
+                dictionary.Add("id", idStringValue);
+            }
+            
+            if (StartTime != null)
+            {
+                var start_timeStringValue = StartTime.ToString();
+                dictionary.Add("start_time", start_timeStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

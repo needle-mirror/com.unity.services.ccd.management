@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -38,12 +39,36 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter tos_version of CcdOrgTosUpdate
         /// </summary>
         [Preserve]
         [DataMember(Name = "tos_version", EmitDefaultValue = false)]
         public int TosVersion{ get; }
     
+        /// <summary>
+        /// Formats a CcdOrgTosUpdate into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            serializedModel += "tos_version," + TosVersion.ToString();
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdOrgTosUpdate as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            var tos_versionStringValue = TosVersion.ToString();
+            dictionary.Add("tos_version", tos_versionStringValue);
+            
+            return dictionary;
+        }
     }
 }
-

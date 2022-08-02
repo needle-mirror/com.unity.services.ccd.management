@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.Content
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.Content
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,20 +277,16 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -285,15 +300,13 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public CreateContentRequest(string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -387,24 +400,19 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -419,17 +427,15 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public CreateContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -523,20 +529,16 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -550,15 +552,13 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentRequest(string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -653,24 +653,19 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -685,17 +680,15 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -790,20 +783,16 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -817,15 +806,13 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentStatusRequest(string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -919,24 +906,19 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -951,17 +933,15 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentStatusEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string versionid = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            Versionid = versionid;
-            
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -1055,19 +1035,15 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
-        
         public string Versionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1082,24 +1058,17 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentStatusVersionRequest(string bucketid, string entryid, string versionid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Versionid = versionid;
-            
-            Projectid = projectid;
 
+            Entryid = entryid;
+
+            Versionid = versionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1181,23 +1150,18 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
-        
         public string Versionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1213,26 +1177,19 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentStatusVersionEnvRequest(string environmentid, string bucketid, string entryid, string versionid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Versionid = versionid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Versionid = versionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1314,19 +1271,15 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
-        
         public string Versionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1341,24 +1294,17 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentVersionRequest(string bucketid, string entryid, string versionid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Versionid = versionid;
-            
-            Projectid = projectid;
 
+            Entryid = entryid;
+
+            Versionid = versionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1441,23 +1387,18 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for versionid </summary>
         [Preserve]
-        
         public string Versionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1473,26 +1414,19 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public GetContentVersionEnvRequest(string environmentid, string bucketid, string entryid, string versionid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Versionid = versionid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Versionid = versionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/versions/{versionid}/content";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1575,24 +1509,19 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for file </summary>
         [Preserve]
         public System.IO.Stream File { get; }
-        
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1607,16 +1536,14 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public UploadContentRequest(string bucketid, string entryid, string projectid, System.IO.Stream file, string versionid = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            File = file;
-                        Versionid = versionid;
-            
 
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            File = file;
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();
@@ -1701,28 +1628,22 @@ namespace Unity.Services.Ccd.Management.Content
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for entryid </summary>
         [Preserve]
-        
         public string Entryid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for file </summary>
         [Preserve]
         public System.IO.Stream File { get; }
-        
         /// <summary>Accessor for versionid </summary>
         [Preserve]
         public string Versionid { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1738,18 +1659,16 @@ namespace Unity.Services.Ccd.Management.Content
         [Preserve]
         public UploadContentEnvRequest(string environmentid, string bucketid, string entryid, string projectid, System.IO.Stream file, string versionid = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Entryid = entryid;
-            
-            Projectid = projectid;
-            File = file;
-                        Versionid = versionid;
-            
 
+            Bucketid = bucketid;
+
+            Entryid = entryid;
+
+            Projectid = projectid;
+
+            File = file;
+            Versionid = versionid;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/entries/{entryid}/content";
 
             List<string> queryParams = new List<string>();

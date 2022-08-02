@@ -63,9 +63,9 @@ namespace Unity.Services.Ccd.Management
 
             public const string Dashboard = "https://dashboard.unity3d.com/cloud-content-delivery";
 
-            public const string Support = "https://docs.unity.com/ccd/Content/UnityCCD-support.htm";
+            public const string Support = "https://docs.unity.com/ccd/Content/UnityCCD-support.html";
 
-            public const string Guide = "https://docs.unity.com/ccd/Content/UnityCCDWalkthrough.htm";
+            public const string Guide = "https://docs.unity.com/ccd/Content/UnityCCDWalkthrough.html";
 
             public const string ApiDoc = "https://content-api.cloud.unity3d.com/doc/";
         }

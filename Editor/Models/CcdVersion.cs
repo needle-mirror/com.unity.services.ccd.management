@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -50,73 +51,189 @@ namespace Unity.Services.Ccd.Management.Models
             Labels = labels;
             LastModified = lastModified;
             Link = link;
-            Metadata = new JsonObject(metadata);
+            Metadata = (JsonObject) JsonObject.GetNewJsonObjectResponse(metadata);
             Path = path;
             Versionid = versionid;
         }
 
         /// <summary>
-        /// 
+        /// Parameter content_hash of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_hash", EmitDefaultValue = false)]
         public string ContentHash{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter content_link of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_link", EmitDefaultValue = false)]
         public string ContentLink{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter content_size of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_size", EmitDefaultValue = false)]
         public int ContentSize{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter content_type of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_type", EmitDefaultValue = false)]
         public string ContentType{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter labels of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "labels", EmitDefaultValue = false)]
         public List<string> Labels{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter last_modified of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "last_modified", EmitDefaultValue = false)]
         public DateTime LastModified{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter link of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "link", EmitDefaultValue = false)]
         public string Link{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter metadata of CcdVersion
         /// </summary>
-        [Preserve]
-        [JsonConverter(typeof(JsonObjectConverter))]
+        [Preserve][JsonConverter(typeof(JsonObjectConverter))]
         [DataMember(Name = "metadata", EmitDefaultValue = false)]
         public JsonObject Metadata{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter path of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "path", EmitDefaultValue = false)]
         public string Path{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter versionid of CcdVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "versionid", EmitDefaultValue = false)]
         public System.Guid Versionid{ get; }
     
+        /// <summary>
+        /// Formats a CcdVersion into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (ContentHash != null)
+            {
+                serializedModel += "content_hash," + ContentHash + ",";
+            }
+            if (ContentLink != null)
+            {
+                serializedModel += "content_link," + ContentLink + ",";
+            }
+            serializedModel += "content_size," + ContentSize.ToString() + ",";
+            if (ContentType != null)
+            {
+                serializedModel += "content_type," + ContentType + ",";
+            }
+            if (Labels != null)
+            {
+                serializedModel += "labels," + Labels.ToString() + ",";
+            }
+            if (LastModified != null)
+            {
+                serializedModel += "last_modified," + LastModified.ToString() + ",";
+            }
+            if (Link != null)
+            {
+                serializedModel += "link," + Link + ",";
+            }
+            if (Metadata != null)
+            {
+                serializedModel += "metadata," + Metadata.ToString() + ",";
+            }
+            if (Path != null)
+            {
+                serializedModel += "path," + Path + ",";
+            }
+            if (Versionid != null)
+            {
+                serializedModel += "versionid," + Versionid;
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdVersion as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (ContentHash != null)
+            {
+                var content_hashStringValue = ContentHash.ToString();
+                dictionary.Add("content_hash", content_hashStringValue);
+            }
+            
+            if (ContentLink != null)
+            {
+                var content_linkStringValue = ContentLink.ToString();
+                dictionary.Add("content_link", content_linkStringValue);
+            }
+            
+            var content_sizeStringValue = ContentSize.ToString();
+            dictionary.Add("content_size", content_sizeStringValue);
+            
+            if (ContentType != null)
+            {
+                var content_typeStringValue = ContentType.ToString();
+                dictionary.Add("content_type", content_typeStringValue);
+            }
+            
+            if (Labels != null)
+            {
+                var labelsStringValue = Labels.ToString();
+                dictionary.Add("labels", labelsStringValue);
+            }
+            
+            if (LastModified != null)
+            {
+                var last_modifiedStringValue = LastModified.ToString();
+                dictionary.Add("last_modified", last_modifiedStringValue);
+            }
+            
+            if (Link != null)
+            {
+                var linkStringValue = Link.ToString();
+                dictionary.Add("link", linkStringValue);
+            }
+            
+            if (Path != null)
+            {
+                var pathStringValue = Path.ToString();
+                dictionary.Add("path", pathStringValue);
+            }
+            
+            if (Versionid != null)
+            {
+                var versionidStringValue = Versionid.ToString();
+                dictionary.Add("versionid", versionidStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

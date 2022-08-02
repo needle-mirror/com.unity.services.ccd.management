@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using Unity.Services.Ccd.Management.Http;
 using Unity.Services.Core;
 using UnityEditorInternal;
 

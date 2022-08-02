@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.Badges
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.Badges
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,15 +277,12 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for badgename </summary>
         [Preserve]
-        
         public string Badgename { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -280,22 +296,15 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public DeleteBadgeRequest(string bucketid, string badgename, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Badgename = badgename;
-            
-            Projectid = projectid;
 
+            Badgename = badgename;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges/{badgename}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -377,19 +386,15 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for badgename </summary>
         [Preserve]
-        
         public string Badgename { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -404,24 +409,17 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public DeleteBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Badgename = badgename;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Badgename = badgename;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges/{badgename}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -503,15 +501,12 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for badgename </summary>
         [Preserve]
-        
         public string Badgename { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -525,22 +520,15 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public GetBadgeRequest(string bucketid, string badgename, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Badgename = badgename;
-            
-            Projectid = projectid;
 
+            Badgename = badgename;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges/{badgename}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -623,19 +611,15 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for badgename </summary>
         [Preserve]
-        
         public string Badgename { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -650,24 +634,17 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public GetBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Badgename = badgename;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Badgename = badgename;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges/{badgename}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -750,36 +727,28 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for name </summary>
         [Preserve]
         public string Name { get; }
-        
         /// <summary>Accessor for releasenum </summary>
         [Preserve]
         public string Releasenum { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -797,18 +766,16 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public ListBadgesRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Name = name;
-                        Releasenum = releasenum;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            Name = name;
+            Releasenum = releasenum;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges";
 
             List<string> queryParams = new List<string>();
@@ -919,40 +886,31 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for name </summary>
         [Preserve]
         public string Name { get; }
-        
         /// <summary>Accessor for releasenum </summary>
         [Preserve]
         public string Releasenum { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -971,20 +929,18 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public ListBadgesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Name = name;
-                        Releasenum = releasenum;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            Name = name;
+            Releasenum = releasenum;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges";
 
             List<string> queryParams = new List<string>();
@@ -1095,16 +1051,13 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBadgeAssign </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBadgeAssign CcdBadgeAssign { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1117,21 +1070,14 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public UpdateBadgeRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBadgeAssign ccdBadgeAssign)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBadgeAssign = ccdBadgeAssign;
-            
 
+            Projectid = projectid;
+
+            CcdBadgeAssign = ccdBadgeAssign;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/badges";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1215,20 +1161,16 @@ namespace Unity.Services.Ccd.Management.Badges
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBadgeAssign </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBadgeAssign CcdBadgeAssign { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1242,23 +1184,16 @@ namespace Unity.Services.Ccd.Management.Badges
         [Preserve]
         public UpdateBadgeEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBadgeAssign ccdBadgeAssign)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBadgeAssign = ccdBadgeAssign;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdBadgeAssign = ccdBadgeAssign;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/badges";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>

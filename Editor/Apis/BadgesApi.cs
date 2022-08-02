@@ -121,10 +121,6 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 // global configuration to ensure we have the correct
                 // combination of headers and a base path (if it is set).
                 Configuration globalConfiguration = new Configuration("https://services.unity.com", 10, 4, null);
-                if (CcdManagementService.Instance != null)
-                {
-                    globalConfiguration = CcdManagementService.Instance.Configuration;
-                }
                 return Configuration.MergeConfigurations(_configuration, globalConfiguration);
             }
             set { _configuration = value; }
@@ -166,7 +162,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
             return new Response(response);
@@ -193,7 +191,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
             return new Response(response);
@@ -220,7 +220,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBadge>(response, statusCodeToTypeMap);
             return new Response<CcdBadge>(response, handledResponse);
@@ -247,7 +249,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBadge>(response, statusCodeToTypeMap);
             return new Response<CcdBadge>(response, handledResponse);
@@ -274,7 +278,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdBadge>>(response, statusCodeToTypeMap);
             return new Response<List<CcdBadge>>(response, handledResponse);
@@ -301,7 +307,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdBadge>>(response, statusCodeToTypeMap);
             return new Response<List<CcdBadge>>(response, handledResponse);
@@ -328,7 +336,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBadge>(response, statusCodeToTypeMap);
             return new Response<CcdBadge>(response, handledResponse);
@@ -355,7 +365,9 @@ namespace Unity.Services.Ccd.Management.Apis.Badges
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBadge>(response, statusCodeToTypeMap);
             return new Response<CcdBadge>(response, handledResponse);

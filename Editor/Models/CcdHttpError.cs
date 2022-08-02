@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -42,24 +43,70 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter code of CcdHttpError
         /// </summary>
         [Preserve]
         [DataMember(Name = "code", EmitDefaultValue = false)]
         public CcdErrorCodes Code{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter details of CcdHttpError
         /// </summary>
         [Preserve]
         [DataMember(Name = "details", EmitDefaultValue = false)]
         public List<string> Details{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter reason of CcdHttpError
         /// </summary>
         [Preserve]
         [DataMember(Name = "reason", EmitDefaultValue = false)]
         public string Reason{ get; }
     
+        /// <summary>
+        /// Formats a CcdHttpError into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            if (Code != null)
+            {
+                serializedModel += "code," + Code.ToString() + ",";
+            }
+            if (Details != null)
+            {
+                serializedModel += "details," + Details.ToString() + ",";
+            }
+            if (Reason != null)
+            {
+                serializedModel += "reason," + Reason;
+            }
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdHttpError as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (Details != null)
+            {
+                var detailsStringValue = Details.ToString();
+                dictionary.Add("details", detailsStringValue);
+            }
+            
+            if (Reason != null)
+            {
+                var reasonStringValue = Reason.ToString();
+                dictionary.Add("reason", reasonStringValue);
+            }
+            
+            return dictionary;
+        }
     }
 }
-

@@ -261,10 +261,6 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 // global configuration to ensure we have the correct
                 // combination of headers and a base path (if it is set).
                 Configuration globalConfiguration = new Configuration("https://services.unity.com", 10, 4, null);
-                if (CcdManagementService.Instance != null)
-                {
-                    globalConfiguration = CcdManagementService.Instance.Configuration;
-                }
                 return Configuration.MergeConfigurations(_configuration, globalConfiguration);
             }
             set { _configuration = value; }
@@ -306,7 +302,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);
@@ -333,7 +331,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);
@@ -360,7 +360,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
             return new Response(response);
@@ -387,7 +389,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             ResponseHandler.HandleAsyncResponse(response, statusCodeToTypeMap);
             return new Response(response);
@@ -414,7 +418,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);
@@ -441,7 +447,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);
@@ -468,7 +476,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdReleaseChangeVersion>(response, statusCodeToTypeMap);
             return new Response<CcdReleaseChangeVersion>(response, handledResponse);
@@ -495,7 +505,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
             return new Response<List<CcdReleaseEntry>>(response, handledResponse);
@@ -522,7 +534,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdReleaseEntry>>(response, statusCodeToTypeMap);
             return new Response<List<CcdReleaseEntry>>(response, handledResponse);
@@ -549,7 +563,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdReleaseChangeVersion>(response, statusCodeToTypeMap);
             return new Response<CcdReleaseChangeVersion>(response, handledResponse);
@@ -576,7 +592,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromotion>(response, statusCodeToTypeMap);
             return new Response<CcdPromotion>(response, handledResponse);
@@ -603,7 +621,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromotion>(response, statusCodeToTypeMap);
             return new Response<CcdPromotion>(response, handledResponse);
@@ -630,7 +650,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdPromotion>>(response, statusCodeToTypeMap);
             return new Response<List<CcdPromotion>>(response, handledResponse);
@@ -657,7 +679,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdPromotion>>(response, statusCodeToTypeMap);
             return new Response<List<CcdPromotion>>(response, handledResponse);
@@ -684,7 +708,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdBucket>>(response, statusCodeToTypeMap);
             return new Response<List<CcdBucket>>(response, handledResponse);
@@ -711,7 +737,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<List<CcdBucket>>(response, statusCodeToTypeMap);
             return new Response<List<CcdBucket>>(response, handledResponse);
@@ -738,7 +766,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
             return new Response<CcdRelease>(response, handledResponse);
@@ -765,7 +795,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromoteBucketResponse>(response, statusCodeToTypeMap);
             return new Response<CcdPromoteBucketResponse>(response, handledResponse);
@@ -792,7 +824,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdPromoteBucketResponse>(response, statusCodeToTypeMap);
             return new Response<CcdPromoteBucketResponse>(response, handledResponse);
@@ -819,7 +853,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdRelease>(response, statusCodeToTypeMap);
             return new Response<CcdRelease>(response, handledResponse);
@@ -846,7 +882,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);
@@ -873,7 +911,9 @@ namespace Unity.Services.Ccd.Management.Apis.Buckets
                 request.ConstructUrl(finalConfiguration.BasePath),
                 request.ConstructBody(),
                 request.ConstructHeaders(finalConfiguration),
-                finalConfiguration.RequestTimeout ?? _baseTimeout);
+                finalConfiguration.RequestTimeout ?? _baseTimeout,
+                finalConfiguration.RetryPolicyConfiguration,
+                finalConfiguration.StatusCodePolicyConfiguration);
 
             var handledResponse = ResponseHandler.HandleAsyncResponse<CcdBucket>(response, statusCodeToTypeMap);
             return new Response<CcdBucket>(response, handledResponse);

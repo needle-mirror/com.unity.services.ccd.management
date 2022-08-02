@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.Orgs
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.Orgs
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,7 +277,6 @@ namespace Unity.Services.Ccd.Management.Orgs
     {
         /// <summary>Accessor for orgid </summary>
         [Preserve]
-        
         public string Orgid { get; }
         string PathAndQueryParams;
 
@@ -270,18 +288,11 @@ namespace Unity.Services.Ccd.Management.Orgs
         [Preserve]
         public GetOrgRequest(string orgid)
         {
-            
             Orgid = orgid;
-
 
             PathAndQueryParams = $"/api/ccd/management/v1/organizations/{orgid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -364,7 +375,6 @@ namespace Unity.Services.Ccd.Management.Orgs
     {
         /// <summary>Accessor for orgid </summary>
         [Preserve]
-        
         public string Orgid { get; }
         string PathAndQueryParams;
 
@@ -376,18 +386,11 @@ namespace Unity.Services.Ccd.Management.Orgs
         [Preserve]
         public GetOrgUsageRequest(string orgid)
         {
-            
             Orgid = orgid;
-
 
             PathAndQueryParams = $"/api/ccd/management/v1/organizations/{orgid}/usage";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -470,12 +473,10 @@ namespace Unity.Services.Ccd.Management.Orgs
     {
         /// <summary>Accessor for orgid </summary>
         [Preserve]
-        
         public string Orgid { get; }
         /// <summary>Accessor for ccdOrgTosUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdOrgTosUpdate CcdOrgTosUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -487,19 +488,12 @@ namespace Unity.Services.Ccd.Management.Orgs
         [Preserve]
         public SaveTosAcceptedRequest(string orgid, Unity.Services.Ccd.Management.Models.CcdOrgTosUpdate ccdOrgTosUpdate)
         {
-            
             Orgid = orgid;
-            CcdOrgTosUpdate = ccdOrgTosUpdate;
-            
 
+            CcdOrgTosUpdate = ccdOrgTosUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/organizations/{orgid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>

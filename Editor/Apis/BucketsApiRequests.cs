@@ -32,7 +32,7 @@ namespace Unity.Services.Ccd.Management.Buckets
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -91,6 +91,25 @@ namespace Unity.Services.Ccd.Management.Buckets
                 }
                 paramString = paramString.Remove(paramString.Length - 1);
                 queryParams.Add(paramString);
+            }
+
+            return queryParams;
+        }
+
+        /// <summary>
+        /// Helper function to add a provided map of keys and values, representing a model, to the
+        /// provided query params.
+        /// </summary>
+        /// <param name="queryParams">A `List/<string/>` of the query parameters.</param>
+        /// <param name="modelVars">A `Dictionary` representing the vars of the model</param>
+        /// <returns>Returns a `List/<string/>`</returns>
+        [Preserve]
+        public List<string> AddParamsToQueryParams(List<string> queryParams, Dictionary<string, string> modelVars)
+        {
+            foreach(var key in modelVars.Keys)
+            {
+                string escapedValue = UnityWebRequest.EscapeURL(modelVars[key]);
+                queryParams.Add($"{UnityWebRequest.EscapeURL(key)}={escapedValue}");
             }
 
             return queryParams;
@@ -258,12 +277,10 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketCreate CcdBucketCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -275,19 +292,12 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public CreateBucketByProjectRequest(string projectid, Unity.Services.Ccd.Management.Models.CcdBucketCreate ccdBucketCreate)
         {
-            
             Projectid = projectid;
-            CcdBucketCreate = ccdBucketCreate;
-            
 
+            CcdBucketCreate = ccdBucketCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -371,16 +381,13 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketCreate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketCreate CcdBucketCreate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -393,21 +400,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public CreateBucketByProjectEnvRequest(string environmentid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketCreate ccdBucketCreate)
         {
-            
             Environmentid = environmentid;
-            
-            Projectid = projectid;
-            CcdBucketCreate = ccdBucketCreate;
-            
 
+            Projectid = projectid;
+
+            CcdBucketCreate = ccdBucketCreate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -491,11 +491,9 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -508,20 +506,13 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public DeleteBucketRequest(string bucketid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -603,15 +594,12 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -625,22 +613,15 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public DeleteBucketEnvRequest(string environmentid, string bucketid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -722,11 +703,9 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -739,20 +718,13 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetBucketRequest(string bucketid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -835,15 +807,12 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -857,22 +826,15 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetBucketEnvRequest(string environmentid, string bucketid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -955,11 +917,9 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -972,20 +932,13 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetDiffRequest(string bucketid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/diff/unreleased";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1068,48 +1021,37 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for path </summary>
         [Preserve]
         public string Path { get; }
-        
         /// <summary>Accessor for includeStates </summary>
         [Preserve]
         public List<string> IncludeStates { get; }
-        
         /// <summary>Accessor for label </summary>
         [Preserve]
         public string Label { get; }
-        
         /// <summary>Accessor for contentType </summary>
         [Preserve]
         public string ContentType { get; }
-        
         /// <summary>Accessor for complete </summary>
         [Preserve]
         public bool? Complete { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1130,21 +1072,19 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetDiffEntriesRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Path = path;
-                        IncludeStates = includeStates;
-                        Label = label;
-                        ContentType = contentType;
-                        Complete = complete;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            Path = path;
+            IncludeStates = includeStates;
+            Label = label;
+            ContentType = contentType;
+            Complete = complete;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/diff/unreleased/entries";
 
             List<string> queryParams = new List<string>();
@@ -1266,52 +1206,40 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for path </summary>
         [Preserve]
         public string Path { get; }
-        
         /// <summary>Accessor for includeStates </summary>
         [Preserve]
         public List<string> IncludeStates { get; }
-        
         /// <summary>Accessor for label </summary>
         [Preserve]
         public string Label { get; }
-        
         /// <summary>Accessor for contentType </summary>
         [Preserve]
         public string ContentType { get; }
-        
         /// <summary>Accessor for complete </summary>
         [Preserve]
         public bool? Complete { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1333,23 +1261,21 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Path = path;
-                        IncludeStates = includeStates;
-                        Label = label;
-                        ContentType = contentType;
-                        Complete = complete;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            Path = path;
+            IncludeStates = includeStates;
+            Label = label;
+            ContentType = contentType;
+            Complete = complete;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/diff/unreleased/entries";
 
             List<string> queryParams = new List<string>();
@@ -1471,15 +1397,12 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1493,22 +1416,15 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetDiffEnvRequest(string environmentid, string bucketid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/diff/unreleased";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1591,15 +1507,12 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for promotionid </summary>
         [Preserve]
-        
         public string Promotionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1613,22 +1526,15 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetPromotionRequest(string bucketid, string promotionid, string projectid)
         {
-            
             Bucketid = bucketid;
-            
-            Promotionid = promotionid;
-            
-            Projectid = projectid;
 
+            Promotionid = promotionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/promote/{promotionid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1711,19 +1617,15 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for promotionid </summary>
         [Preserve]
-        
         public string Promotionid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         string PathAndQueryParams;
 
@@ -1738,24 +1640,17 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetPromotionEnvRequest(string environmentid, string bucketid, string promotionid, string projectid)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Promotionid = promotionid;
-            
-            Projectid = projectid;
 
+            Bucketid = bucketid;
+
+            Promotionid = promotionid;
+
+            Projectid = projectid;
 
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/promote/{promotionid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -1838,28 +1733,22 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for promotionStatus </summary>
         [Preserve]
         public List<string> PromotionStatus { get; }
-        
         /// <summary>Accessor for promotionFilter </summary>
         [Preserve]
         public string PromotionFilter { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -1875,16 +1764,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetPromotionsRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        PromotionStatus = promotionStatus;
-                        PromotionFilter = promotionFilter;
-            
 
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            PromotionStatus = promotionStatus;
+            PromotionFilter = promotionFilter;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/promote";
 
             List<string> queryParams = new List<string>();
@@ -1988,32 +1875,25 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for promotionStatus </summary>
         [Preserve]
         public List<string> PromotionStatus { get; }
-        
         /// <summary>Accessor for promotionFilter </summary>
         [Preserve]
         public string PromotionFilter { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2030,18 +1910,16 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public GetPromotionsEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        PromotionStatus = promotionStatus;
-                        PromotionFilter = promotionFilter;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            PromotionStatus = promotionStatus;
+            PromotionFilter = promotionFilter;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/promote";
 
             List<string> queryParams = new List<string>();
@@ -2145,32 +2023,25 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for name </summary>
         [Preserve]
         public string Name { get; }
-        
         /// <summary>Accessor for description </summary>
         [Preserve]
         public string Description { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2187,16 +2058,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public ListBucketsByProjectRequest(string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Name = name;
-                        Description = description;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Page = page;
+            PerPage = perPage;
+            Name = name;
+            Description = description;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets";
 
             List<string> queryParams = new List<string>();
@@ -2307,36 +2176,28 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
-        
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
-        
         /// <summary>Accessor for name </summary>
         [Preserve]
         public string Name { get; }
-        
         /// <summary>Accessor for description </summary>
         [Preserve]
         public string Description { get; }
-        
         /// <summary>Accessor for sortBy </summary>
         [Preserve]
         public string SortBy { get; }
-        
         /// <summary>Accessor for sortOrder </summary>
         [Preserve]
         public string SortOrder { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2354,18 +2215,16 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public ListBucketsByProjectEnvRequest(string environmentid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
-            
             Environmentid = environmentid;
-            
-            Projectid = projectid;
-            Page = page;
-                        PerPage = perPage;
-                        Name = name;
-                        Description = description;
-                        SortBy = sortBy;
-                        SortOrder = sortOrder;
-            
 
+            Projectid = projectid;
+
+            Page = page;
+            PerPage = perPage;
+            Name = name;
+            Description = description;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets";
 
             List<string> queryParams = new List<string>();
@@ -2476,16 +2335,13 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPromoteBucket </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPromoteBucket CcdPromoteBucket { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2498,21 +2354,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public PromoteBucketRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPromoteBucket ccdPromoteBucket)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPromoteBucket = ccdPromoteBucket;
-            
 
+            Projectid = projectid;
+
+            CcdPromoteBucket = ccdPromoteBucket;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/promote";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -2596,16 +2445,13 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPromoteBucket </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPromoteBucket CcdPromoteBucket { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2618,21 +2464,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public PromoteBucketAsyncRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPromoteBucket ccdPromoteBucket)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPromoteBucket = ccdPromoteBucket;
-            
 
+            Projectid = projectid;
+
+            CcdPromoteBucket = ccdPromoteBucket;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/promoteasync";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -2716,20 +2555,16 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPromoteBucket </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPromoteBucket CcdPromoteBucket { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2743,23 +2578,16 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public PromoteBucketAsyncEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPromoteBucket ccdPromoteBucket)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPromoteBucket = ccdPromoteBucket;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdPromoteBucket = ccdPromoteBucket;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/promoteasync";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -2843,20 +2671,16 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdPromoteBucket </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdPromoteBucket CcdPromoteBucket { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2870,23 +2694,16 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public PromoteBucketEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdPromoteBucket ccdPromoteBucket)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdPromoteBucket = ccdPromoteBucket;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdPromoteBucket = ccdPromoteBucket;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/promote";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -2970,16 +2787,13 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketUpdate CcdBucketUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -2992,21 +2806,14 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public UpdateBucketRequest(string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketUpdate ccdBucketUpdate)
         {
-            
             Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBucketUpdate = ccdBucketUpdate;
-            
 
+            Projectid = projectid;
+
+            CcdBucketUpdate = ccdBucketUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>
@@ -3090,20 +2897,16 @@ namespace Unity.Services.Ccd.Management.Buckets
     {
         /// <summary>Accessor for environmentid </summary>
         [Preserve]
-        
         public string Environmentid { get; }
         /// <summary>Accessor for bucketid </summary>
         [Preserve]
-        
         public string Bucketid { get; }
         /// <summary>Accessor for projectid </summary>
         [Preserve]
-        
         public string Projectid { get; }
         /// <summary>Accessor for ccdBucketUpdate </summary>
         [Preserve]
         public Unity.Services.Ccd.Management.Models.CcdBucketUpdate CcdBucketUpdate { get; }
-        
         string PathAndQueryParams;
 
         /// <summary>
@@ -3117,23 +2920,16 @@ namespace Unity.Services.Ccd.Management.Buckets
         [Preserve]
         public UpdateBucketEnvRequest(string environmentid, string bucketid, string projectid, Unity.Services.Ccd.Management.Models.CcdBucketUpdate ccdBucketUpdate)
         {
-            
             Environmentid = environmentid;
-            
-            Bucketid = bucketid;
-            
-            Projectid = projectid;
-            CcdBucketUpdate = ccdBucketUpdate;
-            
 
+            Bucketid = bucketid;
+
+            Projectid = projectid;
+
+            CcdBucketUpdate = ccdBucketUpdate;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}";
 
-            List<string> queryParams = new List<string>();
 
-            if (queryParams.Count > 0)
-            {
-                PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";
-            }
         }
 
         /// <summary>

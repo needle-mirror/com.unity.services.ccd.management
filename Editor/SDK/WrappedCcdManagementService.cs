@@ -14,6 +14,7 @@ using Unity.Services.Ccd.Management.Apis.Buckets;
 using Unity.Services.Ccd.Management.Apis.Content;
 using Unity.Services.Ccd.Management.Apis.Default;
 using Unity.Services.Ccd.Management.Apis.Entries;
+using Unity.Services.Ccd.Management.Apis.Environments;
 using Unity.Services.Ccd.Management.Apis.Orgs;
 using Unity.Services.Ccd.Management.Apis.Permissions;
 using Unity.Services.Ccd.Management.Apis.Releases;
@@ -22,6 +23,7 @@ using Unity.Services.Ccd.Management.Badges;
 using Unity.Services.Ccd.Management.Buckets;
 using Unity.Services.Ccd.Management.Content;
 using Unity.Services.Ccd.Management.Entries;
+using Unity.Services.Ccd.Management.Environments;
 using Unity.Services.Ccd.Management.Http;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Orgs;
@@ -46,6 +48,7 @@ namespace Unity.Services.Ccd.Management
         internal IContentApiClient ContentApiClient;
         internal IDefaultApiClient DefaultApiClient;
         internal IEntriesApiClient EntriesApiClient;
+        internal IEnvironmentsApiClient EnvironmentsApiClient;
         internal IOrgsApiClient OrgsApiClient;
         internal IPermissionsApiClient PermissionsApiClient;
         internal IReleasesApiClient ReleasesApiClient;
@@ -63,15 +66,16 @@ namespace Unity.Services.Ccd.Management
 
         internal WrappedCcdManagementService(
             IBadgesApiClient badgesApiClient, IBucketsApiClient bucketsApiClient, IContentApiClient contentApiClient,
-            IDefaultApiClient defaultApiClient, IEntriesApiClient entriesApiClient, IOrgsApiClient orgsApiClient,
-            IPermissionsApiClient permissionsApiClient, IReleasesApiClient releasesApiClient, IUsersApiClient usersApiClient,
-            Configuration configuration, IHttpClient httpClient)
+            IDefaultApiClient defaultApiClient, IEntriesApiClient entriesApiClient, IEnvironmentsApiClient environmentsApiClient,
+            IOrgsApiClient orgsApiClient, IPermissionsApiClient permissionsApiClient, IReleasesApiClient releasesApiClient,
+            IUsersApiClient usersApiClient, Configuration configuration, IHttpClient httpClient)
         {
             BadgesApiClient = badgesApiClient;
             BucketsApiClient = bucketsApiClient;
             ContentApiClient = contentApiClient;
             DefaultApiClient = defaultApiClient;
             EntriesApiClient = entriesApiClient;
+            EnvironmentsApiClient = environmentsApiClient;
             OrgsApiClient = orgsApiClient;
             PermissionsApiClient = permissionsApiClient;
             ReleasesApiClient = releasesApiClient;
@@ -352,6 +356,7 @@ namespace Unity.Services.Ccd.Management
             await TryCatchRequest(EntriesApiClient.DeleteEntryEnvAsync, request);
         }
 
+        // GetEntriesAsync(EntryOptions, string, int) is more performant and should be used instead.
         public async Task<List<CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, PageOptions pageOptions = default)
         {
             if (pageOptions == null)
@@ -359,7 +364,15 @@ namespace Unity.Services.Ccd.Management
                 pageOptions = new PageOptions();
             }
             var request = new GetEntriesEnvRequest(
-                CcdManagement.environmentid, entryOptions.BucketId.ToString(), CcdManagement.projectid, pageOptions.Page, null, pageOptions.PerPage, entryOptions.Path, entryOptions.Label, null, null, null);
+                CcdManagement.environmentid, entryOptions.BucketId.ToString(), CcdManagement.projectid, pageOptions.Page, Guid.Empty, pageOptions.PerPage, entryOptions.Path, entryOptions.Label, null, null, null);
+            var response = await TryCatchRequest(EntriesApiClient.GetEntriesEnvAsync, request);
+            return response.Result;
+        }
+
+        public async Task<List<CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, string startingAfter, int perPage = 10)
+        {
+            var request = new GetEntriesEnvRequest(
+                CcdManagement.environmentid, entryOptions.BucketId.ToString(), CcdManagement.projectid, 1, Guid.Parse(startingAfter), perPage, entryOptions.Path, entryOptions.Label, null, null, null);
             var response = await TryCatchRequest(EntriesApiClient.GetEntriesEnvAsync, request);
             return response.Result;
         }
@@ -556,9 +569,9 @@ namespace Unity.Services.Ccd.Management
                 request = new GetReleaseDiffEnvRequest(
                     CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
+                    CcdManagement.projectid,
                     releaseDiffOptions.FromReleaseId.ToString(),
                     null,
-                    CcdManagement.projectid,
                     releaseDiffOptions.ToReleaseId.ToString(),
                     null);
             }
@@ -567,11 +580,11 @@ namespace Unity.Services.Ccd.Management
                 request = new GetReleaseDiffEnvRequest(
                     CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
-                    null,
-                    releaseDiffOptions.FromReleaseNum.ToString(),
                     CcdManagement.projectid,
                     null,
-                    releaseDiffOptions.ToReleaseNum.ToString());
+                    releaseDiffOptions.FromReleaseNum,
+                    null,
+                    releaseDiffOptions.ToReleaseNum);
             }
             else
             {
@@ -597,8 +610,8 @@ namespace Unity.Services.Ccd.Management
                     CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
                     releaseDiffOptions.FromReleaseId.ToString(),
-                    null,
                     CcdManagement.projectid,
+                    null,
                     releaseDiffOptions.ToReleaseId.ToString(),
                     null,
                     pageOptions.Page,
@@ -611,11 +624,11 @@ namespace Unity.Services.Ccd.Management
                 request = new GetReleaseDiffEntriesEnvRequest(
                     CcdManagement.environmentid,
                     releaseDiffOptions.BucketId.ToString(),
-                    null,
-                    releaseDiffOptions.FromReleaseNum.ToString(),
                     CcdManagement.projectid,
                     null,
-                    releaseDiffOptions.ToReleaseNum.ToString(),
+                    releaseDiffOptions.FromReleaseNum,
+                    null,
+                    releaseDiffOptions.ToReleaseNum,
                     pageOptions.Page,
                     pageOptions.PerPage,
                     releaseDiffOptions.Path,
@@ -698,24 +711,51 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<CcdUserAPIKey> GetUserApiKeyAsync()
         {
-            var request = new GetUserApiKeyRequest(CloudProjectSettings.userId);
+            var request = new GetUserApiKeyRequest(CcdManagement.userId);
             var response = await TryCatchRequest(UsersApiClient.GetUserApiKeyAsync, request);
             return response.Result;
         }
 
         public async Task<CcdUser> GetUserInfoAsync()
         {
-            var request = new GetUserInfoRequest(CloudProjectSettings.userId);
+            var request = new GetUserInfoRequest(CcdManagement.userId);
             var response = await TryCatchRequest(UsersApiClient.GetUserInfoAsync, request);
             return response.Result;
         }
 
         public async Task<CcdUserAPIKey> RegenerateUserApiKeyAsync()
         {
-            var apiKeyResult = (await TryCatchRequest(UsersApiClient.GetUserApiKeyAsync, new GetUserApiKeyRequest(CloudProjectSettings.userId))).Result;
-            var request = new RegenerateUserApiKeyRequest(CloudProjectSettings.userId, new CcdUserAPIKey(apiKeyResult.Apikey));
+            var apiKeyResult = (await TryCatchRequest(UsersApiClient.GetUserApiKeyAsync, new GetUserApiKeyRequest(CcdManagement.userId))).Result;
+            var request = new RegenerateUserApiKeyRequest(CcdManagement.userId, new CcdUserAPIKey(apiKeyResult.Apikey));
             var response = await TryCatchRequest(UsersApiClient.RegenerateUserApiKeyAsync, request);
             return response.Result;
+        }
+
+        public async Task<List<CcdEnvironment>> ListEnvironmentsByProjectAsync(Guid projectId, PageOptions pageOptions = default)
+        {
+            if (pageOptions == null)
+            {
+                pageOptions = new PageOptions();
+            }
+            var request = new ListEnvironmentsByProjectRequest(
+                projectId.ToString(), pageOptions.Page, Guid.Empty, pageOptions.PerPage);
+            var response = await TryCatchRequest(EnvironmentsApiClient.ListEnvironmentsByProjectAsync, request, false);
+            return response.Result;
+        }
+
+        public async Task<CcdEnvironment> GetEnvironmentByNameAsync(Guid projectId, string name)
+        {
+            var pageOptions = new PageOptions();
+            pageOptions.PerPage = 100;
+            List<CcdEnvironment> environments = await ListEnvironmentsByProjectAsync(projectId, pageOptions);
+            foreach (var environment in environments)
+            {
+                if (environment.Name == name)
+                {
+                    return environment;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -725,6 +765,15 @@ namespace Unity.Services.Ccd.Management
         public void SetBasePath(string basePath)
         {
             Configuration.BasePath = basePath;
+        }
+
+        /// <summary>
+        /// Sets the http timeout in milliseconds
+        /// </summary>
+        /// <param name="timoutms">The number of milliseonds to wait before timing out.</param>
+        public void SetTimeout(int timeoutms)
+        {
+            Configuration.RequestTimeout = timeoutms;
         }
 
         // Helper function to reduce code duplication of try-catch
@@ -768,7 +817,13 @@ namespace Unity.Services.Ccd.Management
         }
 
         // Helper function to reduce code duplication of try-catch (generic version)
-        private async Task<Response<TReturn>> TryCatchRequest<TRequest, TReturn>(Func<TRequest, Configuration, Task<Response<TReturn>>> func, TRequest request)
+        private async Task<Response<TReturn>> TryCatchRequest<TRequest, TReturn>(
+            Func<TRequest, Configuration, Task<Response<TReturn>>> func, TRequest request)
+        {
+            return await TryCatchRequest(func, request, true);
+        }
+
+        private async Task<Response<TReturn>> TryCatchRequest<TRequest, TReturn>(Func<TRequest, Configuration, Task<Response<TReturn>>> func, TRequest request, bool doEnvironmentLookup)
         {
             if (string.IsNullOrEmpty(CcdManagement.projectid))
             {
@@ -783,9 +838,14 @@ namespace Unity.Services.Ccd.Management
                     await SetConfigurationAuthHeader(Configuration);
                 }
 
+
                 try
                 {
-                    await SetDefaultEnvironmentIfNotExists(Configuration);
+                    if (doEnvironmentLookup)
+                    {
+                        await SetDefaultEnvironmentIfNotExists(Configuration);
+                    }
+
                     response = await func(request, Configuration);
                 }
                 catch (HttpException<AuthorizationError>)
@@ -817,15 +877,16 @@ namespace Unity.Services.Ccd.Management
         {
             if (string.IsNullOrEmpty(CcdManagement.environmentid))
             {
-                var headers = config.Headers.ToDictionary(kvp => kvp.Key, kvp => string.Join(", ", kvp.Value));
-                var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbGET, $"{config.BasePath}/api/unity/v1/projects/{CcdManagement.projectid}/environments", null, headers, config.RequestTimeout ?? 0);
-                if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
+                var pageOptions = new PageOptions();
+                pageOptions.Page = 1;
+                pageOptions.PerPage = 100;
+                var environments = await ListEnvironmentsByProjectAsync(Guid.Parse(CcdManagement.projectid), pageOptions);
+                var defaultEnvironments = environments.Where(x => x.IsDefault == true);
+                if (defaultEnvironments.Count() == 0)
                 {
-                    throw new HttpException(clientResponse);
+                    throw new CcdManagementValidationException(200, "no default environment found");
                 }
-                var result = JsonConvert.DeserializeObject<Environments>(Encoding.Default.GetString(clientResponse.Data));
-                var defaultEnv = result.environments.Where(x => x.IsDefault == true).First();
-                CcdManagement.SetEnvironmentId(defaultEnv.Id);
+                CcdManagement.SetEnvironmentId(defaultEnvironments.First().Id.ToString());
             }
         }
 
@@ -862,9 +923,14 @@ namespace Unity.Services.Ccd.Management
             HttpException<ValidationError> validationException = exception as HttpException<ValidationError>;
             if (validationException != null)
             {
+                var details = new List<object>();
+                foreach (var detail in validationException.ActualError.Details)
+                {
+                    details.Add(detail);
+                }
                 throw new CcdManagementValidationException(code, $"{validationException.ActualError.Title}. {String.Join(", ", validationException.ActualError.Details)}", exception)
                 {
-                    Details = validationException.ActualError.Details
+                    Details = details
                 };
             }
             HttpException<ServiceUnavailableError> serviceException = exception as HttpException<ServiceUnavailableError>;
@@ -951,12 +1017,12 @@ namespace Unity.Services.Ccd.Management
 
         private async Task SetConfigurationAuthHeader(Configuration config)
         {
-            if (string.IsNullOrEmpty(CloudProjectSettings.accessToken))
+            if (string.IsNullOrEmpty(CcdManagement.accessToken))
             {
                 throw new CcdManagementException(CommonErrorCodes.InvalidRequest, SERVICES_ERROR_MSG);
             }
 
-            var jsonString = JsonConvert.SerializeObject(new Token() { TokenValue = CloudProjectSettings.accessToken });
+            var jsonString = JsonConvert.SerializeObject(new Token() { TokenValue = CcdManagement.accessToken });
             var url = $"{config.BasePath}/api/auth/v1/genesis-token-exchange/unity/";
             var headers = config.Headers.ToDictionary(kvp => kvp.Key, kvp => string.Join(", ", kvp.Value));
             if (headers.ContainsKey(CONTENT_TYPE_HEADER))
@@ -967,7 +1033,7 @@ namespace Unity.Services.Ccd.Management
             {
                 headers[CONTENT_TYPE_HEADER] = "application/json";
             }
-            var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbPOST, url, Encoding.Default.GetBytes(jsonString), headers, config.RequestTimeout.Value);
+            var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbPOST, url, Encoding.Default.GetBytes(jsonString), headers, config.RequestTimeout.Value, config.RetryPolicyConfiguration, config.StatusCodePolicyConfiguration);
             if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
             {
                 throw new HttpException(clientResponse);
@@ -1008,36 +1074,10 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// Access Token
         /// </summary>
-        private class Token
+        internal class Token
         {
             [JsonProperty("token")]
             public string TokenValue;
-        }
-
-        /// <summary>
-        /// Environment Wrapper Object
-        /// </summary>
-        private class Environments
-        {
-            [JsonProperty("results")]
-            public List<Environment> environments;
-        }
-
-        /// <summary>
-        /// Identity API Environment Object
-        /// </summary>
-        private class Environment
-        {
-            [JsonProperty("id")]
-            public string Id;
-            [JsonProperty("projectId")]
-            public string ProjectId;
-            [JsonProperty("projectGenesisId")]
-            public string ProjectGenesisId;
-            [JsonProperty("name")]
-            public string Name;
-            [JsonProperty("isDefault")]
-            public bool IsDefault;
         }
     }
 }

@@ -14,6 +14,7 @@ using Unity.Services.Ccd.Management.Apis.Buckets;
 using Unity.Services.Ccd.Management.Apis.Content;
 using Unity.Services.Ccd.Management.Apis.Default;
 using Unity.Services.Ccd.Management.Apis.Entries;
+using Unity.Services.Ccd.Management.Apis.Environments;
 using Unity.Services.Ccd.Management.Apis.Orgs;
 using Unity.Services.Ccd.Management.Apis.Permissions;
 using Unity.Services.Ccd.Management.Apis.Releases;
@@ -54,6 +55,9 @@ namespace Unity.Services.Ccd.Management
         
         /// <summary> Accessor for EntriesApi methods.</summary>
         IEntriesApiClient EntriesApi { get; set; }
+        
+        /// <summary> Accessor for EnvironmentsApi methods.</summary>
+        IEnvironmentsApiClient EnvironmentsApi { get; set; }
         
         /// <summary> Accessor for OrgsApi methods.</summary>
         IOrgsApiClient OrgsApi { get; set; }

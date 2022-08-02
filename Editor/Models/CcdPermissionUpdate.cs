@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Scripting;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -40,21 +41,21 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// 
+        /// Parameter action of CcdPermissionUpdate
         /// </summary>
         [Preserve]
         [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name = "action", IsRequired = true, EmitDefaultValue = true)]
         public ActionOptions Action{ get; }
+        
         /// <summary>
-        /// 
+        /// Parameter permission of CcdPermissionUpdate
         /// </summary>
         [Preserve]
         [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name = "permission", IsRequired = true, EmitDefaultValue = true)]
         public PermissionOptions Permission{ get; }
     
-
         /// <summary>
         /// Defines Action
         /// </summary>
@@ -67,9 +68,7 @@ namespace Unity.Services.Ccd.Management.Models
             /// </summary>
             [EnumMember(Value = "write")]
             Write = 1
-
         }
-
 
         /// <summary>
         /// Defines Permission
@@ -83,15 +82,41 @@ namespace Unity.Services.Ccd.Management.Models
             /// </summary>
             [EnumMember(Value = "allow")]
             Allow = 1,
-
             /// <summary>
             /// Enum Deny for value: deny
             /// </summary>
             [EnumMember(Value = "deny")]
             Deny = 2
-
         }
 
+        /// <summary>
+        /// Formats a CcdPermissionUpdate into a string of key-value pairs for use as a path parameter.
+        /// </summary>
+        /// <returns>Returns a string representation of the key-value pairs.</returns>
+        internal string SerializeAsPathParam()
+        {
+            var serializedModel = "";
+
+            serializedModel += "action," + Action + ",";
+            serializedModel += "permission," + Permission;
+            return serializedModel;
+        }
+
+        /// <summary>
+        /// Returns a CcdPermissionUpdate as a dictionary of key-value pairs for use as a query parameter.
+        /// </summary>
+        /// <returns>Returns a dictionary of string key-value pairs.</returns>
+        internal Dictionary<string, string> GetAsQueryParam()
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            var actionStringValue = Action.ToString();
+            dictionary.Add("action", actionStringValue);
+            
+            var permissionStringValue = Permission.ToString();
+            dictionary.Add("permission", permissionStringValue);
+            
+            return dictionary;
+        }
     }
 }
-

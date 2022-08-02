@@ -23,6 +23,8 @@ using Unity.Services.Ccd.Management.Apis.Default;
 
 using Unity.Services.Ccd.Management.Apis.Entries;
 
+using Unity.Services.Ccd.Management.Apis.Environments;
+
 using Unity.Services.Ccd.Management.Apis.Orgs;
 
 using Unity.Services.Ccd.Management.Apis.Permissions;
@@ -83,6 +85,8 @@ namespace Unity.Services.Ccd.Management
             
             EntriesApi = new EntriesApiClient(httpClient);
             
+            EnvironmentsApi = new EnvironmentsApiClient(httpClient);
+            
             OrgsApi = new OrgsApiClient(httpClient);
             
             PermissionsApi = new PermissionsApiClient(httpClient);
@@ -111,6 +115,9 @@ namespace Unity.Services.Ccd.Management
         
         /// <summary> Instance of IEntriesApiClient interface</summary>
         public IEntriesApiClient EntriesApi { get; set; }
+        
+        /// <summary> Instance of IEnvironmentsApiClient interface</summary>
+        public IEnvironmentsApiClient EnvironmentsApi { get; set; }
         
         /// <summary> Instance of IOrgsApiClient interface</summary>
         public IOrgsApiClient OrgsApi { get; set; }
