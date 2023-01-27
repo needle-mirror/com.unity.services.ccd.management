@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Unity.Services.Ccd.Management.Apis.Badges;
 using Unity.Services.Ccd.Management.Apis.Buckets;
 using Unity.Services.Ccd.Management.Apis.Content;
@@ -31,9 +31,9 @@ using Unity.Services.Ccd.Management.Permissions;
 using Unity.Services.Ccd.Management.Releases;
 using Unity.Services.Ccd.Management.Users;
 using Unity.Services.Core;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using HttpClient = System.Net.Http.HttpClient;
 
 [assembly: InternalsVisibleTo("Unity.Services.Ccd.Management.Editor.Tests")]
 namespace Unity.Services.Ccd.Management
@@ -55,7 +55,8 @@ namespace Unity.Services.Ccd.Management
         internal IUsersApiClient UsersApiClient;
         internal Configuration Configuration;
         private IHttpClient _HttpClient;
-        private TusClient _TusClient;
+        private HttpClient m_StreamContentClient;
+        private ConcurrentDictionary<Guid, Tuple<string, string>> m_SignedUrls = new ConcurrentDictionary<Guid, Tuple<string, string>>();
 
         //CCD Management Error base value (used to elevate standard errors if unhandled)
         internal const int CCD_MANAGEMENT_ERROR_BASE_VALUE = 19000;
@@ -63,6 +64,7 @@ namespace Unity.Services.Ccd.Management
         internal const string CONTENT_TYPE_HEADER = "Content-Type";
         internal const string CONTENT_LENGTH_HEADER = "Content-Length";
         internal const string SERVICES_ERROR_MSG = "Cloud Services must enabled and connected to a Unity Cloud Project.";
+        internal const string MISSING_SIGNED_URL = "Missing signed URL needed for uploading the entry's content.";
 
         internal WrappedCcdManagementService(
             IBadgesApiClient badgesApiClient, IBucketsApiClient bucketsApiClient, IContentApiClient contentApiClient,
@@ -82,7 +84,7 @@ namespace Unity.Services.Ccd.Management
             UsersApiClient = usersApiClient;
             Configuration = configuration;
             _HttpClient = httpClient;
-            _TusClient = new TusClient();
+            m_StreamContentClient = new HttpClient();
         }
 
         public async Task DeleteBadgeAsync(Guid bucketId, string badgeName)
@@ -243,7 +245,9 @@ namespace Unity.Services.Ccd.Management
                 request.ConstructUrl(config.BasePath),
                 null,
                 headers,
-                config.RequestTimeout.Value);
+                config.RequestTimeout.Value,
+                config.RetryPolicyConfiguration,
+                config.StatusCodePolicyConfiguration);
 
             if (response.IsHttpError || response.IsNetworkError)
             {
@@ -295,58 +299,91 @@ namespace Unity.Services.Ccd.Management
 
         public async Task UploadContentAsync(UploadContentOptions uploadContentOptions)
         {
-            await TryCatchRequest(InternalUploadAsync, uploadContentOptions);
+            if (m_SignedUrls.ContainsKey(uploadContentOptions.EntryId))
+            {
+                await InternalUploadAsync(uploadContentOptions);
+            }
         }
 
-        private async Task<Response> InternalUploadAsync(UploadContentOptions request, Configuration config)
+        private async Task InternalUploadAsync(UploadContentOptions uploadContentOptions)
         {
-            var internalRequest = new InternalUploadContentRequest(request, config);
-            string auth;
-            config.Headers.TryGetValue(AUTH_HEADER, out auth);
-            if (!_TusClient.AdditionalHeaders.ContainsKey(AUTH_HEADER))
+            var(signedUrl, contentType) = m_SignedUrls[uploadContentOptions.EntryId];
+            var streamContent = new StreamContent(uploadContentOptions.File);
+            if (!string.IsNullOrEmpty(contentType))
             {
-                _TusClient.AdditionalHeaders.Add(AUTH_HEADER, auth);
+                streamContent.Headers.Add(CONTENT_TYPE_HEADER, contentType);
             }
-            var uploadOp = _TusClient.UploadAsync(internalRequest.Url, internalRequest.File, internalRequest.ChunkSize);
-            uploadOp.Progressed += internalRequest.OnProgressed;
-            var uploadResponse = await uploadOp;
-            var response = TusClient.MapTusHttpResponsesToHttpResponse(uploadResponse);
-            if (response.IsHttpError || response.IsNetworkError)
+            var response = await m_StreamContentClient.PutAsync(signedUrl, streamContent);
+            if (!response.IsSuccessStatusCode)
             {
-                //Custom call so we want to catch Authorization error for retry
-                if (response.StatusCode == (int)HttpStatusCode.Forbidden)
-                {
-                    throw new HttpException<AuthorizationError>(
-                        response,
-                        new AuthorizationError(
-                            response.ErrorMessage,
-                            (int)response.StatusCode,
-                            Encoding.Default.GetString(response.Data)));
-                }
-                else
-                {
-                    throw new HttpException(response);
-                }
+                ResolveErrorWrapping((int)response.StatusCode, new Exception(response.ReasonPhrase));
             }
-            return new Response(response);
+            m_SignedUrls.TryRemove(uploadContentOptions.EntryId, out _);
         }
 
         public async Task<CcdEntry> CreateEntryAsync(Guid bucketId, EntryModelOptions entry)
         {
-            var entryCreate = new CcdEntryCreate(entry.Path, entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, false);
+            var entryCreate = new CcdEntryCreate(entry.Path, entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, true);
             var request = new CreateEntryEnvRequest(
                 CcdManagement.environmentid, bucketId.ToString(), CcdManagement.projectid, entryCreate);
             var response = await TryCatchRequest(EntriesApiClient.CreateEntryEnvAsync, request);
+            if (string.IsNullOrEmpty(response.Result.SignedUrl))
+            {
+                throw new Exception(MISSING_SIGNED_URL);
+            }
+            m_SignedUrls[response.Result.Entryid] = new Tuple<string, string>(response.Result.SignedUrl, response.Result.ContentType);
             return response.Result;
         }
 
         public async Task<CcdEntry> CreateOrUpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry)
         {
-            var entryCreateOrUpdate = new CcdEntryCreateByPath(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
+            var needSignedUrl = !await IsUpToDate(entryByPathOptions, entry);
+            var entryCreateOrUpdate = new CcdEntryCreateByPath(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, needSignedUrl);
             var request = new CreateOrUpdateEntryByPathEnvRequest(
                 CcdManagement.environmentid, entryByPathOptions.BucketId.ToString(), entryByPathOptions.Path, CcdManagement.projectid, entryCreateOrUpdate, entry.UpdateIfExists);
             var response = await TryCatchRequest(EntriesApiClient.CreateOrUpdateEntryByPathEnvAsync, request);
+            switch (needSignedUrl)
+            {
+                case true when string.IsNullOrEmpty(response.Result.SignedUrl):
+                    throw new Exception(MISSING_SIGNED_URL);
+                case true:
+                    m_SignedUrls[response.Result.Entryid] = new Tuple<string, string>(response.Result.SignedUrl, response.Result.ContentType);
+                    break;
+            }
             return response.Result;
+        }
+
+        private async Task<bool> IsUpToDate(EntryByPathOptions entryByPathOptions, EntryModelOptions entry)
+        {
+            try
+            {
+                var remoteEntry = await GetEntryByPathAsync(entryByPathOptions);
+                return IsUpToDate(remoteEntry, entry.ContentSize, entry.ContentHash);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> IsUpToDate(EntryOptions entryOptions, EntryModelOptions entry)
+        {
+            try
+            {
+                var remoteEntry = await GetEntryAsync(entryOptions.BucketId, entryOptions.EntryId);
+                return IsUpToDate(remoteEntry, entry.ContentSize, entry.ContentHash);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private static bool IsUpToDate(CcdEntry remoteEntry, int localContentSize, string localContentHash)
+        {
+            var sameSize = remoteEntry.ContentSize == localContentSize;
+            var sameHash = !string.IsNullOrEmpty(remoteEntry.ContentHash) && remoteEntry.ContentHash == localContentHash;
+            return remoteEntry.Complete && sameSize && sameHash;
         }
 
         public async Task DeleteEntryAsync(Guid bucketId, Guid entryId)
@@ -429,7 +466,8 @@ namespace Unity.Services.Ccd.Management
 
         public async Task<CcdEntry> UpdateEntryAsync(EntryOptions entryOptions, EntryModelOptions entry)
         {
-            var entryUpdate = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
+            var needSignedUrl = !await IsUpToDate(entryOptions, entry);
+            var entryUpdate = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, needSignedUrl);
             var request = new UpdateEntryEnvRequest(
                 CcdManagement.environmentid,
                 entryOptions.BucketId.ToString(),
@@ -437,12 +475,21 @@ namespace Unity.Services.Ccd.Management
                 CcdManagement.projectid,
                 entryUpdate);
             var response = await TryCatchRequest(EntriesApiClient.UpdateEntryEnvAsync, request);
+            switch (needSignedUrl)
+            {
+                case true when string.IsNullOrEmpty(response.Result.SignedUrl):
+                    throw new Exception(MISSING_SIGNED_URL);
+                case true:
+                    m_SignedUrls[response.Result.Entryid] = new Tuple<string, string>(response.Result.SignedUrl, response.Result.ContentType);
+                    break;
+            }
             return response.Result;
         }
 
         public async Task<CcdEntry> UpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry)
         {
-            var entryUpdateByPath = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata);
+            var needSignedUrl = !await IsUpToDate(entryByPathOptions, entry);
+            var entryUpdateByPath = new CcdEntryUpdate(entry.ContentHash, entry.ContentSize, entry.ContentType, entry.Labels, entry.Metadata, needSignedUrl);
             var request = new UpdateEntryByPathEnvRequest(
                 CcdManagement.environmentid,
                 entryByPathOptions.BucketId.ToString(),
@@ -450,6 +497,14 @@ namespace Unity.Services.Ccd.Management
                 CcdManagement.projectid,
                 entryUpdateByPath);
             var response = await TryCatchRequest(EntriesApiClient.UpdateEntryByPathEnvAsync, request);
+            switch (needSignedUrl)
+            {
+                case true when string.IsNullOrEmpty(response.Result.SignedUrl):
+                    throw new Exception(MISSING_SIGNED_URL);
+                case true:
+                    m_SignedUrls[response.Result.Entryid] = new Tuple<string, string>(response.Result.SignedUrl, response.Result.ContentType);
+                    break;
+            }
             return response.Result;
         }
 
@@ -472,10 +527,16 @@ namespace Unity.Services.Ccd.Management
         private async Task<Response<ProjectData>> InternalGetOrgData(string projectId, Configuration config)
         {
             ProjectData projectData;
-            //HttpRequestMessage request = new HttpRequestMessage();
             var url = $"{config.BasePath}/api/unity/v1/projects/{projectId}";
             var headers = config.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbGET, url, null, headers, config.RequestTimeout.Value);
+            var clientResponse = await _HttpClient.MakeRequestAsync(
+                UnityWebRequest.kHttpVerbGET,
+                url,
+                null,
+                headers,
+                config.RequestTimeout.Value,
+                config.RetryPolicyConfiguration,
+                config.StatusCodePolicyConfiguration);
             if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
             {
                 //Custom call so we want to catch Authorization error for retry
@@ -582,9 +643,9 @@ namespace Unity.Services.Ccd.Management
                     releaseDiffOptions.BucketId.ToString(),
                     CcdManagement.projectid,
                     null,
-                    releaseDiffOptions.FromReleaseNum,
+                    releaseDiffOptions.FromReleaseNum.ToString(),
                     null,
-                    releaseDiffOptions.ToReleaseNum);
+                    releaseDiffOptions.ToReleaseNum.ToString());
             }
             else
             {
@@ -626,9 +687,9 @@ namespace Unity.Services.Ccd.Management
                     releaseDiffOptions.BucketId.ToString(),
                     CcdManagement.projectid,
                     null,
-                    releaseDiffOptions.FromReleaseNum,
+                    releaseDiffOptions.FromReleaseNum.ToString(),
                     null,
-                    releaseDiffOptions.ToReleaseNum,
+                    releaseDiffOptions.ToReleaseNum.ToString(),
                     pageOptions.Page,
                     pageOptions.PerPage,
                     releaseDiffOptions.Path,
@@ -1033,7 +1094,14 @@ namespace Unity.Services.Ccd.Management
             {
                 headers[CONTENT_TYPE_HEADER] = "application/json";
             }
-            var clientResponse = await _HttpClient.MakeRequestAsync(UnityWebRequest.kHttpVerbPOST, url, Encoding.Default.GetBytes(jsonString), headers, config.RequestTimeout.Value, config.RetryPolicyConfiguration, config.StatusCodePolicyConfiguration);
+            var clientResponse = await _HttpClient.MakeRequestAsync(
+                UnityWebRequest.kHttpVerbPOST,
+                url,
+                Encoding.Default.GetBytes(jsonString),
+                headers,
+                config.RequestTimeout.Value,
+                config.RetryPolicyConfiguration,
+                config.StatusCodePolicyConfiguration);
             if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
             {
                 throw new HttpException(clientResponse);

@@ -1307,7 +1307,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="perPage">Items Per Page</param>
         /// <param name="path">Path</param>
         /// <param name="includeStates">Include change states, one or more can be specified. The default is all states.</param>
-        /// <param name="contentType">conent type</param>
+        /// <param name="contentType">content type</param>
         /// <param name="label">Label</param>
         /// <param name="complete">is content upload completed or not</param>
         /// <param name="sortBy">Sort By</param>
@@ -1477,13 +1477,13 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Fromreleaseid { get; }
         /// <summary>Accessor for fromreleasenum </summary>
         [Preserve]
-        public int? Fromreleasenum { get; }
+        public string Fromreleasenum { get; }
         /// <summary>Accessor for toreleaseid </summary>
         [Preserve]
         public string Toreleaseid { get; }
         /// <summary>Accessor for toreleasenum </summary>
         [Preserve]
-        public int? Toreleasenum { get; }
+        public string Toreleasenum { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
         public int? Page { get; }
@@ -1528,13 +1528,13 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="perPage">Items Per Page</param>
         /// <param name="path">Path</param>
         /// <param name="includeStates">Include change states, one or more can be specified. The default is all states.</param>
-        /// <param name="contentType">conent type</param>
+        /// <param name="contentType">content type</param>
         /// <param name="label">Label</param>
         /// <param name="complete">is content upload completed or not</param>
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetReleaseDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), int? fromreleasenum = default(int?), string toreleaseid = default(string), int? toreleasenum = default(int?), int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetReleaseDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), string fromreleasenum = default(string), string toreleaseid = default(string), string toreleasenum = default(string), int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 
@@ -1563,14 +1563,18 @@ namespace Unity.Services.Ccd.Management.Releases
             {
                 queryParams = AddParamsToQueryParams(queryParams, "fromreleaseid", Fromreleaseid);
             }
-            var fromreleasenumStringValue = Fromreleasenum.ToString();
-            queryParams = AddParamsToQueryParams(queryParams, "fromreleasenum", fromreleasenumStringValue);
+            if(!string.IsNullOrEmpty(Fromreleasenum))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "fromreleasenum", Fromreleasenum);
+            }
             if(!string.IsNullOrEmpty(Toreleaseid))
             {
                 queryParams = AddParamsToQueryParams(queryParams, "toreleaseid", Toreleaseid);
             }
-            var toreleasenumStringValue = Toreleasenum.ToString();
-            queryParams = AddParamsToQueryParams(queryParams, "toreleasenum", toreleasenumStringValue);
+            if(!string.IsNullOrEmpty(Toreleasenum))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "toreleasenum", Toreleasenum);
+            }
             var pageStringValue = Page.ToString();
             queryParams = AddParamsToQueryParams(queryParams, "page", pageStringValue);
             var perPageStringValue = PerPage.ToString();
@@ -1700,13 +1704,13 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Fromreleaseid { get; }
         /// <summary>Accessor for fromreleasenum </summary>
         [Preserve]
-        public int? Fromreleasenum { get; }
+        public string Fromreleasenum { get; }
         /// <summary>Accessor for toreleaseid </summary>
         [Preserve]
         public string Toreleaseid { get; }
         /// <summary>Accessor for toreleasenum </summary>
         [Preserve]
-        public int? Toreleasenum { get; }
+        public string Toreleasenum { get; }
         string PathAndQueryParams;
 
         /// <summary>
@@ -1721,7 +1725,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="toreleaseid">To Release ID, when not specified the most recent state of the bucket will be used. Either toreleaseid or toreleasenum can be specified, but not both. </param>
         /// <param name="toreleasenum">To Release ID, when not specified the most recent state of the bucket will be used. Either toreleaseid or toreleasenum can be specified, but not both. </param>
         [Preserve]
-        public GetReleaseDiffEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), int? fromreleasenum = default(int?), string toreleaseid = default(string), int? toreleasenum = default(int?))
+        public GetReleaseDiffEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), string fromreleasenum = default(string), string toreleaseid = default(string), string toreleasenum = default(string))
         {
             Environmentid = environmentid;
 
@@ -1741,14 +1745,18 @@ namespace Unity.Services.Ccd.Management.Releases
             {
                 queryParams = AddParamsToQueryParams(queryParams, "fromreleaseid", Fromreleaseid);
             }
-            var fromreleasenumStringValue = Fromreleasenum.ToString();
-            queryParams = AddParamsToQueryParams(queryParams, "fromreleasenum", fromreleasenumStringValue);
+            if(!string.IsNullOrEmpty(Fromreleasenum))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "fromreleasenum", Fromreleasenum);
+            }
             if(!string.IsNullOrEmpty(Toreleaseid))
             {
                 queryParams = AddParamsToQueryParams(queryParams, "toreleaseid", Toreleaseid);
             }
-            var toreleasenumStringValue = Toreleasenum.ToString();
-            queryParams = AddParamsToQueryParams(queryParams, "toreleasenum", toreleasenumStringValue);
+            if(!string.IsNullOrEmpty(Toreleasenum))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "toreleasenum", Toreleasenum);
+            }
             if (queryParams.Count > 0)
             {
                 PathAndQueryParams = $"{PathAndQueryParams}?{string.Join("&", queryParams)}";

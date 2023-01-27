@@ -48,7 +48,7 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// Sets the http timeout in milliseconds
         /// </summary>
-        /// <param name="timoutms">The number of milliseonds to wait before timing out.</param>
+        /// <param name="timeoutms">The number of milliseonds to wait before timing out.</param>
         public static void SetTimeout(int timeoutms)
         {
             configuration.RequestTimeout = timeoutms;

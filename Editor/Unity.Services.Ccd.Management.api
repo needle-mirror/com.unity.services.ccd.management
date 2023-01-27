@@ -15,7 +15,7 @@ namespace Unity.Services.Ccd.Management
 
     public static class CcdManagement
     {
-        public static Unity.Services.Ccd.Management.ICcdManagementServiceSdk Instance { get; }
+        public static ICcdManagementServiceSdk Instance { get; }
         public static void SetBasePath(string basePath);
         public static void SetEnvironmentId(string envId);
         public static void SetTimeout(int timeoutms);
@@ -41,10 +41,10 @@ namespace Unity.Services.Ccd.Management
 
     public struct CcdManagementIdentifier : Unity.Services.Core.Editor.IEditorGameServiceIdentifier
     {
-        public virtual string GetKey();
+        public string GetKey();
     }
 
-    public class CcdManagementValidationException : Unity.Services.Ccd.Management.CcdManagementException
+    public class CcdManagementValidationException : CcdManagementException
     {
         public System.Collections.Generic.List<object> Details;
         public CcdManagementValidationException(int reason, string message) {}
@@ -69,17 +69,17 @@ namespace Unity.Services.Ccd.Management
 
     public class CreatePermissionsOption
     {
-        public Unity.Services.Ccd.Management.Models.CcdPermissionCreate.ActionOptions Action { get; set; }
+        public Models.CcdPermissionCreate.ActionOptions Action { get; set; }
         public System.Guid BucketId { get; set; }
-        public Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions Permission { get; set; }
-        public CreatePermissionsOption(System.Guid bucketId, Unity.Services.Ccd.Management.Models.CcdPermissionCreate.ActionOptions action, Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions permission) {}
+        public Models.CcdPermissionCreate.PermissionOptions Permission { get; set; }
+        public CreatePermissionsOption(System.Guid bucketId, Models.CcdPermissionCreate.ActionOptions action, Models.CcdPermissionCreate.PermissionOptions permission) {}
     }
 
     public class CreateReleaseOptions
     {
         public System.Guid BucketId { get; set; }
-        public System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntryCreate> Entries { get; set; }
-        public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; set; }
+        public System.Collections.Generic.List<Models.CcdReleaseEntryCreate> Entries { get; set; }
+        public Http.JsonObject Metadata { get; set; }
         public string Notes { get; set; }
         public System.DateTime Snapshot { get; set; }
         public CreateReleaseOptions(System.Guid bucketId) {}
@@ -107,7 +107,7 @@ namespace Unity.Services.Ccd.Management
         public int ContentSize { get; set; }
         public string ContentType { get; set; }
         public System.Collections.Generic.List<string> Labels { get; set; }
-        public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; set; }
+        public Http.JsonObject Metadata { get; set; }
         public string Path { get; set; }
         public bool UpdateIfExists { get; set; }
         public EntryModelOptions(string path, string contentHash, int contentSize) {}
@@ -133,69 +133,68 @@ namespace Unity.Services.Ccd.Management
 
     public enum HashingImplementation
     {
-        public const Unity.Services.Ccd.Management.HashingImplementation SHA1CryptoServiceProvider = 1;
-        public const Unity.Services.Ccd.Management.HashingImplementation Sha1Managed = 0;
-        public int value__;
+        SHA1CryptoServiceProvider = 1,
+        Sha1Managed = 0,
     }
 
     public interface ICcdManagementServiceSdk
     {
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdBadge> AssignBadgeAsync(Unity.Services.Ccd.Management.AssignBadgeOptions assignBadgeOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdBucket> CreateBucketAsync(Unity.Services.Ccd.Management.CreateBucketOptions createBucketOptions);
-        public abstract System.Threading.Tasks.Task<string> CreateContentAsync(System.Guid bucketId, System.Guid entryId);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> CreateEntryAsync(System.Guid bucketId, Unity.Services.Ccd.Management.EntryModelOptions entry);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> CreateOrUpdateEntryByPathAsync(Unity.Services.Ccd.Management.EntryByPathOptions entryByPathOptions, Unity.Services.Ccd.Management.EntryModelOptions entry);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdPermission> CreatePermissionAsync(Unity.Services.Ccd.Management.CreatePermissionsOption permissionsOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdRelease> CreateReleaseAsync(Unity.Services.Ccd.Management.CreateReleaseOptions createReleaseOptions);
-        public abstract System.Threading.Tasks.Task DeleteBadgeAsync(System.Guid bucketId, string badgeName);
-        public abstract System.Threading.Tasks.Task DeleteBucketAsync(System.Guid bucketId);
-        public abstract System.Threading.Tasks.Task DeleteEntryAsync(System.Guid bucketId, System.Guid entryId);
-        public abstract System.Threading.Tasks.Task DeletePermissionAsync(Unity.Services.Ccd.Management.UpdatePermissionsOption permissionsOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdBadge> GetBadgeAsync(System.Guid bucketId, string badgeName);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdBucket> GetBucketAsync(System.Guid bucketId);
-        public abstract System.Threading.Tasks.Task<System.IO.Stream> GetContentAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.ContentStatus> GetContentStatusAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.ContentStatus> GetContentStatusVersionAsync(Unity.Services.Ccd.Management.EntryVersionsOptions entryVersionsOption);
-        public abstract System.Threading.Tasks.Task<System.IO.Stream> GetContentVersionAsync(Unity.Services.Ccd.Management.EntryVersionsOptions entryVersionsOption);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion> GetDiffAsync(System.Guid bucketId);
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntry>> GetDiffEntriesAsync(Unity.Services.Ccd.Management.DiffEntriesOptions diffEntriesOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdEntry>> GetEntriesAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdEntry>> GetEntriesAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions, string startingAfter, int perPage = 10);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> GetEntryAsync(System.Guid bucketId, System.Guid entryId);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> GetEntryByPathAsync(Unity.Services.Ccd.Management.EntryByPathOptions entryByPathOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> GetEntryVersionAsync(Unity.Services.Ccd.Management.EntryVersionsOptions entryVersionsOption);
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdVersion>> GetEntryVersionsAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEnvironment> GetEnvironmentByNameAsync(System.Guid projectId, string name);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdOrg> GetOrgAsync();
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdOrgUsage> GetOrgUsageAsync();
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdPermission>> GetPermissionsAsync(System.Guid bucketId);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdRelease> GetReleaseAsync(System.Guid bucketId, System.Guid releaseId);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdRelease> GetReleaseByBadgeAsync(System.Guid bucketId, string badgeName);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion> GetReleaseDiffAsync(Unity.Services.Ccd.Management.ReleaseDiffOptions releaseDiffOptions);
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntry>> GetReleaseDiffEntriesAsync(Unity.Services.Ccd.Management.ReleaseDiffOptions releaseDiffOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntry>> GetReleaseEntriesAsync(Unity.Services.Ccd.Management.ReleaseEntryOptions releaseEntryOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntry>> GetReleaseEntriesByBadgeAsync(Unity.Services.Ccd.Management.ReleaseByBadgeOptions releaseByBadgeOptions, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdRelease>> GetReleasesAsync(System.Guid bucketId, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdMetricQuantity> GetStatsAsync(Unity.Services.Ccd.Management.ReleaseStatsOptions releaseStatsOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdUserAPIKey> GetUserApiKeyAsync();
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdUser> GetUserInfoAsync();
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdBadge>> ListBadgesAsync(System.Guid bucketId, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdBucket>> ListBucketsAsync(Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdEnvironment>> ListEnvironmentsByProjectAsync(System.Guid projectId, Unity.Services.Ccd.Management.PageOptions pageOptions = default(Unity.Services.Ccd.Management.PageOptions));
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdRelease> PromoteBucketAsync(Unity.Services.Ccd.Management.PromoteBucketOptions promoteBucketOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdUserAPIKey> RegenerateUserApiKeyAsync();
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdBucket> UpdateBucketAsync(Unity.Services.Ccd.Management.UpdateBucketOptions updateBucketOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> UpdateEntryAsync(Unity.Services.Ccd.Management.EntryOptions entryOptions, Unity.Services.Ccd.Management.EntryModelOptions entry);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdEntry> UpdateEntryByPathAsync(Unity.Services.Ccd.Management.EntryByPathOptions entryByPathOptions, Unity.Services.Ccd.Management.EntryModelOptions entry);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdPermission> UpdatePermissionAsync(Unity.Services.Ccd.Management.UpdatePermissionsOption permissionsOptions);
-        public abstract System.Threading.Tasks.Task<Unity.Services.Ccd.Management.Models.CcdRelease> UpdateReleaseAsync(System.Guid bucketId, System.Guid releaseId, string notes);
-        public abstract System.Threading.Tasks.Task UploadContentAsync(Unity.Services.Ccd.Management.UploadContentOptions uploadContentOptions);
+        public System.Threading.Tasks.Task<Models.CcdBadge> AssignBadgeAsync(AssignBadgeOptions assignBadgeOptions);
+        public System.Threading.Tasks.Task<Models.CcdBucket> CreateBucketAsync(CreateBucketOptions createBucketOptions);
+        public System.Threading.Tasks.Task<string> CreateContentAsync(System.Guid bucketId, System.Guid entryId);
+        public System.Threading.Tasks.Task<Models.CcdEntry> CreateEntryAsync(System.Guid bucketId, EntryModelOptions entry);
+        public System.Threading.Tasks.Task<Models.CcdEntry> CreateOrUpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry);
+        public System.Threading.Tasks.Task<Models.CcdPermission> CreatePermissionAsync(CreatePermissionsOption permissionsOptions);
+        public System.Threading.Tasks.Task<Models.CcdRelease> CreateReleaseAsync(CreateReleaseOptions createReleaseOptions);
+        public System.Threading.Tasks.Task DeleteBadgeAsync(System.Guid bucketId, string badgeName);
+        public System.Threading.Tasks.Task DeleteBucketAsync(System.Guid bucketId);
+        public System.Threading.Tasks.Task DeleteEntryAsync(System.Guid bucketId, System.Guid entryId);
+        public System.Threading.Tasks.Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions);
+        public System.Threading.Tasks.Task<Models.CcdBadge> GetBadgeAsync(System.Guid bucketId, string badgeName);
+        public System.Threading.Tasks.Task<Models.CcdBucket> GetBucketAsync(System.Guid bucketId);
+        public System.Threading.Tasks.Task<System.IO.Stream> GetContentAsync(EntryOptions entryOptions);
+        public System.Threading.Tasks.Task<ContentStatus> GetContentStatusAsync(EntryOptions entryOptions);
+        public System.Threading.Tasks.Task<ContentStatus> GetContentStatusVersionAsync(EntryVersionsOptions entryVersionsOption);
+        public System.Threading.Tasks.Task<System.IO.Stream> GetContentVersionAsync(EntryVersionsOptions entryVersionsOption);
+        public System.Threading.Tasks.Task<Models.CcdReleaseChangeVersion> GetDiffAsync(System.Guid bucketId);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdReleaseEntry>> GetDiffEntriesAsync(DiffEntriesOptions diffEntriesOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdEntry>> GetEntriesAsync(EntryOptions entryOptions, string startingAfter, int perPage = 10);
+        public System.Threading.Tasks.Task<Models.CcdEntry> GetEntryAsync(System.Guid bucketId, System.Guid entryId);
+        public System.Threading.Tasks.Task<Models.CcdEntry> GetEntryByPathAsync(EntryByPathOptions entryByPathOptions);
+        public System.Threading.Tasks.Task<Models.CcdEntry> GetEntryVersionAsync(EntryVersionsOptions entryVersionsOption);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdVersion>> GetEntryVersionsAsync(EntryOptions entryOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<Models.CcdEnvironment> GetEnvironmentByNameAsync(System.Guid projectId, string name);
+        public System.Threading.Tasks.Task<Models.CcdOrg> GetOrgAsync();
+        public System.Threading.Tasks.Task<Models.CcdOrgUsage> GetOrgUsageAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdPermission>> GetPermissionsAsync(System.Guid bucketId);
+        public System.Threading.Tasks.Task<Models.CcdRelease> GetReleaseAsync(System.Guid bucketId, System.Guid releaseId);
+        public System.Threading.Tasks.Task<Models.CcdRelease> GetReleaseByBadgeAsync(System.Guid bucketId, string badgeName);
+        public System.Threading.Tasks.Task<Models.CcdReleaseChangeVersion> GetReleaseDiffAsync(ReleaseDiffOptions releaseDiffOptions);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdReleaseEntry>> GetReleaseDiffEntriesAsync(ReleaseDiffOptions releaseDiffOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdReleaseEntry>> GetReleaseEntriesAsync(ReleaseEntryOptions releaseEntryOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdReleaseEntry>> GetReleaseEntriesByBadgeAsync(ReleaseByBadgeOptions releaseByBadgeOptions, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdRelease>> GetReleasesAsync(System.Guid bucketId, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<Models.CcdMetricQuantity> GetStatsAsync(ReleaseStatsOptions releaseStatsOptions);
+        public System.Threading.Tasks.Task<Models.CcdUserAPIKey> GetUserApiKeyAsync();
+        public System.Threading.Tasks.Task<Models.CcdUser> GetUserInfoAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdBadge>> ListBadgesAsync(System.Guid bucketId, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdBucket>> ListBucketsAsync(PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.CcdEnvironment>> ListEnvironmentsByProjectAsync(System.Guid projectId, PageOptions pageOptions = default(PageOptions));
+        public System.Threading.Tasks.Task<Models.CcdRelease> PromoteBucketAsync(PromoteBucketOptions promoteBucketOptions);
+        public System.Threading.Tasks.Task<Models.CcdUserAPIKey> RegenerateUserApiKeyAsync();
+        public System.Threading.Tasks.Task<Models.CcdBucket> UpdateBucketAsync(UpdateBucketOptions updateBucketOptions);
+        public System.Threading.Tasks.Task<Models.CcdEntry> UpdateEntryAsync(EntryOptions entryOptions, EntryModelOptions entry);
+        public System.Threading.Tasks.Task<Models.CcdEntry> UpdateEntryByPathAsync(EntryByPathOptions entryByPathOptions, EntryModelOptions entry);
+        public System.Threading.Tasks.Task<Models.CcdPermission> UpdatePermissionAsync(UpdatePermissionsOption permissionsOptions);
+        public System.Threading.Tasks.Task<Models.CcdRelease> UpdateReleaseAsync(System.Guid bucketId, System.Guid releaseId, string notes);
+        public System.Threading.Tasks.Task UploadContentAsync(UploadContentOptions uploadContentOptions);
     }
 
     public interface ICcdManagementServiceSdkConfiguration
     {
-        public abstract void SetBasePath(string basePath);
-        public abstract void SetTimeout(int timoutms);
+        public void SetBasePath(string basePath);
+        public void SetTimeout(int timoutms);
     }
 
     public class PageOptions
@@ -247,50 +246,47 @@ namespace Unity.Services.Ccd.Management
     public class ReleaseStatsOptions
     {
         public System.Guid BucketId { get; set; }
-        public Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdInterval Interval { get; set; }
-        public Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdMetric Metric { get; set; }
+        public ReleaseStatsOptions.CcdInterval Interval { get; set; }
+        public ReleaseStatsOptions.CcdMetric Metric { get; set; }
         public System.Guid ReleaseId { get; set; }
-        public ReleaseStatsOptions(System.Guid bucketId, System.Guid releaseId, Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdMetric metric, Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdInterval interval) {}
+        public ReleaseStatsOptions(System.Guid bucketId, System.Guid releaseId, ReleaseStatsOptions.CcdMetric metric, ReleaseStatsOptions.CcdInterval interval) {}
         public enum CcdInterval
         {
-            public const Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdInterval Day = 1;
-            public const Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdInterval Month = 3;
-            public int value__;
-            public const Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdInterval Week = 2;
+            Day = 1,
+            Month = 3,
+            Week = 2,
         }
         public enum CcdMetric
         {
-            public const Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdMetric Downloads = 1;
-            public const Unity.Services.Ccd.Management.ReleaseStatsOptions.CcdMetric Errors = 2;
-            public int value__;
+            Downloads = 1,
+            Errors = 2,
         }
     }
 
     public enum RequestMethod
     {
-        public const Unity.Services.Ccd.Management.RequestMethod Delete = 5;
-        public const Unity.Services.Ccd.Management.RequestMethod Get = 0;
-        public const Unity.Services.Ccd.Management.RequestMethod Head = 2;
-        public const Unity.Services.Ccd.Management.RequestMethod Options = 4;
-        public const Unity.Services.Ccd.Management.RequestMethod Patch = 3;
-        public const Unity.Services.Ccd.Management.RequestMethod Post = 1;
-        public int value__;
+        Delete = 5,
+        Get = 0,
+        Head = 2,
+        Options = 4,
+        Patch = 3,
+        Post = 1,
     }
 
     public class TusClient
     {
         public System.Collections.Generic.Dictionary<string, string> AdditionalHeaders { get; }
-        public static Unity.Services.Ccd.Management.HashingImplementation HashingImplementation { get; set; }
+        public static HashingImplementation HashingImplementation { get; set; }
         public System.Net.IWebProxy Proxy { get; set; }
         public TusClient() {}
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusClient.<CreateAsync>d__12))] public System.Threading.Tasks.Task<string> CreateAsync(string url, long uploadLength, [System.Runtime.CompilerServices.TupleElementNames(Mono.Cecil.CustomAttributeArgument[])] params System.ValueTuple<string, string>[] metadata);
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusClient.<CreateAsync>d__11))] public System.Threading.Tasks.Task<string> CreateAsync(string url, System.IO.FileInfo fileInfo, [System.Runtime.CompilerServices.TupleElementNames(Mono.Cecil.CustomAttributeArgument[])] params System.ValueTuple<string, string>[] metadata);
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusClient.<Delete>d__18))] public System.Threading.Tasks.Task<bool> Delete(string url);
-        public Unity.Services.Ccd.Management.TusOperation<Unity.Services.Ccd.Management.TusHttpResponse> DownloadAsync(string url, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusClient.<GetServerInfo>d__17))] public System.Threading.Tasks.Task<Unity.Services.Ccd.Management.TusServerInfo> GetServerInfo(string url);
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusClient.<HeadAsync>d__16))] public System.Threading.Tasks.Task<Unity.Services.Ccd.Management.TusHttpResponse> HeadAsync(string url);
-        public Unity.Services.Ccd.Management.TusOperation<System.Collections.Generic.List<Unity.Services.Ccd.Management.TusHttpResponse>> UploadAsync(string url, System.IO.FileInfo file, double chunkSize = 5, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public Unity.Services.Ccd.Management.TusOperation<System.Collections.Generic.List<Unity.Services.Ccd.Management.TusHttpResponse>> UploadAsync(string url, System.IO.Stream fileStream, double chunkSize = 5, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public System.Threading.Tasks.Task<string> CreateAsync(string url, long uploadLength, params System.ValueTuple<string, string>[] metadata);
+        public System.Threading.Tasks.Task<string> CreateAsync(string url, System.IO.FileInfo fileInfo, params System.ValueTuple<string, string>[] metadata);
+        public System.Threading.Tasks.Task<bool> Delete(string url);
+        public Unity.Services.Ccd.Management.TusOperation<TusHttpResponse> DownloadAsync(string url, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public System.Threading.Tasks.Task<TusServerInfo> GetServerInfo(string url);
+        public System.Threading.Tasks.Task<TusHttpResponse> HeadAsync(string url);
+        public Unity.Services.Ccd.Management.TusOperation<System.Collections.Generic.List<TusHttpResponse>> UploadAsync(string url, System.IO.FileInfo file, double chunkSize = 5d, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Unity.Services.Ccd.Management.TusOperation<System.Collections.Generic.List<TusHttpResponse>> UploadAsync(string url, System.IO.Stream fileStream, double chunkSize = 5d, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 
     public class TusException : System.Net.WebException
@@ -300,44 +296,44 @@ namespace Unity.Services.Ccd.Management
         public System.Net.HttpStatusCode StatusCode { get; }
         public string StatusDescription { get; }
         public TusException(System.OperationCanceledException ex) {}
-        public TusException(System.Net.WebException ex, string message = ) {}
-        public TusException(Unity.Services.Ccd.Management.TusException ex, string message) {}
-        public virtual string ToString();
+        public TusException(System.Net.WebException ex, string message = @"") {}
+        public TusException(TusException ex, string message) {}
+        public override string ToString();
     }
 
     public static class TusHeaderNames
     {
-        public const string ContentLength = content-length;
-        public const string ContentType = content-type;
-        public const string TusChecksumAlgorithm = tus-checksum-algorithm;
-        public const string TusExtension = tus-extension;
-        public const string TusMaxSize = tus-max-size;
-        public const string TusResumable = tus-resumable;
-        public const string TusVersion = tus-version;
-        public const string UploadChecksum = upload-checksum;
-        public const string UploadHash = upload-hash;
-        public const string UploadLength = upload-length;
-        public const string UploadMetadata = upload-metadata;
-        public const string UploadOffset = upload-offset;
+        public const string ContentLength = @"content-length";
+        public const string ContentType = @"content-type";
+        public const string TusChecksumAlgorithm = @"tus-checksum-algorithm";
+        public const string TusExtension = @"tus-extension";
+        public const string TusMaxSize = @"tus-max-size";
+        public const string TusResumable = @"tus-resumable";
+        public const string TusVersion = @"tus-version";
+        public const string UploadChecksum = @"upload-checksum";
+        public const string UploadHash = @"upload-hash";
+        public const string UploadLength = @"upload-length";
+        public const string UploadMetadata = @"upload-metadata";
+        public const string UploadOffset = @"upload-offset";
     }
 
     public class TusHttpClient
     {
         public System.Net.IWebProxy Proxy { get; set; }
         public TusHttpClient() {}
-        [System.Diagnostics.DebuggerStepThrough] [System.Runtime.CompilerServices.AsyncStateMachine(typeof(Unity.Services.Ccd.Management.TusHttpClient.<PerformRequestAsync>d__4))] public System.Threading.Tasks.Task<Unity.Services.Ccd.Management.TusHttpResponse> PerformRequestAsync(Unity.Services.Ccd.Management.TusHttpRequest request);
+        public System.Threading.Tasks.Task<TusHttpResponse> PerformRequestAsync(TusHttpRequest request);
     }
 
     public class TusHttpRequest
     {
-        public event Unity.Services.Ccd.Management.ProgressDelegate DownloadProgressed;
-        public event Unity.Services.Ccd.Management.ProgressDelegate UploadProgressed;
+        public event ProgressDelegate DownloadProgressed;
+        public event ProgressDelegate UploadProgressed;
         public System.ArraySegment<byte> BodyBytes { get; }
         public System.Threading.CancellationToken CancelToken { get; }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Headers { get; }
         public string Method { get; }
         public System.Uri Url { get; }
-        public TusHttpRequest(string url, Unity.Services.Ccd.Management.RequestMethod method, System.Collections.Generic.IDictionary<string, string> additionalHeaders = default(System.Collections.Generic.IDictionary<string, string>), System.ArraySegment<byte> bodyBytes = default(System.ArraySegment<byte>), System.Nullable<System.Threading.CancellationToken> cancelToken = default(System.Nullable<System.Threading.CancellationToken>)) {}
+        public TusHttpRequest(string url, RequestMethod method, System.Collections.Generic.IDictionary<string, string> additionalHeaders = default(System.Collections.Generic.IDictionary<string, string>), System.ArraySegment<byte> bodyBytes = default(System.ArraySegment<byte>), System.Nullable<System.Threading.CancellationToken> cancelToken = default(System.Nullable<System.Threading.CancellationToken>)) {}
         public void AddHeader(string key, string value);
         public void OnDownloadProgressed(long bytesTransferred, long bytesTotal);
         public void OnUploadProgressed(long bytesTransferred, long bytesTotal);
@@ -354,10 +350,10 @@ namespace Unity.Services.Ccd.Management
 
     public class TusOperation<T>
     {
-        public event Unity.Services.Ccd.Management.ProgressDelegate Progressed;
+        public event ProgressDelegate Progressed;
         public System.Threading.Tasks.Task<T> Operation { get; }
         public System.Runtime.CompilerServices.TaskAwaiter<T> GetAwaiter();
-        public delegate System.Threading.Tasks.Task<T> OperationDelegate<T>(Unity.Services.Ccd.Management.ProgressDelegate reportProgress);
+        public delegate System.Threading.Tasks.Task<T> OperationDelegate(ProgressDelegate reportProgress);
     }
 
     public class TusServerInfo
@@ -381,10 +377,10 @@ namespace Unity.Services.Ccd.Management
 
     public class UpdatePermissionsOption
     {
-        public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.ActionOptions Action { get; set; }
+        public Models.CcdPermissionUpdate.ActionOptions Action { get; set; }
         public System.Guid BucketId { get; set; }
-        public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions Permission { get; set; }
-        public UpdatePermissionsOption(System.Guid bucketId, Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.ActionOptions action, Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions permission) {}
+        public Models.CcdPermissionUpdate.PermissionOptions Permission { get; set; }
+        public UpdatePermissionsOption(System.Guid bucketId, Models.CcdPermissionUpdate.ActionOptions action, Models.CcdPermissionUpdate.PermissionOptions permission) {}
     }
 
     public class UploadContentOptions
@@ -393,7 +389,7 @@ namespace Unity.Services.Ccd.Management
         public double ChunkSize { get; set; }
         public System.Guid EntryId { get; set; }
         public System.IO.Stream File { get; set; }
-        public Unity.Services.Ccd.Management.ProgressDelegate OnProgressed { get; set; }
+        public ProgressDelegate OnProgressed { get; set; }
         public UploadContentOptions(System.Guid bucketId, System.Guid entryId, System.IO.Stream file) {}
     }
 }
@@ -408,49 +404,48 @@ namespace Unity.Services.Ccd.Management.Http
 
     public class DeserializationSettings
     {
-        public Unity.Services.Ccd.Management.Http.MissingMemberHandling MissingMemberHandling;
+        public MissingMemberHandling MissingMemberHandling = MissingMemberHandling.Error;
         public DeserializationSettings() {}
     }
 
-    [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [UnityEngine.Scripting.Preserve] public interface IDeserializable
+    [Newtonsoft.Json.JsonConverter(typeof(JsonObjectConverter))] [UnityEngine.Scripting.Preserve] public interface IDeserializable
     {
-        public abstract T GetAs<T>(Unity.Services.Ccd.Management.Http.DeserializationSettings deserializationSettings = default(Unity.Services.Ccd.Management.Http.DeserializationSettings));
-        public abstract string GetAsString();
+        public T GetAs<T>(DeserializationSettings deserializationSettings = default(DeserializationSettings));
+        public string GetAsString();
     }
 
-    [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [UnityEngine.Scripting.Preserve] public class JsonObject : Unity.Services.Ccd.Management.Http.IDeserializable
+    [Newtonsoft.Json.JsonConverter(typeof(JsonObjectConverter))] [UnityEngine.Scripting.Preserve] public class JsonObject : IDeserializable
     {
         public T GetAs<T>();
-        public virtual T GetAs<T>(Unity.Services.Ccd.Management.Http.DeserializationSettings deserializationSettings = default(Unity.Services.Ccd.Management.Http.DeserializationSettings));
-        public virtual string GetAsString();
-        public static System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<Unity.Services.Ccd.Management.Http.JsonObject>> GetNewJsonObjectResponse(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<object>> o);
-        public static System.Collections.Generic.Dictionary<string, Unity.Services.Ccd.Management.Http.JsonObject> GetNewJsonObjectResponse(System.Collections.Generic.Dictionary<string, object> o);
-        public static System.Collections.Generic.List<System.Collections.Generic.List<Unity.Services.Ccd.Management.Http.JsonObject>> GetNewJsonObjectResponse(System.Collections.Generic.List<System.Collections.Generic.List<object>> o);
-        public static System.Collections.Generic.List<Unity.Services.Ccd.Management.Http.JsonObject> GetNewJsonObjectResponse(System.Collections.Generic.List<object> o);
-        public static Unity.Services.Ccd.Management.Http.JsonObject GetNewJsonObjectResponse(object o);
+        public T GetAs<T>(DeserializationSettings deserializationSettings = default(DeserializationSettings));
+        public string GetAsString();
+        public static System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<JsonObject>> GetNewJsonObjectResponse(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<object>> o);
+        public static System.Collections.Generic.Dictionary<string, JsonObject> GetNewJsonObjectResponse(System.Collections.Generic.Dictionary<string, object> o);
+        public static System.Collections.Generic.List<System.Collections.Generic.List<JsonObject>> GetNewJsonObjectResponse(System.Collections.Generic.List<System.Collections.Generic.List<object>> o);
+        public static System.Collections.Generic.List<JsonObject> GetNewJsonObjectResponse(System.Collections.Generic.List<object> o);
+        public static JsonObject GetNewJsonObjectResponse(object o);
     }
 
     [UnityEngine.Scripting.Preserve] public class JsonObjectCollectionConverter : Newtonsoft.Json.JsonConverter
     {
         public JsonObjectCollectionConverter() {}
-        public virtual bool CanConvert(System.Type objectType);
-        public virtual object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer);
-        public virtual void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer);
+        public override bool CanConvert(System.Type objectType);
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer);
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer);
     }
 
     [UnityEngine.Scripting.Preserve] public class JsonObjectConverter : Newtonsoft.Json.JsonConverter
     {
         public JsonObjectConverter() {}
-        public virtual bool CanConvert(System.Type objectType);
-        public virtual object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer);
-        public virtual void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer);
+        public override bool CanConvert(System.Type objectType);
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer);
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer);
     }
 
     public enum MissingMemberHandling
     {
-        public const Unity.Services.Ccd.Management.Http.MissingMemberHandling Error = 0;
-        public const Unity.Services.Ccd.Management.Http.MissingMemberHandling Ignore = 1;
-        public int value__;
+        Error = 0,
+        Ignore = 1,
     }
 }
 
@@ -493,19 +488,19 @@ namespace Unity.Services.Ccd.Management.Models
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucket")] [UnityEngine.Scripting.Preserve] public class CcdBucket
     {
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"attributes")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdBucketAttributes Attributes { get; }
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"changes")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion Changes { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"attributes")] [UnityEngine.Scripting.Preserve] public CcdBucketAttributes Attributes { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"changes")] [UnityEngine.Scripting.Preserve] public CcdReleaseChangeVersion Changes { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"created")] [UnityEngine.Scripting.Preserve] public System.DateTime Created { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"description")] [UnityEngine.Scripting.Preserve] public string Description { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"environment_id")] [UnityEngine.Scripting.Preserve] public System.Guid EnvironmentId { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"environment_name")] [UnityEngine.Scripting.Preserve] public string EnvironmentName { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"id")] [UnityEngine.Scripting.Preserve] public System.Guid Id { get; }
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"last_release")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdRelease LastRelease { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"last_release")] [UnityEngine.Scripting.Preserve] public CcdRelease LastRelease { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"name")] [UnityEngine.Scripting.Preserve] public string Name { get; }
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"permissions")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdBucketPermissions Permissions { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"permissions")] [UnityEngine.Scripting.Preserve] public CcdBucketPermissions Permissions { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"private")] [UnityEngine.Scripting.Preserve] public bool Private { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"projectguid")] [UnityEngine.Scripting.Preserve] public System.Guid Projectguid { get; }
-        [UnityEngine.Scripting.Preserve] public CcdBucket(Unity.Services.Ccd.Management.Models.CcdBucketAttributes attributes = default(Unity.Services.Ccd.Management.Models.CcdBucketAttributes), Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion changes = default(Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion), System.DateTime created = default(System.DateTime), string description = default(string), System.Guid environmentId = default(System.Guid), string environmentName = default(string), System.Guid id = default(System.Guid), Unity.Services.Ccd.Management.Models.CcdRelease lastRelease = default(Unity.Services.Ccd.Management.Models.CcdRelease), string name = default(string), Unity.Services.Ccd.Management.Models.CcdBucketPermissions permissions = default(Unity.Services.Ccd.Management.Models.CcdBucketPermissions), bool private = False, System.Guid projectguid = default(System.Guid)) {}
+        [UnityEngine.Scripting.Preserve] public CcdBucket(CcdBucketAttributes attributes = default(CcdBucketAttributes), CcdReleaseChangeVersion changes = default(CcdReleaseChangeVersion), System.DateTime created = default(System.DateTime), string description = default(string), System.Guid environmentId = default(System.Guid), string environmentName = default(string), System.Guid id = default(System.Guid), CcdRelease lastRelease = default(CcdRelease), string name = default(string), CcdBucketPermissions permissions = default(CcdBucketPermissions), bool private = false, System.Guid projectguid = default(System.Guid)) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucketAccessToken")] [UnityEngine.Scripting.Preserve] public class CcdBucketAccessToken
@@ -532,7 +527,7 @@ namespace Unity.Services.Ccd.Management.Models
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucketAttributes")] [UnityEngine.Scripting.Preserve] public class CcdBucketAttributes
     {
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"promote_only")] [UnityEngine.Scripting.Preserve] public bool PromoteOnly { get; }
-        [UnityEngine.Scripting.Preserve] public CcdBucketAttributes(bool promoteOnly = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdBucketAttributes(bool promoteOnly = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucketCreate")] [UnityEngine.Scripting.Preserve] public class CcdBucketCreate
@@ -541,7 +536,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"name")] [UnityEngine.Scripting.Preserve] public string Name { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"private")] [UnityEngine.Scripting.Preserve] public bool Private { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"projectguid")] [UnityEngine.Scripting.Preserve] public System.Guid Projectguid { get; }
-        [UnityEngine.Scripting.Preserve] public CcdBucketCreate(string name, System.Guid projectguid, string description = default(string), bool private = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdBucketCreate(string name, System.Guid projectguid, string description = default(string), bool private = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucketPermissions")] [UnityEngine.Scripting.Preserve] public class CcdBucketPermissions
@@ -550,7 +545,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"bucket_read")] [UnityEngine.Scripting.Preserve] public bool BucketRead { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"bucket_release")] [UnityEngine.Scripting.Preserve] public bool BucketRelease { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"bucket_write")] [UnityEngine.Scripting.Preserve] public bool BucketWrite { get; }
-        [UnityEngine.Scripting.Preserve] public CcdBucketPermissions(bool bucketPromote = False, bool bucketRead = False, bool bucketRelease = False, bool bucketWrite = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdBucketPermissions(bool bucketPromote = false, bool bucketRead = false, bool bucketRelease = false, bool bucketWrite = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.bucketUpdate")] [UnityEngine.Scripting.Preserve] public class CcdBucketUpdate
@@ -578,7 +573,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"path")] [UnityEngine.Scripting.Preserve] public string Path { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"signed_url")] [UnityEngine.Scripting.Preserve] public string SignedUrl { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"updated_at")] [UnityEngine.Scripting.Preserve] public System.DateTime UpdatedAt { get; }
-        [UnityEngine.Scripting.Preserve] public CcdEntry(bool complete = False, string contentHash = default(string), string contentLink = default(string), int contentSize = 0, string contentType = default(string), System.Guid currentVersionid = default(System.Guid), System.Guid entryid = default(System.Guid), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), string link = default(string), object metadata = default(object), string path = default(string), string signedUrl = default(string), System.DateTime updatedAt = default(System.DateTime)) {}
+        [UnityEngine.Scripting.Preserve] public CcdEntry(bool complete = false, string contentHash = default(string), string contentLink = default(string), int contentSize = 0, string contentType = default(string), System.Guid currentVersionid = default(System.Guid), System.Guid entryid = default(System.Guid), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), string link = default(string), object metadata = default(object), string path = default(string), string signedUrl = default(string), System.DateTime updatedAt = default(System.DateTime)) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.entryCreate")] [UnityEngine.Scripting.Preserve] public class CcdEntryCreate
@@ -590,7 +585,7 @@ namespace Unity.Services.Ccd.Management.Models
         [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"metadata")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"path")] [UnityEngine.Scripting.Preserve] public string Path { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"signed_url")] [UnityEngine.Scripting.Preserve] public bool SignedUrl { get; }
-        [UnityEngine.Scripting.Preserve] public CcdEntryCreate(string path, string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdEntryCreate(string path, string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.entryCreateByPath")] [UnityEngine.Scripting.Preserve] public class CcdEntryCreateByPath
@@ -601,7 +596,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"labels")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<string> Labels { get; }
         [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"metadata")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"signed_url")] [UnityEngine.Scripting.Preserve] public bool SignedUrl { get; }
-        [UnityEngine.Scripting.Preserve] public CcdEntryCreateByPath(string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdEntryCreateByPath(string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.entryUpdate")] [UnityEngine.Scripting.Preserve] public class CcdEntryUpdate
@@ -612,7 +607,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"labels")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<string> Labels { get; }
         [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"metadata")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"signed_url")] [UnityEngine.Scripting.Preserve] public bool SignedUrl { get; }
-        [UnityEngine.Scripting.Preserve] public CcdEntryUpdate(string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdEntryUpdate(string contentHash = default(string), int contentSize = 0, string contentType = default(string), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), object metadata = default(object), bool signedUrl = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.environment")] [UnityEngine.Scripting.Preserve] public class CcdEnvironment
@@ -621,33 +616,32 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"is_default")] [UnityEngine.Scripting.Preserve] public bool IsDefault { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"name")] [UnityEngine.Scripting.Preserve] public string Name { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"project_id")] [UnityEngine.Scripting.Preserve] public System.Guid ProjectId { get; }
-        [UnityEngine.Scripting.Preserve] public CcdEnvironment(System.Guid id = default(System.Guid), bool isDefault = False, string name = default(string), System.Guid projectId = default(System.Guid)) {}
+        [UnityEngine.Scripting.Preserve] public CcdEnvironment(System.Guid id = default(System.Guid), bool isDefault = false, string name = default(string), System.Guid projectId = default(System.Guid)) {}
     }
 
     [UnityEngine.Scripting.Preserve] public enum CcdErrorCodes
     {
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _0 = 0;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _1 = 1;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _10 = 10;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _11 = 11;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _12 = 12;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _2 = 2;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _3 = 3;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _4 = 4;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _5 = 5;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _6 = 6;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _7 = 7;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _8 = 8;
-        public const Unity.Services.Ccd.Management.Models.CcdErrorCodes _9 = 9;
-        public int value__;
+        _0 = 0,
+        _1 = 1,
+        _10 = 10,
+        _11 = 11,
+        _12 = 12,
+        _2 = 2,
+        _3 = 3,
+        _4 = 4,
+        _5 = 5,
+        _6 = 6,
+        _7 = 7,
+        _8 = 8,
+        _9 = 9,
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.httpError")] [UnityEngine.Scripting.Preserve] public class CcdHttpError
     {
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"code")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdErrorCodes Code { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"code")] [UnityEngine.Scripting.Preserve] public CcdErrorCodes Code { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"details")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<string> Details { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"reason")] [UnityEngine.Scripting.Preserve] public string Reason { get; }
-        [UnityEngine.Scripting.Preserve] public CcdHttpError(Unity.Services.Ccd.Management.Models.CcdErrorCodes code = 0, System.Collections.Generic.List<string> details = default(System.Collections.Generic.List<string>), string reason = default(string)) {}
+        [UnityEngine.Scripting.Preserve] public CcdHttpError(CcdErrorCodes code = CcdErrorCodes._0, System.Collections.Generic.List<string> details = default(System.Collections.Generic.List<string>), string reason = default(string)) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.metricQuantity")] [UnityEngine.Scripting.Preserve] public class CcdMetricQuantity
@@ -662,7 +656,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"name")] [UnityEngine.Scripting.Preserve] public string Name { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"orgid")] [UnityEngine.Scripting.Preserve] public string Orgid { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"tos_accepted")] [UnityEngine.Scripting.Preserve] public bool TosAccepted { get; }
-        [UnityEngine.Scripting.Preserve] public CcdOrg(string id = default(string), string name = default(string), string orgid = default(string), bool tosAccepted = False) {}
+        [UnityEngine.Scripting.Preserve] public CcdOrg(string id = default(string), string name = default(string), string orgid = default(string), bool tosAccepted = false) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.orgTosUpdate")] [UnityEngine.Scripting.Preserve] public class CcdOrgTosUpdate
@@ -675,8 +669,8 @@ namespace Unity.Services.Ccd.Management.Models
     {
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"id")] [UnityEngine.Scripting.Preserve] public string Id { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"start_time")] [UnityEngine.Scripting.Preserve] public System.DateTime StartTime { get; }
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"usage")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdUsage> Usage { get; }
-        [UnityEngine.Scripting.Preserve] public CcdOrgUsage(string id = default(string), System.DateTime startTime = default(System.DateTime), System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdUsage> usage = default(System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdUsage>)) {}
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"usage")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<CcdUsage> Usage { get; }
+        [UnityEngine.Scripting.Preserve] public CcdOrgUsage(string id = default(string), System.DateTime startTime = default(System.DateTime), System.Collections.Generic.List<CcdUsage> usage = default(System.Collections.Generic.List<CcdUsage>)) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.permission")] [UnityEngine.Scripting.Preserve] public class CcdPermission
@@ -689,37 +683,33 @@ namespace Unity.Services.Ccd.Management.Models
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.permissionCreate")] [UnityEngine.Scripting.Preserve] public class CcdPermissionCreate
     {
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"action")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdPermissionCreate.ActionOptions Action { get; }
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"permission")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions Permission { get; }
-        [UnityEngine.Scripting.Preserve] public CcdPermissionCreate(Unity.Services.Ccd.Management.Models.CcdPermissionCreate.ActionOptions action, Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions permission) {}
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"action")] [UnityEngine.Scripting.Preserve] public CcdPermissionCreate.ActionOptions Action { get; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"permission")] [UnityEngine.Scripting.Preserve] public CcdPermissionCreate.PermissionOptions Permission { get; }
+        [UnityEngine.Scripting.Preserve] public CcdPermissionCreate(CcdPermissionCreate.ActionOptions action, CcdPermissionCreate.PermissionOptions permission) {}
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum ActionOptions
         {
-            public int value__;
-            [System.Runtime.Serialization.EnumMember(Value = @"write")] public const Unity.Services.Ccd.Management.Models.CcdPermissionCreate.ActionOptions Write = 1;
+            [System.Runtime.Serialization.EnumMember(Value = @"write")] Write = 1,
         }
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum PermissionOptions
         {
-            [System.Runtime.Serialization.EnumMember(Value = @"allow")] public const Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions Allow = 1;
-            [System.Runtime.Serialization.EnumMember(Value = @"deny")] public const Unity.Services.Ccd.Management.Models.CcdPermissionCreate.PermissionOptions Deny = 2;
-            public int value__;
+            [System.Runtime.Serialization.EnumMember(Value = @"allow")] Allow = 1,
+            [System.Runtime.Serialization.EnumMember(Value = @"deny")] Deny = 2,
         }
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.permissionUpdate")] [UnityEngine.Scripting.Preserve] public class CcdPermissionUpdate
     {
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"action")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.ActionOptions Action { get; }
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"permission")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions Permission { get; }
-        [UnityEngine.Scripting.Preserve] public CcdPermissionUpdate(Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.ActionOptions action, Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions permission) {}
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"action")] [UnityEngine.Scripting.Preserve] public CcdPermissionUpdate.ActionOptions Action { get; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, IsRequired = true, Name = @"permission")] [UnityEngine.Scripting.Preserve] public CcdPermissionUpdate.PermissionOptions Permission { get; }
+        [UnityEngine.Scripting.Preserve] public CcdPermissionUpdate(CcdPermissionUpdate.ActionOptions action, CcdPermissionUpdate.PermissionOptions permission) {}
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum ActionOptions
         {
-            public int value__;
-            [System.Runtime.Serialization.EnumMember(Value = @"write")] public const Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.ActionOptions Write = 1;
+            [System.Runtime.Serialization.EnumMember(Value = @"write")] Write = 1,
         }
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum PermissionOptions
         {
-            [System.Runtime.Serialization.EnumMember(Value = @"allow")] public const Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions Allow = 1;
-            [System.Runtime.Serialization.EnumMember(Value = @"deny")] public const Unity.Services.Ccd.Management.Models.CcdPermissionUpdate.PermissionOptions Deny = 2;
-            public int value__;
+            [System.Runtime.Serialization.EnumMember(Value = @"allow")] Allow = 1,
+            [System.Runtime.Serialization.EnumMember(Value = @"deny")] Deny = 2,
         }
     }
 
@@ -748,27 +738,26 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"from_release_id")] [UnityEngine.Scripting.Preserve] public System.Guid FromReleaseId { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"from_release_number")] [UnityEngine.Scripting.Preserve] public int FromReleaseNumber { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"promotion_id")] [UnityEngine.Scripting.Preserve] public System.Guid PromotionId { get; }
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"promotion_status")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions PromotionStatus { get; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"promotion_status")] [UnityEngine.Scripting.Preserve] public CcdPromotion.PromotionStatusOptions PromotionStatus { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"to_bucket_id")] [UnityEngine.Scripting.Preserve] public System.Guid ToBucketId { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"to_bucket_name")] [UnityEngine.Scripting.Preserve] public string ToBucketName { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"to_environment_id")] [UnityEngine.Scripting.Preserve] public System.Guid ToEnvironmentId { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"to_environment_name")] [UnityEngine.Scripting.Preserve] public string ToEnvironmentName { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"to_release_id")] [UnityEngine.Scripting.Preserve] public System.Guid ToReleaseId { get; }
-        [UnityEngine.Scripting.Preserve] public CcdPromotion(string error = default(string), System.Guid fromBucketId = default(System.Guid), string fromBucketName = default(string), System.Guid fromEnvironmentId = default(System.Guid), string fromEnvironmentName = default(string), System.Guid fromReleaseId = default(System.Guid), int fromReleaseNumber = 0, System.Guid promotionId = default(System.Guid), Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions promotionStatus = 0, System.Guid toBucketId = default(System.Guid), string toBucketName = default(string), System.Guid toEnvironmentId = default(System.Guid), string toEnvironmentName = default(string), System.Guid toReleaseId = default(System.Guid)) {}
+        [UnityEngine.Scripting.Preserve] public CcdPromotion(string error = default(string), System.Guid fromBucketId = default(System.Guid), string fromBucketName = default(string), System.Guid fromEnvironmentId = default(System.Guid), string fromEnvironmentName = default(string), System.Guid fromReleaseId = default(System.Guid), int fromReleaseNumber = 0, System.Guid promotionId = default(System.Guid), CcdPromotion.PromotionStatusOptions promotionStatus = , System.Guid toBucketId = default(System.Guid), string toBucketName = default(string), System.Guid toEnvironmentId = default(System.Guid), string toEnvironmentName = default(string), System.Guid toReleaseId = default(System.Guid)) {}
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum PromotionStatusOptions
         {
-            [System.Runtime.Serialization.EnumMember(Value = @"Complete")] public const Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions Complete = 2;
-            [System.Runtime.Serialization.EnumMember(Value = @"Failed")] public const Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions Failed = 4;
-            [System.Runtime.Serialization.EnumMember(Value = @"InProgress")] public const Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions InProgress = 3;
-            [System.Runtime.Serialization.EnumMember(Value = @"NotFound")] public const Unity.Services.Ccd.Management.Models.CcdPromotion.PromotionStatusOptions NotFound = 1;
-            public int value__;
+            [System.Runtime.Serialization.EnumMember(Value = @"Complete")] Complete = 2,
+            [System.Runtime.Serialization.EnumMember(Value = @"Failed")] Failed = 4,
+            [System.Runtime.Serialization.EnumMember(Value = @"InProgress")] InProgress = 3,
+            [System.Runtime.Serialization.EnumMember(Value = @"NotFound")] NotFound = 1,
         }
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.release")] [UnityEngine.Scripting.Preserve] public class CcdRelease
     {
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"badges")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdBadge> Badges { get; }
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"changes")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion Changes { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"badges")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<CcdBadge> Badges { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"changes")] [UnityEngine.Scripting.Preserve] public CcdReleaseChangeVersion Changes { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"content_hash")] [UnityEngine.Scripting.Preserve] public string ContentHash { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"content_size")] [UnityEngine.Scripting.Preserve] public int ContentSize { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"created")] [UnityEngine.Scripting.Preserve] public System.DateTime Created { get; }
@@ -781,7 +770,7 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"promoted_from_release")] [UnityEngine.Scripting.Preserve] public System.Guid PromotedFromRelease { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"releaseid")] [UnityEngine.Scripting.Preserve] public System.Guid Releaseid { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"releasenum")] [UnityEngine.Scripting.Preserve] public int Releasenum { get; }
-        [UnityEngine.Scripting.Preserve] public CcdRelease(System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdBadge> badges = default(System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdBadge>), Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion changes = default(Unity.Services.Ccd.Management.Models.CcdReleaseChangeVersion), string contentHash = default(string), int contentSize = 0, System.DateTime created = default(System.DateTime), string createdBy = default(string), string createdByName = default(string), string entriesLink = default(string), object metadata = default(object), string notes = default(string), System.Guid promotedFromBucket = default(System.Guid), System.Guid promotedFromRelease = default(System.Guid), System.Guid releaseid = default(System.Guid), int releasenum = 0) {}
+        [UnityEngine.Scripting.Preserve] public CcdRelease(System.Collections.Generic.List<CcdBadge> badges = default(System.Collections.Generic.List<CcdBadge>), CcdReleaseChangeVersion changes = default(CcdReleaseChangeVersion), string contentHash = default(string), int contentSize = 0, System.DateTime created = default(System.DateTime), string createdBy = default(string), string createdByName = default(string), string entriesLink = default(string), object metadata = default(object), string notes = default(string), System.Guid promotedFromBucket = default(System.Guid), System.Guid promotedFromRelease = default(System.Guid), System.Guid releaseid = default(System.Guid), int releasenum = 0) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.releaseChangeVersion")] [UnityEngine.Scripting.Preserve] public class CcdReleaseChangeVersion
@@ -794,21 +783,21 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"loading")] [UnityEngine.Scripting.Preserve] public bool Loading { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"unchanged")] [UnityEngine.Scripting.Preserve] public int Unchanged { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"update")] [UnityEngine.Scripting.Preserve] public int Update { get; }
-        [UnityEngine.Scripting.Preserve] public CcdReleaseChangeVersion(int add = 0, int delete = 0, System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), bool loading = False, int unchanged = 0, int update = 0) {}
+        [UnityEngine.Scripting.Preserve] public CcdReleaseChangeVersion(int add = 0, int delete = 0, System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), bool loading = false, int unchanged = 0, int update = 0) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.releaseCreate")] [UnityEngine.Scripting.Preserve] public class CcdReleaseCreate
     {
-        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"entries")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntryCreate> Entries { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"entries")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.List<CcdReleaseEntryCreate> Entries { get; }
         [Newtonsoft.Json.JsonConverter(typeof(Unity.Services.Ccd.Management.Http.JsonObjectConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"metadata")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Http.JsonObject Metadata { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"notes")] [UnityEngine.Scripting.Preserve] public string Notes { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"snapshot")] [UnityEngine.Scripting.Preserve] public System.DateTime Snapshot { get; }
-        [UnityEngine.Scripting.Preserve] public CcdReleaseCreate(System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntryCreate> entries = default(System.Collections.Generic.List<Unity.Services.Ccd.Management.Models.CcdReleaseEntryCreate>), object metadata = default(object), string notes = default(string), System.DateTime snapshot = default(System.DateTime)) {}
+        [UnityEngine.Scripting.Preserve] public CcdReleaseCreate(System.Collections.Generic.List<CcdReleaseEntryCreate> entries = default(System.Collections.Generic.List<CcdReleaseEntryCreate>), object metadata = default(object), string notes = default(string), System.DateTime snapshot = default(System.DateTime)) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.releaseEntry")] [UnityEngine.Scripting.Preserve] public class CcdReleaseEntry
     {
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"change_state")] [UnityEngine.Scripting.Preserve] public Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions ChangeState { get; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"change_state")] [UnityEngine.Scripting.Preserve] public CcdReleaseEntry.ChangeStateOptions ChangeState { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = true, Name = @"complete")] [UnityEngine.Scripting.Preserve] public bool Complete { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"content_hash")] [UnityEngine.Scripting.Preserve] public string ContentHash { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"content_link")] [UnityEngine.Scripting.Preserve] public string ContentLink { get; }
@@ -824,14 +813,13 @@ namespace Unity.Services.Ccd.Management.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"path")] [UnityEngine.Scripting.Preserve] public string Path { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"updated_at")] [UnityEngine.Scripting.Preserve] public System.DateTime UpdatedAt { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"versionid")] [UnityEngine.Scripting.Preserve] public System.Guid Versionid { get; }
-        [UnityEngine.Scripting.Preserve] public CcdReleaseEntry(Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions changeState = 0, bool complete = False, string contentHash = default(string), string contentLink = default(string), int contentSize = 0, string contentType = default(string), System.Guid entryid = default(System.Guid), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), string link = default(string), object metadata = default(object), string path = default(string), System.DateTime updatedAt = default(System.DateTime), System.Guid versionid = default(System.Guid)) {}
+        [UnityEngine.Scripting.Preserve] public CcdReleaseEntry(CcdReleaseEntry.ChangeStateOptions changeState = , bool complete = false, string contentHash = default(string), string contentLink = default(string), int contentSize = 0, string contentType = default(string), System.Guid entryid = default(System.Guid), System.Collections.Generic.List<string> labels = default(System.Collections.Generic.List<string>), System.DateTime lastModified = default(System.DateTime), string lastModifiedBy = default(string), string lastModifiedByName = default(string), string link = default(string), object metadata = default(object), string path = default(string), System.DateTime updatedAt = default(System.DateTime), System.Guid versionid = default(System.Guid)) {}
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))] [UnityEngine.Scripting.Preserve] public enum ChangeStateOptions
         {
-            [System.Runtime.Serialization.EnumMember(Value = @"Add")] public const Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions Add = 2;
-            [System.Runtime.Serialization.EnumMember(Value = @"Delete")] public const Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions Delete = 3;
-            [System.Runtime.Serialization.EnumMember(Value = @"Unchanged")] public const Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions Unchanged = 1;
-            [System.Runtime.Serialization.EnumMember(Value = @"Update")] public const Unity.Services.Ccd.Management.Models.CcdReleaseEntry.ChangeStateOptions Update = 4;
-            public int value__;
+            [System.Runtime.Serialization.EnumMember(Value = @"Add")] Add = 2,
+            [System.Runtime.Serialization.EnumMember(Value = @"Delete")] Delete = 3,
+            [System.Runtime.Serialization.EnumMember(Value = @"Unchanged")] Unchanged = 1,
+            [System.Runtime.Serialization.EnumMember(Value = @"Update")] Update = 4,
         }
     }
 
@@ -852,7 +840,7 @@ namespace Unity.Services.Ccd.Management.Models
     {
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"projectguid")] [UnityEngine.Scripting.Preserve] public System.Guid Projectguid { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"quantity")] [UnityEngine.Scripting.Preserve] public System.Decimal Quantity { get; }
-        [UnityEngine.Scripting.Preserve] public CcdUsage(System.Guid projectguid = default(System.Guid), [System.Runtime.CompilerServices.DecimalConstant(0, 0, 0, 0, 0)] System.Decimal quantity) {}
+        [UnityEngine.Scripting.Preserve] public CcdUsage(System.Guid projectguid = default(System.Guid), System.Decimal quantity) {}
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"ccd.user")] [UnityEngine.Scripting.Preserve] public class CcdUser
@@ -981,8 +969,8 @@ namespace Unity.Services.Ccd.Management.Models
 
     public interface IOneOf
     {
-        public abstract System.Type Type { get; }
-        public abstract object Value { get; }
+        public System.Type Type { get; }
+        public object Value { get; }
     }
 
     [System.Runtime.Serialization.DataContract(Name = @"MethodNotAllowedError")] [UnityEngine.Scripting.Preserve] public class MethodNotAllowedError

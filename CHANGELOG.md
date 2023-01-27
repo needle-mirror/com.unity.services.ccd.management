@@ -5,6 +5,13 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.2.2] - 2023-01-27
+### Changed
+* InternalUploadAsync changed to use a signed URL to upload content
+* CreateEntryAsync, CreateOrUpdateEntryByPathAsync, UpdateEntryAsync and UpdateEntryByPathAsync changed to request a signed URL if an upload is needed based on IsUpToDate
+* Fix issue with GetReleaseDiff and GetReleaseDiffEntries sending empty release num query params
+* Fix issue with GetOrgAsync and GetOrgUsageAsync sending badly formatted body in request 
+
 ## [2.2.1] - 2022-08-02
 ### Added
 * Add SetTimeout to CcdManagement to allow configuring timeouts for API calls

@@ -1039,7 +1039,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="perPage">Items Per Page</param>
         /// <param name="path">Path</param>
         /// <param name="label">Label</param>
-        /// <param name="contentType">conent type</param>
+        /// <param name="contentType">content type</param>
         /// <param name="complete">is content upload completed or not</param>
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
@@ -1227,7 +1227,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="perPage">Items Per Page</param>
         /// <param name="path">Path</param>
         /// <param name="label">Label</param>
-        /// <param name="contentType">conent type</param>
+        /// <param name="contentType">content type</param>
         /// <param name="complete">is content upload completed or not</param>
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>

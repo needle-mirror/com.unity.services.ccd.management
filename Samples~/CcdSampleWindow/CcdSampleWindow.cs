@@ -138,10 +138,7 @@ To Setup the Demo:
                     using (var file = File.OpenRead(FILENAME))
                     {
                         await CcdManagement.Instance.UploadContentAsync(
-                            new UploadContentOptions(bucket.Id, entry.Entryid, file)
-                            {
-                                ChunkSize = 1
-                            });
+                            new UploadContentOptions(bucket.Id, entry.Entryid, file));
                     }
 
                     var contentStatus = await CcdManagement.Instance.GetContentStatusAsync(new EntryOptions(bucket.Id, entry.Entryid));
@@ -185,10 +182,7 @@ To Setup the Demo:
                     using (var file = File.OpenRead(FILENAME))
                     {
                         await CcdManagement.Instance.UploadContentAsync(
-                            new UploadContentOptions(bucket.Id, entry.Entryid, file)
-                            {
-                                ChunkSize = 1
-                            });
+                            new UploadContentOptions(bucket.Id, entry.Entryid, file));
                     }
 
                     //Get the content status of a specified version
