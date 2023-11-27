@@ -293,7 +293,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> CreateReleaseAsync(Unity.Services.Ccd.Management.Releases.CreateReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -322,7 +322,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> CreateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.CreateReleaseEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -351,7 +351,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<byte[]>> GetErrorDetailsAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -380,7 +380,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<byte[]>> GetErrorDetailsEnvAsync(Unity.Services.Ccd.Management.Releases.GetErrorDetailsEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(byte[])   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -409,7 +409,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseAsync(Unity.Services.Ccd.Management.Releases.GetReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -438,7 +438,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseByBadgeAsync(Unity.Services.Ccd.Management.Releases.GetReleaseByBadgeRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -467,7 +467,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseByBadgeEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -496,7 +496,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdReleaseChangeVersion>> GetReleaseDiffAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -525,7 +525,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -554,7 +554,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseDiffEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEntriesEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -583,7 +583,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdReleaseChangeVersion>> GetReleaseDiffEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseDiffEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdReleaseChangeVersion)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -612,7 +612,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -641,7 +641,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesByBadgeAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesByBadgeRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -670,7 +670,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesByBadgeEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesByBadgeEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -699,7 +699,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdReleaseEntry>>> GetReleaseEntriesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEntriesEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdReleaseEntry>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -728,7 +728,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> GetReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleaseEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -757,7 +757,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdRelease>>> GetReleasesAsync(Unity.Services.Ccd.Management.Releases.GetReleasesRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -786,7 +786,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<List<CcdRelease>>> GetReleasesEnvAsync(Unity.Services.Ccd.Management.Releases.GetReleasesEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdRelease>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -815,7 +815,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdMetricQuantity>> GetStatsAsync(Unity.Services.Ccd.Management.Releases.GetStatsRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -844,7 +844,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdMetricQuantity>> GetStatsEnvAsync(Unity.Services.Ccd.Management.Releases.GetStatsEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdMetricQuantity)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -873,7 +873,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> UpdateReleaseAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -902,7 +902,7 @@ namespace Unity.Services.Ccd.Management.Apis.Releases
         public async Task<Response<CcdRelease>> UpdateReleaseEnvAsync(Unity.Services.Ccd.Management.Releases.UpdateReleaseEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdRelease)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);

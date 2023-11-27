@@ -33,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         /// <param name="tosVersion">tosVersion param</param>
         [Preserve]
-        public CcdOrgTosUpdate(int tosVersion = default)
+        public CcdOrgTosUpdate(long tosVersion = default)
         {
             TosVersion = tosVersion;
         }
@@ -43,7 +43,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "tos_version", EmitDefaultValue = false)]
-        public int TosVersion{ get; }
+        public long TosVersion{ get; }
     
         /// <summary>
         /// Formats a CcdOrgTosUpdate into a string of key-value pairs for use as a path parameter.

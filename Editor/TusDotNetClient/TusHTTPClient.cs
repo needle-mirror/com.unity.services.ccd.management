@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Unity.Services.Ccd.Management.Http;
 
 namespace Unity.Services.Ccd.Management
 {
@@ -151,7 +151,7 @@ namespace Unity.Services.Ccd.Management
             catch (WebException ex)
             {
                 var encoding = ASCIIEncoding.ASCII;
-                var jsonString = JsonConvert.SerializeObject(ex.Response);
+                var jsonString = IsolatedJsonConvert.SerializeObject(ex.Response);
                 using (var reader = new System.IO.StreamReader(ex.Response.GetResponseStream(), encoding))
                 {
                     string responseText = reader.ReadToEnd();

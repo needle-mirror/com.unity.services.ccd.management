@@ -62,7 +62,7 @@ namespace Unity.Services.Ccd.Management
 
             if(headers == null)
             {
-                Headers = headers;
+                Headers = new Dictionary<string, string>();
             }
             else
             {

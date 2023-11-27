@@ -16,7 +16,7 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// Content size of the entry.
         /// </summary>
-        public int ContentSize { get; set; }
+        public long ContentSize { get; set; }
         /// <summary>
         /// Content type of the entry.
         /// </summary>
@@ -43,7 +43,7 @@ namespace Unity.Services.Ccd.Management
         /// <param name="path">Path of the entry.</param>
         /// <param name="contentHash">Content hash of the entry.</param>
         /// <param name="contentSize">Content size of the entry.</param>
-        public EntryModelOptions(string path, string contentHash, int contentSize)
+        public EntryModelOptions(string path, string contentHash, long contentSize)
         {
             Path = path;
             ContentHash = contentHash;

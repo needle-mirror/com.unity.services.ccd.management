@@ -173,7 +173,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> CreateBucketAccessTokenAsync(Unity.Services.Ccd.Management.BucketAccessTokens.CreateBucketAccessTokenRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -202,7 +202,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> CreateBucketAccessTokenEnvAsync(Unity.Services.Ccd.Management.BucketAccessTokens.CreateBucketAccessTokenEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -231,7 +231,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response> DeleteBucketAccessTokenAsync(Unity.Services.Ccd.Management.BucketAccessTokens.DeleteBucketAccessTokenRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -260,7 +260,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response> DeleteBucketAccessTokenEnvAsync(Unity.Services.Ccd.Management.BucketAccessTokens.DeleteBucketAccessTokenEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"204",  null },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -289,7 +289,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> GetBucketAccessTokenAsync(Unity.Services.Ccd.Management.BucketAccessTokens.GetBucketAccessTokenRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -318,7 +318,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> GetBucketAccessTokenEnvAsync(Unity.Services.Ccd.Management.BucketAccessTokens.GetBucketAccessTokenEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -347,7 +347,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<List<CcdBucketAccessToken>>> ListBucketAccessTokensAsync(Unity.Services.Ccd.Management.BucketAccessTokens.ListBucketAccessTokensRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucketAccessToken>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucketAccessToken>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -376,7 +376,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<List<CcdBucketAccessToken>>> ListBucketAccessTokensEnvAsync(Unity.Services.Ccd.Management.BucketAccessTokens.ListBucketAccessTokensEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucketAccessToken>)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(List<CcdBucketAccessToken>)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -405,7 +405,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> UpdateBucketAccessTokenInfoAsync(Unity.Services.Ccd.Management.BucketAccessTokens.UpdateBucketAccessTokenInfoRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);
@@ -434,7 +434,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
         public async Task<Response<CcdBucketAccessToken>> UpdateBucketAccessTokenInfoEnvAsync(Unity.Services.Ccd.Management.BucketAccessTokens.UpdateBucketAccessTokenInfoEnvRequest request,
             Configuration operationConfiguration = null)
         {
-            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(InlineResponse400)   },{"401", typeof(InlineResponse401)   },{"403", typeof(InlineResponse403)   },{"404", typeof(InlineResponse404)   },{"429", typeof(InlineResponse429)   },{"500", typeof(InlineResponse500)   },{"503", typeof(InlineResponse503)   } };
+            var statusCodeToTypeMap = new Dictionary<string, System.Type>() { {"200", typeof(CcdBucketAccessToken)   },{"400", typeof(Models.ValidationError)   },{"401", typeof(Models.AuthenticationError)   },{"403", typeof(Models.AuthorizationError)   },{"404", typeof(Models.NotFoundError)   },{"429", typeof(Models.TooManyRequestsError)   },{"500", typeof(Models.InternalServerError)   },{"503", typeof(Models.ServiceUnavailableError)   } };
 
             // Merge the operation/request level configuration with the client level configuration.
             var finalConfiguration = Configuration.MergeConfigurations(operationConfiguration, Configuration);

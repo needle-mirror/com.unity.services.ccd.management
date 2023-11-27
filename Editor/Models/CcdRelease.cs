@@ -46,7 +46,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="releaseid">releaseid param</param>
         /// <param name="releasenum">releasenum param</param>
         [Preserve]
-        public CcdRelease(List<CcdBadge> badges = default, CcdReleaseChangeVersion changes = default, string contentHash = default, int contentSize = default, DateTime created = default, string createdBy = default, string createdByName = default, string entriesLink = default, object metadata = default, string notes = default, System.Guid promotedFromBucket = default, System.Guid promotedFromRelease = default, System.Guid releaseid = default, int releasenum = default)
+        public CcdRelease(List<CcdBadge> badges = default, CcdReleaseChangeVersion changes = default, string contentHash = default, long contentSize = default, DateTime created = default, string createdBy = default, string createdByName = default, string entriesLink = default, object metadata = default, string notes = default, System.Guid promotedFromBucket = default, System.Guid promotedFromRelease = default, System.Guid releaseid = default, long releasenum = default)
         {
             Badges = badges;
             Changes = changes;
@@ -90,7 +90,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_size", EmitDefaultValue = false)]
-        public int ContentSize{ get; }
+        public long ContentSize{ get; }
         
         /// <summary>
         /// Parameter created of CcdRelease
@@ -160,7 +160,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "releasenum", EmitDefaultValue = false)]
-        public int Releasenum{ get; }
+        public long Releasenum{ get; }
     
         /// <summary>
         /// Formats a CcdRelease into a string of key-value pairs for use as a path parameter.

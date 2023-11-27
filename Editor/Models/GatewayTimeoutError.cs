@@ -33,11 +33,13 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         /// <param name="title">title param</param>
         /// <param name="status">status param</param>
+        /// <param name="requestId">requestId param</param>
         [Preserve]
-        public GatewayTimeoutError(string title = default, int status = default)
+        public GatewayTimeoutError(string title = default, int status = default, string requestId = default)
         {
             Title = title;
             Status = status;
+            RequestId = requestId;
         }
 
         /// <summary>
@@ -53,6 +55,13 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public int Status{ get; }
+        
+        /// <summary>
+        /// Parameter requestId of GatewayTimeoutError
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "requestId", EmitDefaultValue = false)]
+        public string RequestId{ get; }
     
         /// <summary>
         /// Formats a GatewayTimeoutError into a string of key-value pairs for use as a path parameter.
@@ -66,7 +75,11 @@ namespace Unity.Services.Ccd.Management.Models
             {
                 serializedModel += "title," + Title + ",";
             }
-            serializedModel += "status," + Status.ToString();
+            serializedModel += "status," + Status.ToString() + ",";
+            if (RequestId != null)
+            {
+                serializedModel += "requestId," + RequestId;
+            }
             return serializedModel;
         }
 
@@ -86,6 +99,12 @@ namespace Unity.Services.Ccd.Management.Models
             
             var statusStringValue = Status.ToString();
             dictionary.Add("status", statusStringValue);
+            
+            if (RequestId != null)
+            {
+                var requestIdStringValue = RequestId.ToString();
+                dictionary.Add("requestId", requestIdStringValue);
+            }
             
             return dictionary;
         }

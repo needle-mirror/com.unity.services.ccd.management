@@ -34,13 +34,15 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="created">created param</param>
         /// <param name="description">description param</param>
         /// <param name="id">id param</param>
+        /// <param name="releaseid">If not specified, the access token will be valid for all releases in the bucket.</param>
         /// <param name="token">token param</param>
         [Preserve]
-        public CcdBucketAccessToken(DateTime created = default, string description = default, System.Guid id = default, string token = default)
+        public CcdBucketAccessToken(DateTime created = default, string description = default, System.Guid id = default, System.Guid releaseid = default, string token = default)
         {
             Created = created;
             Description = description;
             Id = id;
+            Releaseid = releaseid;
             Token = token;
         }
 
@@ -64,6 +66,13 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public System.Guid Id{ get; }
+        
+        /// <summary>
+        /// If not specified, the access token will be valid for all releases in the bucket.
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "releaseid", EmitDefaultValue = false)]
+        public System.Guid Releaseid{ get; }
         
         /// <summary>
         /// Parameter token of CcdBucketAccessToken
@@ -91,6 +100,10 @@ namespace Unity.Services.Ccd.Management.Models
             if (Id != null)
             {
                 serializedModel += "id," + Id + ",";
+            }
+            if (Releaseid != null)
+            {
+                serializedModel += "releaseid," + Releaseid + ",";
             }
             if (Token != null)
             {
@@ -123,6 +136,12 @@ namespace Unity.Services.Ccd.Management.Models
             {
                 var idStringValue = Id.ToString();
                 dictionary.Add("id", idStringValue);
+            }
+            
+            if (Releaseid != null)
+            {
+                var releaseidStringValue = Releaseid.ToString();
+                dictionary.Add("releaseid", releaseidStringValue);
             }
             
             if (Token != null)

@@ -33,11 +33,13 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         /// <param name="action">action param</param>
         /// <param name="permission">permission param</param>
+        /// <param name="role">role param</param>
         [Preserve]
-        public CcdPermissionUpdate(ActionOptions action, PermissionOptions permission)
+        public CcdPermissionUpdate(ActionOptions action, PermissionOptions permission, RoleOptions role = RoleOptions.User)
         {
             Action = action;
             Permission = permission;
+            Role = role;
         }
 
         /// <summary>
@@ -55,6 +57,14 @@ namespace Unity.Services.Ccd.Management.Models
         [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name = "permission", IsRequired = true, EmitDefaultValue = true)]
         public PermissionOptions Permission{ get; }
+        
+        /// <summary>
+        /// Parameter role of CcdPermissionUpdate
+        /// </summary>
+        [Preserve]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [DataMember(Name = "role", EmitDefaultValue = false)]
+        public RoleOptions Role{ get; }
     
         /// <summary>
         /// Defines Action
@@ -67,7 +77,17 @@ namespace Unity.Services.Ccd.Management.Models
             /// Enum Write for value: write
             /// </summary>
             [EnumMember(Value = "write")]
-            Write = 1
+            Write = 1,
+            /// <summary>
+            /// Enum ListEntries for value: list-entries
+            /// </summary>
+            [EnumMember(Value = "list-entries")]
+            ListEntries = 2,
+            /// <summary>
+            /// Enum ListReleases for value: list-releases
+            /// </summary>
+            [EnumMember(Value = "list-releases")]
+            ListReleases = 3
         }
 
         /// <summary>
@@ -90,6 +110,25 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
+        /// Defines Role
+        /// </summary>
+        [Preserve]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum RoleOptions
+        {
+            /// <summary>
+            /// Enum User for value: user
+            /// </summary>
+            [EnumMember(Value = "user")]
+            User = 1,
+            /// <summary>
+            /// Enum Client for value: client
+            /// </summary>
+            [EnumMember(Value = "client")]
+            Client = 2
+        }
+
+        /// <summary>
         /// Formats a CcdPermissionUpdate into a string of key-value pairs for use as a path parameter.
         /// </summary>
         /// <returns>Returns a string representation of the key-value pairs.</returns>
@@ -98,7 +137,8 @@ namespace Unity.Services.Ccd.Management.Models
             var serializedModel = "";
 
             serializedModel += "action," + Action + ",";
-            serializedModel += "permission," + Permission;
+            serializedModel += "permission," + Permission + ",";
+            serializedModel += "role," + Role;
             return serializedModel;
         }
 
@@ -115,6 +155,9 @@ namespace Unity.Services.Ccd.Management.Models
             
             var permissionStringValue = Permission.ToString();
             dictionary.Add("permission", permissionStringValue);
+            
+            var roleStringValue = Role.ToString();
+            dictionary.Add("role", roleStringValue);
             
             return dictionary;
         }

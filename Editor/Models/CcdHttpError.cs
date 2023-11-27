@@ -46,6 +46,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// Parameter code of CcdHttpError
         /// </summary>
         [Preserve]
+        [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name = "code", EmitDefaultValue = false)]
         public CcdErrorCodes Code{ get; }
         
@@ -71,10 +72,7 @@ namespace Unity.Services.Ccd.Management.Models
         {
             var serializedModel = "";
 
-            if (Code != null)
-            {
-                serializedModel += "code," + Code.ToString() + ",";
-            }
+            serializedModel += "code," + Code.ToString() + ",";
             if (Details != null)
             {
                 serializedModel += "details," + Details.ToString() + ",";
@@ -94,6 +92,9 @@ namespace Unity.Services.Ccd.Management.Models
         {
             var dictionary = new Dictionary<string, string>();
 
+            var codeStringValue = Code.ToString();
+            dictionary.Add("code", codeStringValue);
+            
             if (Details != null)
             {
                 var detailsStringValue = Details.ToString();

@@ -22,21 +22,21 @@ using Unity.Services.Ccd.Management.Http;
 namespace Unity.Services.Ccd.Management.Models
 {
     /// <summary>
-    /// InlineResponse429 model
+    /// FailedDependencyError model
     /// </summary>
     [Preserve]
-    [DataContract(Name = "inline_response_429")]
-    public class InlineResponse429
+    [DataContract(Name = "FailedDependencyError")]
+    public class FailedDependencyError
     {
         /// <summary>
-        /// Creates an instance of InlineResponse429.
+        /// Creates an instance of FailedDependencyError.
         /// </summary>
         /// <param name="title">title param</param>
         /// <param name="status">status param</param>
         /// <param name="detail">detail param</param>
         /// <param name="requestId">requestId param</param>
         [Preserve]
-        public InlineResponse429(string title = default, int status = default, string detail = default, string requestId = default)
+        public FailedDependencyError(string title = default, int status = default, string detail = default, string requestId = default)
         {
             Title = title;
             Status = status;
@@ -45,35 +45,35 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// Parameter title of InlineResponse429
+        /// Parameter title of FailedDependencyError
         /// </summary>
         [Preserve]
         [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title{ get; }
         
         /// <summary>
-        /// Parameter status of InlineResponse429
+        /// Parameter status of FailedDependencyError
         /// </summary>
         [Preserve]
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public int Status{ get; }
         
         /// <summary>
-        /// Parameter detail of InlineResponse429
+        /// Parameter detail of FailedDependencyError
         /// </summary>
         [Preserve]
         [DataMember(Name = "detail", EmitDefaultValue = false)]
         public string Detail{ get; }
         
         /// <summary>
-        /// Parameter requestId of InlineResponse429
+        /// Parameter requestId of FailedDependencyError
         /// </summary>
         [Preserve]
         [DataMember(Name = "requestId", EmitDefaultValue = false)]
         public string RequestId{ get; }
     
         /// <summary>
-        /// Formats a InlineResponse429 into a string of key-value pairs for use as a path parameter.
+        /// Formats a FailedDependencyError into a string of key-value pairs for use as a path parameter.
         /// </summary>
         /// <returns>Returns a string representation of the key-value pairs.</returns>
         internal string SerializeAsPathParam()
@@ -97,7 +97,7 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// Returns a InlineResponse429 as a dictionary of key-value pairs for use as a query parameter.
+        /// Returns a FailedDependencyError as a dictionary of key-value pairs for use as a query parameter.
         /// </summary>
         /// <returns>Returns a dictionary of string key-value pairs.</returns>
         internal Dictionary<string, string> GetAsQueryParam()

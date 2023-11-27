@@ -35,13 +35,15 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="status">status param</param>
         /// <param name="detail">detail param</param>
         /// <param name="details">details param</param>
+        /// <param name="requestId">requestId param</param>
         [Preserve]
-        public ValidationError(string title = default, int status = default, string detail = default, List<object> details = default)
+        public ValidationError(string title = default, int status = default, string detail = default, List<object> details = default, string requestId = default)
         {
             Title = title;
             Status = status;
             Detail = detail;
-            Details = details;
+            Details = (List<JsonObject>) JsonObject.GetNewJsonObjectResponse(details);
+            RequestId = requestId;
         }
 
         /// <summary>
@@ -70,7 +72,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "details", EmitDefaultValue = false)]
-        public List<object> Details{ get; }
+        public List<JsonObject> Details{ get; }
+        
+        /// <summary>
+        /// Parameter requestId of ValidationError
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "requestId", EmitDefaultValue = false)]
+        public string RequestId{ get; }
     
         /// <summary>
         /// Formats a ValidationError into a string of key-value pairs for use as a path parameter.
@@ -91,7 +100,11 @@ namespace Unity.Services.Ccd.Management.Models
             }
             if (Details != null)
             {
-                serializedModel += "details," + Details.ToString();
+                serializedModel += "details," + Details.ToString() + ",";
+            }
+            if (RequestId != null)
+            {
+                serializedModel += "requestId," + RequestId;
             }
             return serializedModel;
         }
@@ -123,6 +136,12 @@ namespace Unity.Services.Ccd.Management.Models
             {
                 var detailsStringValue = Details.ToString();
                 dictionary.Add("details", detailsStringValue);
+            }
+            
+            if (RequestId != null)
+            {
+                var requestIdStringValue = RequestId.ToString();
+                dictionary.Add("requestId", requestIdStringValue);
             }
             
             return dictionary;

@@ -105,9 +105,10 @@ namespace Unity.Services.Ccd.Management
         /// Get buckets for project.
         /// </summary>
         /// <param name="pageOptions">Pagination options.</param>
+        /// <param name="listBucketsOptions">Parameters for listing the project buckets.</param>
         /// <returns>List of CcdBuckets.</returns>
         /// <exception cref="CcdManagementException"></exception>
-        Task<List<CcdBucket>> ListBucketsAsync(PageOptions pageOptions = default);
+        Task<List<CcdBucket>> ListBucketsAsync(PageOptions pageOptions = default, ListBucketsOptions listBucketsOptions = default);
 
         /// <summary>
         /// Async Operation.
@@ -339,9 +340,10 @@ namespace Unity.Services.Ccd.Management
         /// Required: BucketId, Action, Permission.
         /// </summary>
         /// <param name="permissionsOptions">Parameters for deleting a permission.</param>
+        /// <param name="role">Delete permission for the given role.</param>
         /// <returns>Awaitable task.</returns>
         /// <exception cref="CcdManagementException"></exception>
-        Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions);
+        Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions, CcdPermissionUpdate.RoleOptions role = CcdPermissionUpdate.RoleOptions.User);
 
         /// <summary>
         /// Async Operation.

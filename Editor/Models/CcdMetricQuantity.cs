@@ -33,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         /// <param name="quantity">quantity param</param>
         [Preserve]
-        public CcdMetricQuantity(int quantity = default)
+        public CcdMetricQuantity(long quantity = default)
         {
             Quantity = quantity;
         }
@@ -43,7 +43,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "quantity", EmitDefaultValue = false)]
-        public int Quantity{ get; }
+        public long Quantity{ get; }
     
         /// <summary>
         /// Formats a CcdMetricQuantity into a string of key-value pairs for use as a path parameter.

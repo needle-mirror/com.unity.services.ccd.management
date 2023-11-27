@@ -42,7 +42,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="path">path param</param>
         /// <param name="versionid">versionid param</param>
         [Preserve]
-        public CcdVersion(string contentHash = default, string contentLink = default, int contentSize = default, string contentType = default, List<string> labels = default, DateTime lastModified = default, string link = default, object metadata = default, string path = default, System.Guid versionid = default)
+        public CcdVersion(string contentHash = default, string contentLink = default, long contentSize = default, string contentType = default, List<string> labels = default, DateTime lastModified = default, string link = default, object metadata = default, string path = default, System.Guid versionid = default)
         {
             ContentHash = contentHash;
             ContentLink = contentLink;
@@ -75,7 +75,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_size", EmitDefaultValue = false)]
-        public int ContentSize{ get; }
+        public long ContentSize{ get; }
         
         /// <summary>
         /// Parameter content_type of CcdVersion

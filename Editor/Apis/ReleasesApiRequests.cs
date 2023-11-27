@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Releases
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Releases
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -1116,13 +1117,13 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Fromreleaseid { get; }
         /// <summary>Accessor for fromreleasenum </summary>
         [Preserve]
-        public int? Fromreleasenum { get; }
+        public long? Fromreleasenum { get; }
         /// <summary>Accessor for toreleaseid </summary>
         [Preserve]
         public string Toreleaseid { get; }
         /// <summary>Accessor for toreleasenum </summary>
         [Preserve]
-        public int? Toreleasenum { get; }
+        public long? Toreleasenum { get; }
         string PathAndQueryParams;
 
         /// <summary>
@@ -1136,7 +1137,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="toreleaseid">To Release ID, when not specified the most recent state of the bucket will be used. Either toreleaseid or toreleasenum can be specified, but not both. </param>
         /// <param name="toreleasenum">To Release ID, when not specified the most recent state of the bucket will be used. Either toreleaseid or toreleasenum can be specified, but not both. </param>
         [Preserve]
-        public GetReleaseDiffRequest(string bucketid, string projectid, string fromreleaseid = default(string), int? fromreleasenum = default(int?), string toreleaseid = default(string), int? toreleasenum = default(int?))
+        public GetReleaseDiffRequest(string bucketid, string projectid, string fromreleaseid = default(string), long? fromreleasenum = default(long?), string toreleaseid = default(string), long? toreleasenum = default(long?))
         {
             Bucketid = bucketid;
 
@@ -1257,16 +1258,16 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Fromreleaseid { get; }
         /// <summary>Accessor for fromreleasenum </summary>
         [Preserve]
-        public int? Fromreleasenum { get; }
+        public long? Fromreleasenum { get; }
         /// <summary>Accessor for toreleaseid </summary>
         [Preserve]
         public string Toreleaseid { get; }
         /// <summary>Accessor for toreleasenum </summary>
         [Preserve]
-        public int? Toreleasenum { get; }
+        public long? Toreleasenum { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1313,7 +1314,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetReleaseDiffEntriesRequest(string bucketid, string projectid, string fromreleaseid = default(string), int? fromreleasenum = default(int?), string toreleaseid = default(string), int? toreleasenum = default(int?), int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetReleaseDiffEntriesRequest(string bucketid, string projectid, string fromreleaseid = default(string), long? fromreleasenum = default(long?), string toreleaseid = default(string), long? toreleasenum = default(long?), long? page = default(long?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Bucketid = bucketid;
 
@@ -1486,7 +1487,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Toreleasenum { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1534,7 +1535,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetReleaseDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), string fromreleasenum = default(string), string toreleaseid = default(string), string toreleasenum = default(string), int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetReleaseDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, string fromreleaseid = default(string), string fromreleasenum = default(string), string toreleaseid = default(string), string toreleasenum = default(string), long? page = default(long?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string contentType = default(string), string label = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 
@@ -1855,7 +1856,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1872,7 +1873,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetReleaseEntriesRequest(string bucketid, string releaseid, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetReleaseEntriesRequest(string bucketid, string releaseid, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Bucketid = bucketid;
 
@@ -1993,7 +1994,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2010,7 +2011,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetReleaseEntriesByBadgeRequest(string bucketid, string badgename, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetReleaseEntriesByBadgeRequest(string bucketid, string badgename, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Bucketid = bucketid;
 
@@ -2134,7 +2135,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2152,7 +2153,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetReleaseEntriesByBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetReleaseEntriesByBadgeEnvRequest(string environmentid, string bucketid, string badgename, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Environmentid = environmentid;
 
@@ -2278,7 +2279,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2296,7 +2297,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetReleaseEntriesEnvRequest(string environmentid, string bucketid, string releaseid, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetReleaseEntriesEnvRequest(string environmentid, string bucketid, string releaseid, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Environmentid = environmentid;
 
@@ -2529,7 +2530,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2572,7 +2573,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetReleasesRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string releasenum = default(string), string notes = default(string), string promotedFromBucket = default(string), string promotedFromRelease = default(string), string badges = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public GetReleasesRequest(string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string releasenum = default(string), string notes = default(string), string promotedFromBucket = default(string), string promotedFromRelease = default(string), string badges = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Bucketid = bucketid;
 
@@ -2718,7 +2719,7 @@ namespace Unity.Services.Ccd.Management.Releases
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2762,7 +2763,7 @@ namespace Unity.Services.Ccd.Management.Releases
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetReleasesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string releasenum = default(string), string notes = default(string), string promotedFromBucket = default(string), string promotedFromRelease = default(string), string badges = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public GetReleasesEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string releasenum = default(string), string notes = default(string), string promotedFromBucket = default(string), string promotedFromRelease = default(string), string badges = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 

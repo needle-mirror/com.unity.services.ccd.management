@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Entries
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Entries
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -1001,7 +1002,7 @@ namespace Unity.Services.Ccd.Management.Entries
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for startingAfter </summary>
         [Preserve]
         public System.Guid StartingAfter { get; }
@@ -1044,7 +1045,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetEntriesRequest(string bucketid, string projectid, int? page = default(int?), System.Guid startingAfter = default(System.Guid), int? perPage = 10, string path = default(string), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetEntriesRequest(string bucketid, string projectid, long? page = default(long?), System.Guid startingAfter = default(System.Guid), int? perPage = 10, string path = default(string), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Bucketid = bucketid;
 
@@ -1188,7 +1189,7 @@ namespace Unity.Services.Ccd.Management.Entries
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for startingAfter </summary>
         [Preserve]
         public System.Guid StartingAfter { get; }
@@ -1232,7 +1233,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetEntriesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), System.Guid startingAfter = default(System.Guid), int? perPage = 10, string path = default(string), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetEntriesEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), System.Guid startingAfter = default(System.Guid), int? perPage = 10, string path = default(string), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 
@@ -2105,7 +2106,7 @@ namespace Unity.Services.Ccd.Management.Entries
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2122,7 +2123,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetEntryVersionsRequest(string bucketid, string entryid, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetEntryVersionsRequest(string bucketid, string entryid, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Bucketid = bucketid;
 
@@ -2246,7 +2247,7 @@ namespace Unity.Services.Ccd.Management.Entries
         public string Label { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2264,7 +2265,7 @@ namespace Unity.Services.Ccd.Management.Entries
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public GetEntryVersionsEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string label = default(string), int? page = default(int?), int? perPage = 10)
+        public GetEntryVersionsEnvRequest(string environmentid, string bucketid, string entryid, string projectid, string label = default(string), long? page = default(long?), int? perPage = 10)
         {
             Environmentid = environmentid;
 

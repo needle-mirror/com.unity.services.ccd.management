@@ -40,7 +40,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="unchanged">unchanged param</param>
         /// <param name="update">update param</param>
         [Preserve]
-        public CcdReleaseChangeVersion(int add = default, int delete = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, bool loading = default, int unchanged = default, int update = default)
+        public CcdReleaseChangeVersion(long add = default, long delete = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, bool loading = default, long unchanged = default, long update = default)
         {
             Add = add;
             Delete = delete;
@@ -57,14 +57,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "add", EmitDefaultValue = false)]
-        public int Add{ get; }
+        public long Add{ get; }
         
         /// <summary>
         /// Parameter delete of CcdReleaseChangeVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "delete", EmitDefaultValue = false)]
-        public int Delete{ get; }
+        public long Delete{ get; }
         
         /// <summary>
         /// Parameter last_modified of CcdReleaseChangeVersion
@@ -99,14 +99,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "unchanged", EmitDefaultValue = false)]
-        public int Unchanged{ get; }
+        public long Unchanged{ get; }
         
         /// <summary>
         /// Parameter update of CcdReleaseChangeVersion
         /// </summary>
         [Preserve]
         [DataMember(Name = "update", EmitDefaultValue = false)]
-        public int Update{ get; }
+        public long Update{ get; }
     
         /// <summary>
         /// Formats a CcdReleaseChangeVersion into a string of key-value pairs for use as a path parameter.

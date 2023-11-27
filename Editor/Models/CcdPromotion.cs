@@ -46,7 +46,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="toEnvironmentName">toEnvironmentName param</param>
         /// <param name="toReleaseId">toReleaseId param</param>
         [Preserve]
-        public CcdPromotion(string error = default, System.Guid fromBucketId = default, string fromBucketName = default, System.Guid fromEnvironmentId = default, string fromEnvironmentName = default, System.Guid fromReleaseId = default, int fromReleaseNumber = default, System.Guid promotionId = default, PromotionStatusOptions promotionStatus = default, System.Guid toBucketId = default, string toBucketName = default, System.Guid toEnvironmentId = default, string toEnvironmentName = default, System.Guid toReleaseId = default)
+        public CcdPromotion(string error = default, System.Guid fromBucketId = default, string fromBucketName = default, System.Guid fromEnvironmentId = default, string fromEnvironmentName = default, System.Guid fromReleaseId = default, long fromReleaseNumber = default, System.Guid promotionId = default, PromotionStatusOptions promotionStatus = default, System.Guid toBucketId = default, string toBucketName = default, System.Guid toEnvironmentId = default, string toEnvironmentName = default, System.Guid toReleaseId = default)
         {
             Error = error;
             FromBucketId = fromBucketId;
@@ -111,7 +111,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "from_release_number", EmitDefaultValue = false)]
-        public int FromReleaseNumber{ get; }
+        public long FromReleaseNumber{ get; }
         
         /// <summary>
         /// Parameter promotion_id of CcdPromotion

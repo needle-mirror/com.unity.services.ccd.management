@@ -5,6 +5,23 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2023-11-27
+### Added
+* Added support for ListBucketsOptions for the ListBucketsAsync method.
+* Added RoleOptions to DeletePermissionAsync method.
+
+### Changed
+* Fix integer overflow when ContentSize is larger than 2GB by changing ContentSize to a long.
+* Aligned most integer types to use longs instead of ints to properly reflect the API.
+* Fix issue with CcdSampleWindow.cs sample causing errors in standalone build.
+* Updated Core and NewtonsoftJson dependencies.
+
+## [2.3.0] - 2023-12-15
+### Added
+* Added LogRequests and LogRequestHeaders to CcdManagement to add a way to log internal requests
+### Changed
+* Catch 401 and 403 errors, get new token, and retry
+
 ## [2.2.2] - 2023-01-27
 ### Changed
 * InternalUploadAsync changed to use a signed URL to upload content

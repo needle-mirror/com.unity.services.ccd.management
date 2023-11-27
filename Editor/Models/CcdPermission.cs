@@ -34,12 +34,14 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="action">action param</param>
         /// <param name="permission">permission param</param>
         /// <param name="resource">resource param</param>
+        /// <param name="role">role param</param>
         [Preserve]
-        public CcdPermission(string action = default, string permission = default, string resource = default)
+        public CcdPermission(string action = default, string permission = default, string resource = default, string role = default)
         {
             Action = action;
             Permission = permission;
             Resource = resource;
+            Role = role;
         }
 
         /// <summary>
@@ -62,6 +64,13 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "resource", EmitDefaultValue = false)]
         public string Resource{ get; }
+        
+        /// <summary>
+        /// Parameter role of CcdPermission
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "role", EmitDefaultValue = false)]
+        public string Role{ get; }
     
         /// <summary>
         /// Formats a CcdPermission into a string of key-value pairs for use as a path parameter.
@@ -81,7 +90,11 @@ namespace Unity.Services.Ccd.Management.Models
             }
             if (Resource != null)
             {
-                serializedModel += "resource," + Resource;
+                serializedModel += "resource," + Resource + ",";
+            }
+            if (Role != null)
+            {
+                serializedModel += "role," + Role;
             }
             return serializedModel;
         }
@@ -110,6 +123,12 @@ namespace Unity.Services.Ccd.Management.Models
             {
                 var resourceStringValue = Resource.ToString();
                 dictionary.Add("resource", resourceStringValue);
+            }
+            
+            if (Role != null)
+            {
+                var roleStringValue = Role.ToString();
+                dictionary.Add("role", roleStringValue);
             }
             
             return dictionary;

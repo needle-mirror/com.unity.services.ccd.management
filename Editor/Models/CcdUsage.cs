@@ -34,7 +34,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="projectguid">projectguid param</param>
         /// <param name="quantity">quantity param</param>
         [Preserve]
-        public CcdUsage(System.Guid projectguid = default, decimal quantity = default)
+        public CcdUsage(System.Guid projectguid = default, double quantity = default)
         {
             Projectguid = projectguid;
             Quantity = quantity;
@@ -52,7 +52,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "quantity", EmitDefaultValue = false)]
-        public decimal Quantity{ get; }
+        public double Quantity{ get; }
     
         /// <summary>
         /// Formats a CcdUsage into a string of key-value pairs for use as a path parameter.

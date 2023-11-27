@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Unity.Services.Ccd.Management.ErrorMitigation;
 using Unity.Services.Ccd.Management.Helpers;
 using Unity.Services.Ccd.Management.Scheduler;
+using UnityEngine;
 using Task = System.Threading.Tasks.Task;
 
 namespace Unity.Services.Ccd.Management.Http
@@ -28,12 +29,22 @@ namespace Unity.Services.Ccd.Management.Http
     internal class HttpClient : IHttpClient
     {
         private IRetryPolicyProvider _retryPolicy;
+        private bool _logRequests;
+        private bool _logRequestHeaders;
 
         /// <summary>Default Constructor.</summary>
         /// <param name="retryPolicy">The policy provider for backoff and retry.</param>
+        /// <param name="logRequests">Log http requests</param>
+        /// <param name="logRequestHeaders">Log http request headers</param>
         public HttpClient(IRetryPolicyProvider retryPolicy = null)
         {
             _retryPolicy = retryPolicy;
+        }
+
+        public void ConfigureLogging(bool logRequests = false, bool logRequestHeaders = false)
+        {
+            _logRequests = logRequests;
+            _logRequestHeaders = logRequestHeaders;
         }
 
         /// <inheritdoc/>
@@ -101,6 +112,7 @@ namespace Unity.Services.Ccd.Management.Http
                     }
                 }, CancellationToken.None, TaskCreationOptions.None,
                 Scheduler.ThreadHelper.TaskScheduler);
+            LogVerbose(method, url, body, result);
             return result;
         }
 
@@ -140,6 +152,7 @@ namespace Unity.Services.Ccd.Management.Http
                     return await SendWebRequest(request);
                 }, CancellationToken.None, TaskCreationOptions.None,
                 Scheduler.ThreadHelper.TaskScheduler);
+            LogVerbose(method, url, Encoding.UTF8.GetBytes("MultipartBody"), result);
             return result;
         }
 
@@ -166,6 +179,53 @@ namespace Unity.Services.Ccd.Management.Http
         private UnityWebRequestAsyncOperation SendWebRequest(UnityWebRequest request)
         {
             return request.SendWebRequest();
+        }
+
+        private void LogVerbose(string method, string url, byte[] body, HttpClientResponse result)
+        {
+            if (!_logRequests)
+            {
+                return;
+            }
+
+            var msg = new StringBuilder($"{method}[{result.StatusCode}] {result.ErrorMessage} {url}");
+            if (body != null)
+            {
+                msg.Append($"\n\tRequest Body: {Encoding.UTF8.GetString(body, 0, body.Length)}");
+            }
+            if (result.Data.Length > 0)
+            {
+                msg.Append($"\n\tResponse Body: {Encoding.UTF8.GetString(result.Data, 0, result.Data.Length)}");
+            }
+
+            LogRequestHeaders(result, msg);
+
+            if (result.StatusCode >= 500)
+            {
+                Debug.LogError(msg.ToString());
+            }
+            else if (result.StatusCode >= 400)
+            {
+                Debug.LogWarning(msg.ToString());
+            }
+            else
+            {
+                Debug.Log(msg.ToString());
+            }
+        }
+
+        public void LogRequestHeaders(HttpClientResponse result, StringBuilder msg)
+        {
+            if (!_logRequestHeaders)
+            {
+                return;
+            }
+
+            msg.Append("\n\tHeaders:");
+            foreach (var header in result.Headers)
+            {
+                msg.Append($"\n\t\t{header.Key}: {header.Value}");
+            }
         }
     }
 }

@@ -22,18 +22,18 @@ using Unity.Services.Ccd.Management.Http;
 namespace Unity.Services.Ccd.Management.Models
 {
     /// <summary>
-    /// InlineObject1 model
+    /// CcdFile model
     /// </summary>
     [Preserve]
-    [DataContract(Name = "inline_object_1")]
-    public class InlineObject1
+    [DataContract(Name = "ccd.file")]
+    public class CcdFile
     {
         /// <summary>
-        /// Creates an instance of InlineObject1.
+        /// Creates an instance of CcdFile.
         /// </summary>
         /// <param name="file">File content</param>
         [Preserve]
-        public InlineObject1(System.IO.Stream file)
+        public CcdFile(System.IO.Stream file)
         {
             File = file;
         }
@@ -46,7 +46,7 @@ namespace Unity.Services.Ccd.Management.Models
         public System.IO.Stream File{ get; }
     
         /// <summary>
-        /// Formats a InlineObject1 into a string of key-value pairs for use as a path parameter.
+        /// Formats a CcdFile into a string of key-value pairs for use as a path parameter.
         /// </summary>
         /// <returns>Returns a string representation of the key-value pairs.</returns>
         internal string SerializeAsPathParam()
@@ -61,7 +61,7 @@ namespace Unity.Services.Ccd.Management.Models
         }
 
         /// <summary>
-        /// Returns a InlineObject1 as a dictionary of key-value pairs for use as a query parameter.
+        /// Returns a CcdFile as a dictionary of key-value pairs for use as a query parameter.
         /// </summary>
         /// <returns>Returns a dictionary of string key-value pairs.</returns>
         internal Dictionary<string, string> GetAsQueryParam()

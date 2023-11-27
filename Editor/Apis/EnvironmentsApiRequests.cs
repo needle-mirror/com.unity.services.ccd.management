@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Environments
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Environments
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -384,7 +385,7 @@ namespace Unity.Services.Ccd.Management.Environments
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for startingAfter </summary>
         [Preserve]
         public System.Guid StartingAfter { get; }
@@ -402,7 +403,7 @@ namespace Unity.Services.Ccd.Management.Environments
         /// <param name="startingAfter">returns items listed after the named ID</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public ListEnvironmentsByProjectRequest(string projectid, int? page = default(int?), System.Guid startingAfter = default(System.Guid), int? perPage = 10)
+        public ListEnvironmentsByProjectRequest(string projectid, long? page = default(long?), System.Guid startingAfter = default(System.Guid), int? perPage = 10)
         {
             Projectid = projectid;
 

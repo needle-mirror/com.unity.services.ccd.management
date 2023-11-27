@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Permissions
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Permissions
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -507,6 +508,9 @@ namespace Unity.Services.Ccd.Management.Permissions
         /// <summary>Accessor for projectid </summary>
         [Preserve]
         public string Projectid { get; }
+        /// <summary>Accessor for role </summary>
+        [Preserve]
+        public string Role { get; }
         /// <summary>Accessor for permission </summary>
         [Preserve]
         public string Permission { get; }
@@ -521,21 +525,27 @@ namespace Unity.Services.Ccd.Management.Permissions
         /// </summary>
         /// <param name="bucketid">Bucket ID</param>
         /// <param name="projectid">Project ID</param>
+        /// <param name="role">Permission role: user, client. </param>
         /// <param name="permission">Permission of resource: allow, deny. </param>
         /// <param name="action">Permission action: write, read. </param>
         [Preserve]
-        public DeletePermissionByBucketRequest(string bucketid, string projectid, string permission = default(string), string action = default(string))
+        public DeletePermissionByBucketRequest(string bucketid, string projectid, string role = default(string), string permission = default(string), string action = default(string))
         {
             Bucketid = bucketid;
 
             Projectid = projectid;
 
+            Role = role;
             Permission = permission;
             Action = action;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/buckets/{bucketid}/permissions";
 
             List<string> queryParams = new List<string>();
 
+            if(!string.IsNullOrEmpty(Role))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "role", Role);
+            }
             if(!string.IsNullOrEmpty(Permission))
             {
                 queryParams = AddParamsToQueryParams(queryParams, "permission", Permission);
@@ -636,6 +646,9 @@ namespace Unity.Services.Ccd.Management.Permissions
         /// <summary>Accessor for projectid </summary>
         [Preserve]
         public string Projectid { get; }
+        /// <summary>Accessor for role </summary>
+        [Preserve]
+        public string Role { get; }
         /// <summary>Accessor for permission </summary>
         [Preserve]
         public string Permission { get; }
@@ -651,10 +664,11 @@ namespace Unity.Services.Ccd.Management.Permissions
         /// <param name="environmentid">Environment ID</param>
         /// <param name="bucketid">Bucket ID</param>
         /// <param name="projectid">Project ID</param>
+        /// <param name="role">Permission role: user, client. </param>
         /// <param name="permission">Permission of resource: allow, deny. </param>
         /// <param name="action">Permission action: write, read. </param>
         [Preserve]
-        public DeletePermissionByBucketEnvRequest(string environmentid, string bucketid, string projectid, string permission = default(string), string action = default(string))
+        public DeletePermissionByBucketEnvRequest(string environmentid, string bucketid, string projectid, string role = default(string), string permission = default(string), string action = default(string))
         {
             Environmentid = environmentid;
 
@@ -662,12 +676,17 @@ namespace Unity.Services.Ccd.Management.Permissions
 
             Projectid = projectid;
 
+            Role = role;
             Permission = permission;
             Action = action;
             PathAndQueryParams = $"/api/ccd/management/v1/projects/{projectid}/environments/{environmentid}/buckets/{bucketid}/permissions";
 
             List<string> queryParams = new List<string>();
 
+            if(!string.IsNullOrEmpty(Role))
+            {
+                queryParams = AddParamsToQueryParams(queryParams, "role", Role);
+            }
             if(!string.IsNullOrEmpty(Permission))
             {
                 queryParams = AddParamsToQueryParams(queryParams, "permission", Permission);

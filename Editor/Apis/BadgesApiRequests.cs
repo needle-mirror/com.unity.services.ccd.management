@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Badges
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Badges
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -733,7 +734,7 @@ namespace Unity.Services.Ccd.Management.Badges
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -764,7 +765,7 @@ namespace Unity.Services.Ccd.Management.Badges
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public ListBadgesRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public ListBadgesRequest(string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Bucketid = bucketid;
 
@@ -895,7 +896,7 @@ namespace Unity.Services.Ccd.Management.Badges
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -927,7 +928,7 @@ namespace Unity.Services.Ccd.Management.Badges
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public ListBadgesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public ListBadgesEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string name = default(string), string releasenum = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 

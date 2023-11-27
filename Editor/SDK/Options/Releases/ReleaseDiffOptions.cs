@@ -19,7 +19,7 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// The release number to start from.
         /// </summary>
-        public int? FromReleaseNum { get; set; }
+        public long? FromReleaseNum { get; set; }
         /// <summary>
         /// The Id of the release to end at.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// The release number to end at.
         /// </summary>
-        public int? ToReleaseNum { get; set; }
+        public long? ToReleaseNum { get; set; }
         /// <summary>
         /// The path to filter to.
         /// </summary>
@@ -55,7 +55,7 @@ namespace Unity.Services.Ccd.Management
         /// <param name="bucketId">Id of the bucket.</param>
         /// <param name="fromReleaseNum">Release number to start from.</param>
         /// <param name="toReleaseNum">Release number to end at.</param>
-        public ReleaseDiffOptions(Guid bucketId, int fromReleaseNum, int toReleaseNum)
+        public ReleaseDiffOptions(Guid bucketId, long fromReleaseNum, long toReleaseNum)
         {
             BucketId = bucketId;
             FromReleaseNum = fromReleaseNum;

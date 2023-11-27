@@ -14,6 +14,7 @@ using Unity.Services.Ccd.Management.Apis.Users;
 using Unity.Services.Ccd.Management.ErrorMitigation;
 using Unity.Services.Ccd.Management.Http;
 using UnityEditor;
+using UnityEngine;
 
 [assembly: InternalsVisibleTo("Unity.Services.Ccd.Management.Editor.Tests")]
 
@@ -35,6 +36,10 @@ namespace Unity.Services.Ccd.Management
         internal static string userId;
         internal static string projectid;
         internal static string environmentid;
+        internal static bool logRequests;
+        internal static bool logRequestHeaders;
+        public static bool LogRequests { get { return logRequests; } set { logRequests = value; } }
+        public static bool LogRequestHeaders { get { return logRequestHeaders; } set { logRequestHeaders = value; } }
 
         /// <summary>
         /// Sets the configuration base path
@@ -75,6 +80,20 @@ namespace Unity.Services.Ccd.Management
             userId = CloudProjectSettings.userId;
             projectid = CloudProjectSettings.projectId;
             accessToken = CloudProjectSettings.accessToken;
+            ConfigureLogging();
+        }
+
+        internal static void ConfigureLogging()
+        {
+            if (client == null)
+            {
+                return;
+            }
+            var httpClient = client as HttpClient;
+            if (httpClient != null)
+            {
+                httpClient.ConfigureLogging(CcdManagement.LogRequests, CcdManagement.LogRequestHeaders);
+            }
         }
 
         [InitializeOnLoadMethod]
@@ -94,7 +113,8 @@ namespace Unity.Services.Ccd.Management
 
                 if (client == null)
                 {
-                    client = new HttpClient();
+                    client = new HttpClient(null);
+                    ConfigureLogging();
                 }
 
                 if (service == null)

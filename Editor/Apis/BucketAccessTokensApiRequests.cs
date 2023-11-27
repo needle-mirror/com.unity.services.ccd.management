@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.BucketAccessTokens
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -959,7 +960,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -974,7 +975,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public ListBucketAccessTokensRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10)
+        public ListBucketAccessTokensRequest(string bucketid, string projectid, long? page = default(long?), int? perPage = 10)
         {
             Bucketid = bucketid;
 
@@ -1085,7 +1086,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1101,7 +1102,7 @@ namespace Unity.Services.Ccd.Management.BucketAccessTokens
         /// <param name="page">Current Page</param>
         /// <param name="perPage">Items Per Page</param>
         [Preserve]
-        public ListBucketAccessTokensEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10)
+        public ListBucketAccessTokensEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), int? perPage = 10)
         {
             Environmentid = environmentid;
 

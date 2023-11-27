@@ -32,10 +32,12 @@ namespace Unity.Services.Ccd.Management.Models
         /// Creates an instance of CcdBucketAccessTokenCreate.
         /// </summary>
         /// <param name="description">description param</param>
+        /// <param name="releaseid">If not specified, the access token will be valid for all releases in the bucket.</param>
         [Preserve]
-        public CcdBucketAccessTokenCreate(string description = default)
+        public CcdBucketAccessTokenCreate(string description = default, System.Guid releaseid = default)
         {
             Description = description;
+            Releaseid = releaseid;
         }
 
         /// <summary>
@@ -44,6 +46,13 @@ namespace Unity.Services.Ccd.Management.Models
         [Preserve]
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description{ get; }
+        
+        /// <summary>
+        /// If not specified, the access token will be valid for all releases in the bucket.
+        /// </summary>
+        [Preserve]
+        [DataMember(Name = "releaseid", EmitDefaultValue = false)]
+        public System.Guid Releaseid{ get; }
     
         /// <summary>
         /// Formats a CcdBucketAccessTokenCreate into a string of key-value pairs for use as a path parameter.
@@ -55,7 +64,11 @@ namespace Unity.Services.Ccd.Management.Models
 
             if (Description != null)
             {
-                serializedModel += "description," + Description;
+                serializedModel += "description," + Description + ",";
+            }
+            if (Releaseid != null)
+            {
+                serializedModel += "releaseid," + Releaseid;
             }
             return serializedModel;
         }
@@ -72,6 +85,12 @@ namespace Unity.Services.Ccd.Management.Models
             {
                 var descriptionStringValue = Description.ToString();
                 dictionary.Add("description", descriptionStringValue);
+            }
+            
+            if (Releaseid != null)
+            {
+                var releaseidStringValue = Releaseid.ToString();
+                dictionary.Add("releaseid", releaseidStringValue);
             }
             
             return dictionary;

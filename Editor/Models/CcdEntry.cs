@@ -48,7 +48,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="signedUrl">signedUrl param</param>
         /// <param name="updatedAt">updatedAt param</param>
         [Preserve]
-        public CcdEntry(bool complete = default, string contentHash = default, string contentLink = default, int contentSize = default, string contentType = default, System.Guid currentVersionid = default, System.Guid entryid = default, List<string> labels = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, string link = default, object metadata = default, string path = default, string signedUrl = default, DateTime updatedAt = default)
+        public CcdEntry(bool complete = default, string contentHash = default, string contentLink = default, long contentSize = default, string contentType = default, System.Guid currentVersionid = default, System.Guid entryid = default, List<string> labels = default, DateTime lastModified = default, string lastModifiedBy = default, string lastModifiedByName = default, string link = default, object metadata = default, string path = default, string signedUrl = default, DateTime updatedAt = default)
         {
             Complete = complete;
             ContentHash = contentHash;
@@ -94,7 +94,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_size", EmitDefaultValue = false)]
-        public int ContentSize{ get; }
+        public long ContentSize{ get; }
         
         /// <summary>
         /// Parameter content_type of CcdEntry

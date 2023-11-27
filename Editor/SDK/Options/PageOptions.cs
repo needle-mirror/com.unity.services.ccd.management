@@ -11,7 +11,7 @@ namespace Unity.Services.Ccd.Management
         /// The current page to retrieve.
         /// Minimum: 1.
         /// </summary>
-        public int Page { get; set; } = 1;
+        public long Page { get; set; } = 1;
         /// <summary>
         /// The number of items to retrieve.
         /// Minimum: 1. Maximum: 100.

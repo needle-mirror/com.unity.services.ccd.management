@@ -13,11 +13,11 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// Size of the content in bytes.
         /// </summary>
-        public int UploadLength { get; }
+        public long UploadLength { get; }
         /// <summary>
         /// Upload offset of the content in bytes.
         /// </summary>
-        public int UploadOffset { get; }
+        public long UploadOffset { get; }
 
         ///<summary>
         /// Constructor for ContentStatus
@@ -25,7 +25,7 @@ namespace Unity.Services.Ccd.Management
         ///<param name="uploadHash">ContentHash</param>
         ///<param name="uploadLength">ContentLength</param>
         ///<param name="uploadOffset">UploadOffset</param>
-        public ContentStatus(string uploadHash, int uploadLength, int uploadOffset)
+        public ContentStatus(string uploadHash, long uploadLength, long uploadOffset)
         {
             UploadHash = uploadHash;
             UploadLength = uploadLength;

@@ -39,7 +39,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="metadata">metadata param</param>
         /// <param name="signedUrl">Set to &#39;true&#39; if you want to return a signed URL for direct upload. Otherwise defaults to &#39;false&#39;.</param>
         [Preserve]
-        public CcdEntryCreate(string path, string contentHash = default, int contentSize = default, string contentType = default, List<string> labels = default, object metadata = default, bool signedUrl = default)
+        public CcdEntryCreate(string path, string contentHash = default, long contentSize = default, string contentType = default, List<string> labels = default, object metadata = default, bool signedUrl = default)
         {
             ContentHash = contentHash;
             ContentSize = contentSize;
@@ -62,7 +62,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "content_size", EmitDefaultValue = false)]
-        public int ContentSize{ get; }
+        public long ContentSize{ get; }
         
         /// <summary>
         /// Parameter content_type of CcdEntryCreate

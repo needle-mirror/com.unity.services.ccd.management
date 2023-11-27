@@ -19,6 +19,7 @@ using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using Unity.Services.Ccd.Management.Models;
 using Unity.Services.Ccd.Management.Scheduler;
+using Unity.Services.Ccd.Management.Http;
 
 
 namespace Unity.Services.Ccd.Management.Buckets
@@ -32,7 +33,7 @@ namespace Unity.Services.Ccd.Management.Buckets
 
         public static string SerializeToString<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
+            return IsolatedJsonConvert.SerializeObject(obj, new JsonSerializerSettings{ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore});
         }
     }
 
@@ -1027,7 +1028,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1070,7 +1071,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetDiffEntriesRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetDiffEntriesRequest(string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Bucketid = bucketid;
 
@@ -1215,7 +1216,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1259,7 +1260,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public GetDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
+        public GetDiffEntriesEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), int? perPage = 10, string path = default(string), List<string> includeStates = default(List<string>), string label = default(string), string contentType = default(string), bool? complete = default(bool?), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 
@@ -1739,7 +1740,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1762,7 +1763,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="promotionStatus">Promotion status, one or more can be specified. The default is all statuses.</param>
         /// <param name="promotionFilter">Filter to get only incoming/only outgoing promotions for a bucket. If nothing is specified, both, incoming and outgoing, promotions are returned</param>
         [Preserve]
-        public GetPromotionsRequest(string bucketid, string projectid, int? page = default(int?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
+        public GetPromotionsRequest(string bucketid, string projectid, long? page = default(long?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
         {
             Bucketid = bucketid;
 
@@ -1884,7 +1885,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -1908,7 +1909,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="promotionStatus">Promotion status, one or more can be specified. The default is all statuses.</param>
         /// <param name="promotionFilter">Filter to get only incoming/only outgoing promotions for a bucket. If nothing is specified, both, incoming and outgoing, promotions are returned</param>
         [Preserve]
-        public GetPromotionsEnvRequest(string environmentid, string bucketid, string projectid, int? page = default(int?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
+        public GetPromotionsEnvRequest(string environmentid, string bucketid, string projectid, long? page = default(long?), int? perPage = 10, List<string> promotionStatus = default(List<string>), string promotionFilter = default(string))
         {
             Environmentid = environmentid;
 
@@ -2026,7 +2027,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2056,7 +2057,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public ListBucketsByProjectRequest(string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public ListBucketsByProjectRequest(string projectid, long? page = default(long?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Projectid = projectid;
 
@@ -2182,7 +2183,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         public string Projectid { get; }
         /// <summary>Accessor for page </summary>
         [Preserve]
-        public int? Page { get; }
+        public long? Page { get; }
         /// <summary>Accessor for perPage </summary>
         [Preserve]
         public int? PerPage { get; }
@@ -2213,7 +2214,7 @@ namespace Unity.Services.Ccd.Management.Buckets
         /// <param name="sortBy">Sort By</param>
         /// <param name="sortOrder">Sort Order</param>
         [Preserve]
-        public ListBucketsByProjectEnvRequest(string environmentid, string projectid, int? page = default(int?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
+        public ListBucketsByProjectEnvRequest(string environmentid, string projectid, long? page = default(long?), int? perPage = 10, string name = default(string), string description = default(string), string sortBy = default(string), string sortOrder = default(string))
         {
             Environmentid = environmentid;
 

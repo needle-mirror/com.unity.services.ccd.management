@@ -206,14 +206,19 @@ namespace Unity.Services.Ccd.Management
             return response.Result;
         }
 
-        public async Task<List<CcdBucket>> ListBucketsAsync(PageOptions pageOptions = default)
+        public async Task<List<CcdBucket>> ListBucketsAsync(PageOptions pageOptions = default, ListBucketsOptions listBucketsOptions = default)
         {
             if (pageOptions == null)
             {
                 pageOptions = new PageOptions();
             }
+            if (listBucketsOptions == null)
+            {
+                listBucketsOptions = new ListBucketsOptions();
+            }
             var request = new ListBucketsByProjectEnvRequest(
-                CcdManagement.environmentid, CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage);
+                CcdManagement.environmentid, CcdManagement.projectid, pageOptions.Page, pageOptions.PerPage,
+                listBucketsOptions.Name, listBucketsOptions.Description, listBucketsOptions.SortBy, listBucketsOptions.SortOrder);
             var response = await TryCatchRequest(BucketsApiClient.ListBucketsByProjectEnvAsync, request);
             return response.Result;
         }
@@ -316,7 +321,7 @@ namespace Unity.Services.Ccd.Management
             var response = await m_StreamContentClient.PutAsync(signedUrl, streamContent);
             if (!response.IsSuccessStatusCode)
             {
-                ResolveErrorWrapping((int)response.StatusCode, new Exception(response.ReasonPhrase));
+                ResolveErrorWrapping((long)response.StatusCode, new Exception(response.ReasonPhrase));
             }
             m_SignedUrls.TryRemove(uploadContentOptions.EntryId, out _);
         }
@@ -379,7 +384,7 @@ namespace Unity.Services.Ccd.Management
             }
         }
 
-        private static bool IsUpToDate(CcdEntry remoteEntry, int localContentSize, string localContentHash)
+        private static bool IsUpToDate(CcdEntry remoteEntry, long localContentSize, string localContentHash)
         {
             var sameSize = remoteEntry.ContentSize == localContentSize;
             var sameHash = !string.IsNullOrEmpty(remoteEntry.ContentHash) && remoteEntry.ContentHash == localContentHash;
@@ -540,7 +545,7 @@ namespace Unity.Services.Ccd.Management
             if (clientResponse.IsHttpError || clientResponse.IsNetworkError)
             {
                 //Custom call so we want to catch Authorization error for retry
-                if (clientResponse.StatusCode == (int)HttpStatusCode.Forbidden)
+                if (clientResponse.StatusCode == (long)HttpStatusCode.Forbidden)
                 {
                     throw new HttpException<AuthorizationError>(
                         clientResponse,
@@ -567,14 +572,15 @@ namespace Unity.Services.Ccd.Management
             return response.Result;
         }
 
-        public async Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions)
+        public async Task DeletePermissionAsync(UpdatePermissionsOption permissionsOptions, CcdPermissionUpdate.RoleOptions role = CcdPermissionUpdate.RoleOptions.User)
         {
             string permission = permissionsOptions.Permission.ToString();
             var request = new DeletePermissionByBucketEnvRequest(
                 CcdManagement.environmentid,
                 permissionsOptions.BucketId.ToString(), CcdManagement.projectid,
                 permission: permissionsOptions.Permission.ToString().ToLower(),
-                action: permissionsOptions.Action.ToString().ToLower());
+                action: permissionsOptions.Action.ToString().ToLower(),
+                role: role.ToString().ToLower());
             await TryCatchRequest(PermissionsApiClient.DeletePermissionByBucketEnvAsync, request);
         }
 
@@ -857,17 +863,18 @@ namespace Unity.Services.Ccd.Management
                     await SetDefaultEnvironmentIfNotExists(Configuration);
                     response = await func(request, Configuration);
                 }
+                catch (HttpException<AuthenticationError>)
+                {
+                    response = await RetryRequest(func, request);
+                }
                 catch (HttpException<AuthorizationError>)
                 {
-                    ClearAuthHeader(Configuration);
-                    await SetConfigurationAuthHeader(Configuration);
-                    await SetDefaultEnvironmentIfNotExists(Configuration);
-                    response = await func(request, Configuration);
+                    response = await RetryRequest(func, request);
                 }
             }
             catch (HttpException he)
             {
-                ResolveErrorWrapping((int)he.Response.StatusCode, he);
+                ResolveErrorWrapping(he.Response.StatusCode, he);
             }
             catch (Exception e)
             {
@@ -875,6 +882,14 @@ namespace Unity.Services.Ccd.Management
                 ResolveErrorWrapping(CommonErrorCodes.Unknown, e);
             }
             return response;
+        }
+
+        private async Task<Response> RetryRequest<TRequest>(Func<TRequest, Configuration, Task<Response>> func, TRequest request)
+        {
+            ClearAuthHeader(Configuration);
+            await SetConfigurationAuthHeader(Configuration);
+            await SetDefaultEnvironmentIfNotExists(Configuration);
+            return await func(request, Configuration);
         }
 
         // Helper function to reduce code duplication of try-catch (generic version)
@@ -909,17 +924,18 @@ namespace Unity.Services.Ccd.Management
 
                     response = await func(request, Configuration);
                 }
+                catch (HttpException<AuthenticationError>)
+                {
+                    response = await RetryRequest<TRequest, TReturn>(func, request);
+                }
                 catch (HttpException<AuthorizationError>)
                 {
-                    ClearAuthHeader(Configuration);
-                    await SetConfigurationAuthHeader(Configuration);
-                    await SetDefaultEnvironmentIfNotExists(Configuration);
-                    response = await func(request, Configuration);
+                    response = await RetryRequest<TRequest, TReturn>(func, request);
                 }
             }
             catch (HttpException he)
             {
-                ResolveErrorWrapping((int)he.Response.StatusCode, he);
+                ResolveErrorWrapping(he.Response.StatusCode, he);
             }
             catch (Exception e)
             {
@@ -927,6 +943,14 @@ namespace Unity.Services.Ccd.Management
                 ResolveErrorWrapping(CommonErrorCodes.Unknown, e);
             }
             return response;
+        }
+
+        private async Task<Response<TReturn>> RetryRequest<TRequest, TReturn>(Func<TRequest, Configuration, Task<Response<TReturn>>> func, TRequest request)
+        {
+            ClearAuthHeader(Configuration);
+            await SetConfigurationAuthHeader(Configuration);
+            await SetDefaultEnvironmentIfNotExists(Configuration);
+            return await func(request, Configuration);
         }
 
         /// <summary>
@@ -952,7 +976,7 @@ namespace Unity.Services.Ccd.Management
         }
 
         // Helper function to resolve the new wrapped error/exception based on input parameter
-        internal static void ResolveErrorWrapping(int reason, Exception exception = null)
+        internal static void ResolveErrorWrapping(long reason, Exception exception = null)
         {
             int code = MapErrorCode(reason);
             //Check http exception types
@@ -1005,7 +1029,7 @@ namespace Unity.Services.Ccd.Management
                 throw new CcdManagementException(code, $"{tooManyRequestException.ActualError.Title}. {tooManyRequestException.ActualError.Detail}", exception);
             }
             //Other general exception message handling
-            throw new CcdManagementException(code, exception.Message, exception);
+            throw new CcdManagementException(code, exception != null ? exception.Message : string.Empty, exception);
         }
 
         /// <summary>
@@ -1013,7 +1037,7 @@ namespace Unity.Services.Ccd.Management
         /// </summary>
         /// <param name="reason">Error code to match</param>
         /// <returns></returns>
-        internal static int MapErrorCode(int reason)
+        internal static int MapErrorCode(long reason)
         {
             switch (reason)
             {
@@ -1083,7 +1107,7 @@ namespace Unity.Services.Ccd.Management
                 throw new CcdManagementException(CommonErrorCodes.InvalidRequest, SERVICES_ERROR_MSG);
             }
 
-            var jsonString = JsonConvert.SerializeObject(new Token() { TokenValue = CcdManagement.accessToken });
+            var jsonString = IsolatedJsonConvert.SerializeObject(new Token() { TokenValue = CcdManagement.accessToken });
             var url = $"{config.BasePath}/api/auth/v1/genesis-token-exchange/unity/";
             var headers = config.Headers.ToDictionary(kvp => kvp.Key, kvp => string.Join(", ", kvp.Value));
             if (headers.ContainsKey(CONTENT_TYPE_HEADER))
@@ -1126,10 +1150,10 @@ namespace Unity.Services.Ccd.Management
             response.Headers.TryGetValue("upload-length", out uploadLengthString);
             response.Headers.TryGetValue("upload-offset", out uploadOffsetString);
 
-            int uploadLength, uploadOffset;
+            long uploadLength, uploadOffset;
             bool parsed = true;
-            var parsedLength = int.TryParse(uploadLengthString, out uploadLength);
-            var parsedOffset = int.TryParse(uploadOffsetString, out uploadOffset);
+            var parsedLength = long.TryParse(uploadLengthString, out uploadLength);
+            var parsedOffset = long.TryParse(uploadOffsetString, out uploadOffset);
             parsed = parsedLength && parsedOffset && parsed;
             if (!parsed)
             {

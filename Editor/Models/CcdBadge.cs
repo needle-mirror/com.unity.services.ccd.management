@@ -38,7 +38,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// <param name="releaseid">releaseid param</param>
         /// <param name="releasenum">releasenum param</param>
         [Preserve]
-        public CcdBadge(DateTime created = default, string createdBy = default, string createdByName = default, string name = default, System.Guid releaseid = default, int releasenum = default)
+        public CcdBadge(DateTime created = default, string createdBy = default, string createdByName = default, string name = default, System.Guid releaseid = default, long releasenum = default)
         {
             Created = created;
             CreatedBy = createdBy;
@@ -88,7 +88,7 @@ namespace Unity.Services.Ccd.Management.Models
         /// </summary>
         [Preserve]
         [DataMember(Name = "releasenum", EmitDefaultValue = false)]
-        public int Releasenum{ get; }
+        public long Releasenum{ get; }
     
         /// <summary>
         /// Formats a CcdBadge into a string of key-value pairs for use as a path parameter.

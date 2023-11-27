@@ -23,7 +23,7 @@ namespace Unity.Services.Ccd.Management
         /// <summary>
         /// The release number of the badge to update.
         /// </summary>
-        public int? ReleaseNum { get; set; }
+        public long? ReleaseNum { get; set; }
         /// <summary>
         /// Create parameters object for assigning a badge.
         /// </summary>
@@ -43,7 +43,7 @@ namespace Unity.Services.Ccd.Management
         /// <param name="bucketId">Id of the bucket.</param>
         /// <param name="badgeName">Name of the badge.</param>
         /// <param name="releaseId">Id of the release.</param>
-        public AssignBadgeOptions(Guid bucketId, string badgeName, int releaseNum)
+        public AssignBadgeOptions(Guid bucketId, string badgeName, long releaseNum)
         {
             BucketId = bucketId;
             BadgeName = badgeName;
