@@ -140,7 +140,7 @@ namespace Unity.Services.Ccd.Management.Apis.BucketAccessTokens
                 // We return a merge between the current configuration and the
                 // global configuration to ensure we have the correct
                 // combination of headers and a base path (if it is set).
-                Configuration globalConfiguration = new Configuration("https://services.unity.com", 10, 4, null);
+                Configuration globalConfiguration = new Configuration("https://services.unity.com", 30, 4, null);
                 return Configuration.MergeConfigurations(_configuration, globalConfiguration);
             }
             set { _configuration = value; }

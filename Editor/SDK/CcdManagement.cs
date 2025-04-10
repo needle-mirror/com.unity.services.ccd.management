@@ -70,7 +70,7 @@ namespace Unity.Services.Ccd.Management
 
         static CcdManagement()
         {
-            configuration = new Configuration("https://services.unity.com", 10, 4, new Dictionary<string, string>(), new RetryPolicyConfig(), new StatusCodePolicyConfig());
+            configuration = new Configuration("https://services.unity.com", 30, 4, new Dictionary<string, string>(), new RetryPolicyConfig(), new StatusCodePolicyConfig());
         }
 
         internal static Action instanceCallbacks;

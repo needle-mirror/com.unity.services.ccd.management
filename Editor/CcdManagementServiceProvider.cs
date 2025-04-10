@@ -95,7 +95,7 @@ namespace Unity.Services.Ccd.Management
             
             UsersApi = new UsersApiClient(httpClient);
             
-            Configuration = new Configuration("https://services.unity.com", 10, 4, null);
+            Configuration = new Configuration("https://services.unity.com", 30, 4, null);
         }
         
         /// <summary> Instance of IBadgesApiClient interface</summary>

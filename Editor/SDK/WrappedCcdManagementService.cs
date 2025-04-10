@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading; 
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Unity.Services.Ccd.Management.Apis.Badges;
@@ -84,7 +85,7 @@ namespace Unity.Services.Ccd.Management
             UsersApiClient = usersApiClient;
             Configuration = configuration;
             _HttpClient = httpClient;
-            m_StreamContentClient = new HttpClient();
+            m_StreamContentClient = new HttpClient() { Timeout = Timeout.InfiniteTimeSpan };
         }
 
         public async Task DeleteBadgeAsync(Guid bucketId, string badgeName)
